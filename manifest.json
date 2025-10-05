@@ -1,0 +1,21 @@
+{
+  "name": "Digital Master Prediction",
+  "short_name": "DMP for Wix Ambara",
+  "description": "A digital master prediction application for Wix Ambara.",
+  "start_url": "./app.html",
+  "display": "standalone",
+  "background_color": "#f8fafc",
+  "theme_color": "#ffffff",
+  "icons": [
+    {
+      "src": "images192",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "images512",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

@@ -3,6 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- PWA Tags Start -->
+    <meta name="theme-color" content="#ffffff"/>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Pub Cadabra">
+    <link rel="apple-touch-icon" href="icons/icon-192x192.png">
+    <link rel="manifest" href="./manifest.json">
+    <!-- PWA Tags End -->
+
     <title>The Pub Cadabra - Digital Master Prediction</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -33,7 +43,7 @@
         
         <!-- Main Screen -->
         <div id="main-screen" class="w-full h-screen flex flex-col items-center justify-center p-4 text-center">
-             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-16 h-16 text-blue-600 mb-6">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-16 h-16 text-blue-600 mb-6">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456zM16.898 20.562L16.25 22.5l-.648-1.938a3.375 3.375 0 00-2.684-2.684l-1.938-.648 1.938-.648a3.375 3.375 0 002.684-2.684l.648-1.938.648 1.938a3.375 3.375 0 002.684 2.684l1.938.648-1.938.648a3.375 3.375 0 00-2.684 2.684z" />
             </svg>
             <h1 class="text-4xl sm:text-5xl font-bold text-gray-800">Digital Master Prediction</h1>
@@ -160,7 +170,7 @@
             apiKey: "AIzaSyCd13i8nOby99JTa2AyhsG_YuFLmj5Bt5s",
             authDomain: "digital-master-prediction.firebaseapp.com",
             projectId: "digital-master-prediction",
-            storageBucket: "digital-master-prediction.firebasestorage.app",
+            storageBucket: "digital-master-prediction.appspot.com",
             messagingSenderId: "671010231911",
             appId: "1:671010231911:web:1d49fc7aff2cc3b09566c2"
         };
@@ -290,10 +300,10 @@
 
         function updateStateAndRender(data) {
              if (data && data.config) {
-                state.config = { ...state.config, ...data.config };
-                localStorage.setItem(CONFIG_STORAGE_KEY, JSON.stringify(state.config));
+                 state.config = { ...state.config, ...data.config };
+                 localStorage.setItem(CONFIG_STORAGE_KEY, JSON.stringify(state.config));
              }
-             
+            
             const newPlaceholders = parsePlaceholders(state.config.content);
             const placeholdersChanged = JSON.stringify(state.ui.placeholders) !== JSON.stringify(newPlaceholders);
 
@@ -367,12 +377,12 @@
              if (!state.ui.isAuthReady) return;
              const docRef = doc(db, "artifacts", FIXED_USER_ID);
              onSnapshot(docRef, (docSnap) => {
-                if (docSnap.exists()) {
-                    updateStateAndRender(docSnap.data());
-                } else {
-                    console.log("No such document! Starting fresh.");
-                    updateStateAndRender(null);
-                }
+                 if (docSnap.exists()) {
+                     updateStateAndRender(docSnap.data());
+                 } else {
+                     console.log("No such document! Starting fresh.");
+                     updateStateAndRender(null);
+                 }
              }, (error) => console.error("Error listening to Firestore:", error));
         }
 
@@ -503,6 +513,19 @@
         }
 
         document.addEventListener('DOMContentLoaded', init);
+
+        // Service Worker Registration
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./service-worker.js')
+                    .then(registration => {
+                        console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                    })
+                    .catch(err => {
+                        console.log('ServiceWorker registration failed: ', err);
+                    });
+            });
+        }
     </script>
 </body>
 </html>

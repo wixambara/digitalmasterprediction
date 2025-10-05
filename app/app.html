@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Pub Cadabra - Digital Master Prediction</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: #f8fafc; /* Light gray background */
+            transition: background-color 0.3s ease;
+        }
+
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 3px; }
+        
+        #note-input-area {
+            font-family: 'Roboto', sans-serif;
+        }
+        #note-input-area:focus {
+            outline: none;
+        }
+    </style>
+</head>
+<body class="text-gray-800 antialiased overflow-hidden">
+
+    <div id="app" class="relative min-h-screen w-full flex">
+        
+        <!-- Main Screen -->
+        <div id="main-screen" class="w-full h-screen flex flex-col items-center justify-center p-4 text-center">
+             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-16 h-16 text-blue-600 mb-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456zM16.898 20.562L16.25 22.5l-.648-1.938a3.375 3.375 0 00-2.684-2.684l-1.938-.648 1.938-.648a3.375 3.375 0 002.684-2.684l.648-1.938.648 1.938a3.375 3.375 0 002.684 2.684l1.938.648-1.938.648a3.375 3.375 0 00-2.684 2.684z" />
+            </svg>
+            <h1 class="text-4xl sm:text-5xl font-bold text-gray-800">Digital Master Prediction</h1>
+            <p class="mt-2 text-gray-500">made for Wix Ambara</p>
+            <div class="mt-12 space-y-4 w-full max-w-xs">
+                <button id="start-magic-btn" class="w-full flex items-center justify-center bg-gradient-to-br from-blue-500 to-blue-700 text-white font-bold py-4 px-4 rounded-xl transition-transform duration-200 shadow-lg active:scale-95">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mr-3">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456zM16.898 20.562L16.25 22.5l-.648-1.938a3.375 3.375 0 00-2.684-2.684l-1.938-.648 1.938-.648a3.375 3.375 0 002.684-2.684l.648-1.938.648 1.938a3.375 3.375 0 002.684 2.684l1.938.648-1.938.648a3.375 3.375 0 00-2.684 2.684z" />
+                    </svg>
+                    <span>Start Magic</span>
+                </button>
+                <button id="settings-btn" class="w-full flex items-center justify-center bg-white text-gray-700 font-bold py-3 px-4 rounded-xl transition-transform duration-200 border border-gray-200 shadow-md active:scale-95">
+                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mr-3">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.324.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 011.37.49l1.296 2.247a1.125 1.125 0 01-.26 1.431l-1.003.827c-.293.24-.438.613-.438.995a6.473 6.473 0 010 .255c0 .382.145.755.438.995l1.003.827c.424.35.534.954.26 1.431l-1.296 2.247a1.125 1.125 0 01-1.37.49l-1.217-.456c-.355-.133-.75-.072-1.075.124a6.57 6.57 0 01-.22.127c-.332.183-.582.495-.645.87l-.213 1.281c-.09.543-.56.94-1.11.94h-2.594c-.55 0-1.02-.398-1.11-.94l-.213-1.281c-.063-.374-.313-.686-.645-.87a6.52 6.52 0 01-.22-.127c-.324-.196-.72-.257-1.075-.124l-1.217.456a1.125 1.125 0 01-1.37-.49l-1.296-2.247a1.125 1.125 0 01.26-1.431l1.004-.827c.292-.24.437-.613.437-.995a6.473 6.473 0 010-.255c0-.382-.145-.755-.437-.995l-1.004-.827a1.125 1.125 0 01-.26-1.431l1.296-2.247a1.125 1.125 0 011.37-.49l1.217.456c.355.133.75.072 1.075-.124.072-.044.146-.087.22-.127.332-.183.582-.495-.645-.87l.213-1.281z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                    <span>Setting</span>
+                </button>
+                <button id="panduan-btn" class="w-full flex items-center justify-center bg-white text-gray-700 font-bold py-3 px-4 rounded-xl transition-transform duration-200 border border-gray-200 shadow-md active:scale-95">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mr-3">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
+                    </svg>
+                    <span>Panduan</span>
+                </button>
+            </div>
+            <p class="absolute bottom-6 text-xs italic text-gray-400">Concepted by Heri Sanjaya</p>
+        </div>
+
+        <!-- Magic Interface (hidden by default) -->
+        <main id="magic-interface" class="w-full h-screen flex-grow flex transition-all duration-300 hidden">
+            
+            <!-- Note View -->
+            <div id="note-view" class="hidden w-full h-full flex flex-col bg-white">
+                <header id="note-header" class="flex-shrink-0 sticky top-0 z-10 flex justify-between items-center p-2 bg-white/80 backdrop-blur-md border-b border-gray-200">
+                    <button id="note-back-btn" class="p-3 text-gray-600 rounded-full hover:bg-gray-100 opacity-50 cursor-default">
+                        <!-- Decorative ArrowLeft Icon -->
+                    </button>
+                     <button id="note-save-btn-deco" class="p-3 text-gray-400 rounded-full cursor-default">
+                        <!-- Decorative Save Icon -->
+                    </button>
+                </header>
+                <div class="flex-grow flex flex-col overflow-y-auto px-5 pt-3 pb-5">
+                    <input id="note-title-display" type="text" value="Input Prediksi" readonly class="flex-shrink-0 text-2xl font-medium p-2 -mx-2 mb-2 focus:outline-none w-full bg-transparent text-gray-800" />
+                    <textarea id="note-input-area" class="flex-grow w-full bg-transparent text-gray-800 resize-none outline-none leading-relaxed text-base" placeholder="Write your note.."></textarea>
+                </div>
+            </div>
+
+            <!-- Assistant Input View -->
+            <div id="assistant-view" class="w-full max-w-sm m-auto p-4">
+                <div id="assistant-container" class="bg-white border border-gray-200 rounded-xl shadow-xl p-6 text-center">
+                    <div id="assistant-content" class="hidden">
+                        <p class="text-sm mb-1 text-gray-500">Masukkan nilai untuk:</p>
+                        <h2 id="current-placeholder" class="text-xl sm:text-2xl font-bold text-gray-800 mb-4 break-all">$placeholder</h2>
+                        <input id="placeholder-input" type="text" class="w-full bg-gray-100 border border-gray-300 rounded-lg px-4 py-2.5 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4" placeholder="Ketik nilainya di sini...">
+                        <button id="submit-placeholder" class="w-full bg-gray-800 hover:bg-gray-900 text-white font-bold py-2.5 px-4 rounded-lg transition duration-200">Lanjut</button>
+                        <p id="progress-indicator" class="text-gray-500 mt-3 text-xs"></p>
+                    </div>
+                    <div id="assistant-idle">
+                        <h2 class="text-lg font-bold">Tidak Ada Placeholder</h2>
+                        <p class="text-gray-500 text-sm">Buka panel kontrol untuk menambahkan placeholder.</p>
+                    </div>
+                    <div id="assistant-complete" class="hidden">
+                        <h2 class="text-lg font-bold">Ringkasan Input</h2>
+                        <div id="assistant-summary-list" class="mt-3 text-left text-sm text-gray-600 border-t border-gray-200 pt-3 space-y-2"></div>
+                        <p id="assistant-save-status" class="text-gray-500 text-xs mt-4">Prediksi telah tersimpan otomatis.</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Control Panel (Fullscreen) -->
+        <aside id="control-panel" class="hidden fixed inset-0 z-50 bg-slate-50 flex flex-col">
+            <header class="p-4 border-b border-gray-200 flex justify-between items-center flex-shrink-0">
+                <h2 class="text-lg font-bold text-gray-900">Panel Kontrol</h2>
+                <button id="close-panel-btn" class="p-2 text-gray-500 rounded-full hover:bg-gray-200">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </header>
+            
+            <div class="p-6 overflow-y-auto flex-grow space-y-6 text-gray-800">
+                 <div>
+                    <label for="control-article-title" class="block text-sm font-medium text-gray-600 mb-1">Judul Artikel</label>
+                    <input type="text" id="control-article-title" class="w-full bg-gray-100 border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                <div>
+                    <label for="control-article-date" class="block text-sm font-medium text-gray-600 mb-1">Tanggal Publikasi</label>
+                    <input type="date" id="control-article-date" class="w-full bg-gray-100 border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                 <div>
+                    <label for="control-article-content" class="block text-sm font-medium text-gray-600 mb-1">Konten Artikel (Template)</label>
+                    <textarea id="control-article-content" rows="8" class="w-full bg-gray-100 border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none" placeholder="Contoh: Kartu Anda adalah $kartu..."></textarea>
+                </div>
+                <div>
+                    <label for="control-note-title" class="block text-sm font-medium text-gray-600 mb-1">Judul Mode Catatan</label>
+                    <input type="text" id="control-note-title" class="w-full bg-gray-100 border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-600 mb-2">Mode Tampilan</label>
+                    <div class="flex bg-gray-200 rounded-lg p-1">
+                        <button id="view-assistant-btn" class="w-1/2 py-2 text-sm font-semibold rounded-md transition-colors">Asisten</button>
+                        <button id="view-note-btn" class="w-1/2 py-2 text-sm font-semibold rounded-md transition-colors">Catatan</button>
+                    </div>
+                </div>
+            </div>
+
+            <footer class="p-6 border-t border-gray-200 flex-shrink-0 space-y-3">
+                 <button id="save-settings-btn" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-lg transition duration-200">
+                    Simpan & Kembali
+                </button>
+                 <button id="sync-btn" class="w-full bg-gray-700 hover:bg-gray-600 text-white font-bold py-3 px-4 rounded-lg transition duration-200">
+                    Sinkronkan Semuanya
+                </button>
+                 <div id="save-status" class="text-center text-sm mt-1 text-gray-500 h-4"></div>
+            </footer>
+        </aside>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+        import { getFirestore, doc, setDoc, onSnapshot, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCd13i8nOby99JTa2AyhsG_YuFLmj5Bt5s",
+            authDomain: "digital-master-prediction.firebaseapp.com",
+            projectId: "digital-master-prediction",
+            storageBucket: "digital-master-prediction.firebasestorage.app",
+            messagingSenderId: "671010231911",
+            appId: "1:671010231911:web:1d49fc7aff2cc3b09566c2"
+        };
+        
+        let app, auth, db;
+        const FIXED_USER_ID = "wixAmbara";
+        const CONFIG_STORAGE_KEY = 'dmp_config';
+        const VIEW_MODE_STORAGE_KEY = 'dmp_view_mode';
+
+        const ICONS = {
+            ArrowLeft: `<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="currentColor"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>`,
+            Save: `<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="currentColor"><path d="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z"/></svg>`,
+        };
+
+        const state = {
+            config: {
+                title: '',
+                date: new Date().toISOString().split('T')[0],
+                content: '',
+                viewMode: 'assistant',
+                noteTitle: 'Input Prediksi'
+            },
+            predictions: {},
+            ui: {
+                placeholders: [],
+                currentPlaceholderIndex: 0,
+                isPanelOpen: false,
+                isAuthReady: false,
+                currentView: 'main' // 'main' or 'magic'
+            }
+        };
+
+        const DOM = {
+            mainScreen: document.getElementById('main-screen'),
+            magicInterface: document.getElementById('magic-interface'),
+            startMagicBtn: document.getElementById('start-magic-btn'),
+            settingsBtn: document.getElementById('settings-btn'),
+            panduanBtn: document.getElementById('panduan-btn'),
+            controlPanel: document.getElementById('control-panel'),
+            closePanelBtn: document.getElementById('close-panel-btn'),
+            saveSettingsBtn: document.getElementById('save-settings-btn'),
+            syncBtn: document.getElementById('sync-btn'),
+            saveStatus: document.getElementById('save-status'),
+            noteView: document.getElementById('note-view'),
+            noteHeader: document.getElementById('note-header'),
+            noteBackBtn: document.getElementById('note-back-btn'),
+            noteSaveBtnDeco: document.getElementById('note-save-btn-deco'),
+            noteTitleDisplay: document.getElementById('note-title-display'),
+            noteInputArea: document.getElementById('note-input-area'),
+            assistantView: document.getElementById('assistant-view'),
+            assistantContainer: document.getElementById('assistant-container'),
+            titleControl: document.getElementById('control-article-title'),
+            dateControl: document.getElementById('control-article-date'),
+            contentControl: document.getElementById('control-article-content'),
+            controlNoteTitle: document.getElementById('control-note-title'),
+            viewAssistantBtn: document.getElementById('view-assistant-btn'),
+            viewNoteBtn: document.getElementById('view-note-btn'),
+            assistantContent: document.getElementById('assistant-content'),
+            assistantIdle: document.getElementById('assistant-idle'),
+            assistantComplete: document.getElementById('assistant-complete'),
+            assistantSummaryList: document.getElementById('assistant-summary-list'),
+            assistantSaveStatus: document.getElementById('assistant-save-status'),
+            currentPlaceholder: document.getElementById('current-placeholder'),
+            placeholderInput: document.getElementById('placeholder-input'),
+            submitPlaceholderBtn: document.getElementById('submit-placeholder'),
+            progressIndicator: document.getElementById('progress-indicator'),
+        };
+
+        const parsePlaceholders = (content) => [...new Set((content || '').match(/\$(\w+)/g) || [])].map(p => p.substring(1));
+
+        function render() {
+            // Main view switching
+            DOM.mainScreen.classList.toggle('hidden', state.ui.currentView !== 'main');
+            DOM.magicInterface.classList.toggle('hidden', state.ui.currentView !== 'magic');
+
+            DOM.controlPanel.classList.toggle('hidden', !state.ui.isPanelOpen);
+            
+            DOM.titleControl.value = state.config.title;
+            DOM.dateControl.value = state.config.date;
+            DOM.contentControl.value = state.config.content;
+            DOM.controlNoteTitle.value = state.config.noteTitle;
+
+            const isAssistantMode = state.config.viewMode === 'assistant';
+            
+            DOM.assistantView.classList.toggle('hidden', !isAssistantMode);
+            DOM.noteView.classList.toggle('hidden', isAssistantMode);
+
+            DOM.viewAssistantBtn.classList.toggle('bg-blue-600', isAssistantMode);
+            DOM.viewAssistantBtn.classList.toggle('text-white', isAssistantMode);
+            DOM.viewNoteBtn.classList.toggle('bg-blue-600', !isAssistantMode);
+            DOM.viewNoteBtn.classList.toggle('text-white', !isAssistantMode);
+
+            if (state.ui.currentView === 'magic') {
+                if (isAssistantMode) renderAssistantView();
+                else renderNoteView();
+            }
+        }
+
+        function renderAssistantView() {
+            const hasPlaceholders = state.ui.placeholders.length > 0;
+            const isComplete = state.ui.currentPlaceholderIndex >= state.ui.placeholders.length;
+            DOM.assistantIdle.classList.toggle('hidden', hasPlaceholders);
+            DOM.assistantComplete.classList.toggle('hidden', !(hasPlaceholders && isComplete));
+            DOM.assistantContent.classList.toggle('hidden', !hasPlaceholders || isComplete);
+
+            if (hasPlaceholders && isComplete) {
+                const summaryHtml = state.ui.placeholders.map(p => {
+                    const value = state.predictions[p] || '<i>Kosong</i>';
+                    return `<div class="flex justify-between items-center"><span class="font-semibold text-gray-700">$${p}:</span><span class="truncate ml-2">${value}</span></div>`;
+                }).join('');
+                DOM.assistantSummaryList.innerHTML = summaryHtml;
+            } else if (hasPlaceholders && !isComplete) {
+                const currentName = state.ui.placeholders[state.ui.currentPlaceholderIndex];
+                DOM.currentPlaceholder.textContent = `$${currentName}`;
+                DOM.placeholderInput.value = state.predictions[currentName] || '';
+                DOM.progressIndicator.textContent = `Langkah ${state.ui.currentPlaceholderIndex + 1} dari ${state.ui.placeholders.length}`;
+            }
+        }
+        
+        function renderNoteView() {
+            DOM.noteBackBtn.innerHTML = ICONS.ArrowLeft;
+            DOM.noteSaveBtnDeco.innerHTML = ICONS.Save;
+            DOM.noteTitleDisplay.value = state.config.noteTitle;
+            DOM.noteInputArea.placeholder = "Write your note..";
+            DOM.noteInputArea.value = state.ui.placeholders.map(p => state.predictions[p] || '').join('\n');
+        }
+
+        function updateStateAndRender(data) {
+             if (data && data.config) {
+                state.config = { ...state.config, ...data.config };
+                localStorage.setItem(CONFIG_STORAGE_KEY, JSON.stringify(state.config));
+             }
+             
+            const newPlaceholders = parsePlaceholders(state.config.content);
+            const placeholdersChanged = JSON.stringify(state.ui.placeholders) !== JSON.stringify(newPlaceholders);
+
+            if (placeholdersChanged) {
+                state.ui.placeholders = newPlaceholders;
+                state.predictions = {};
+                state.ui.currentPlaceholderIndex = 0;
+            }
+            render();
+        }
+
+        async function saveConfigToFirestore() {
+            if (!state.ui.isAuthReady) return;
+            DOM.saveStatus.textContent = 'Menyimpan & Mereset...';
+            
+            try {
+                const docRef = doc(db, "artifacts", FIXED_USER_ID);
+                await setDoc(docRef, { config: state.config, predictions: {} });
+                
+                localStorage.setItem(CONFIG_STORAGE_KEY, JSON.stringify(state.config));
+                state.predictions = {};
+                state.ui.currentPlaceholderIndex = 0;
+                
+                DOM.saveStatus.textContent = 'Pengaturan disimpan!';
+                setTimeout(() => { DOM.saveStatus.textContent = ''; }, 2000);
+            } catch (error) {
+                console.error("Error saving config to Firestore:", error);
+                DOM.saveStatus.textContent = 'Gagal menyimpan.';
+            }
+        }
+
+        async function savePredictionsToFirestore() {
+            if (!state.ui.isAuthReady) return;
+            
+            try {
+                const docRef = doc(db, "artifacts", FIXED_USER_ID);
+                await setDoc(docRef, { predictions: state.predictions }, { merge: true });
+                console.log("Predictions saved.");
+                if (state.config.viewMode === 'note') {
+                    DOM.noteTitleDisplay.value = state.config.noteTitle + '.';
+                }
+            } catch (error) {
+                console.error("Error saving predictions to Firestore:", error);
+            }
+        }
+
+        async function forceSyncFromFirestore() {
+            if (!state.ui.isAuthReady) {
+                DOM.saveStatus.textContent = 'Otentikasi belum siap.';
+                return;
+            }
+            DOM.saveStatus.textContent = 'Sinkronisasi...';
+            try {
+                const docRef = doc(db, "artifacts", FIXED_USER_ID);
+                const docSnap = await getDoc(docRef);
+                if (docSnap.exists()) {
+                    updateStateAndRender(docSnap.data());
+                    DOM.saveStatus.textContent = 'Sinkronisasi berhasil!';
+                } else {
+                    DOM.saveStatus.textContent = 'Tidak ada data di server.';
+                }
+            } catch (error) {
+                console.error("Error syncing from Firestore:", error);
+                DOM.saveStatus.textContent = 'Gagal sinkronisasi.';
+            } finally {
+                setTimeout(() => { DOM.saveStatus.textContent = ''; }, 2000);
+            }
+        }
+        
+        function attachFirebaseListeners() {
+             if (!state.ui.isAuthReady) return;
+             const docRef = doc(db, "artifacts", FIXED_USER_ID);
+             onSnapshot(docRef, (docSnap) => {
+                if (docSnap.exists()) {
+                    updateStateAndRender(docSnap.data());
+                } else {
+                    console.log("No such document! Starting fresh.");
+                    updateStateAndRender(null);
+                }
+             }, (error) => console.error("Error listening to Firestore:", error));
+        }
+
+        function createTripleTapListener(element, callback) {
+            let tapCount = 0;
+            let lastTapTime = 0;
+            element.addEventListener('click', () => {
+                const currentTime = new Date().getTime();
+                if (currentTime - lastTapTime < 300) {
+                    tapCount++;
+                } else {
+                    tapCount = 1;
+                }
+                lastTapTime = currentTime;
+                if (tapCount === 3) {
+                    callback();
+                    tapCount = 0;
+                }
+            });
+        }
+
+        function setupEventListeners() {
+            // Main Screen Buttons
+            DOM.startMagicBtn.addEventListener('click', () => {
+                state.ui.currentView = 'magic';
+                render();
+            });
+            DOM.settingsBtn.addEventListener('click', () => {
+                state.ui.isPanelOpen = true;
+                render();
+            });
+            DOM.panduanBtn.addEventListener('click', () => {
+                window.location.href = 'panduan.html';
+            });
+            
+            // Panel Buttons
+            DOM.closePanelBtn.addEventListener('click', () => {
+                state.ui.isPanelOpen = false;
+                render();
+            });
+            DOM.saveSettingsBtn.addEventListener('click', async () => {
+                await saveConfigToFirestore();
+                localStorage.setItem(VIEW_MODE_STORAGE_KEY, state.config.viewMode);
+                state.ui.isPanelOpen = false;
+                state.ui.currentView = 'main';
+                render();
+            });
+
+            DOM.syncBtn.addEventListener('click', forceSyncFromFirestore);
+
+            // Panel Inputs
+            DOM.titleControl.addEventListener('input', e => { state.config.title = e.target.value; });
+            DOM.dateControl.addEventListener('input', e => { state.config.date = e.target.value; });
+            DOM.contentControl.addEventListener('input', e => {
+                state.config.content = e.target.value;
+                updateStateAndRender(null);
+            });
+            DOM.controlNoteTitle.addEventListener('input', e => { state.config.noteTitle = e.target.value; render(); });
+
+            DOM.viewAssistantBtn.addEventListener('click', () => { state.config.viewMode = 'assistant'; render(); });
+            DOM.viewNoteBtn.addEventListener('click', () => { state.config.viewMode = 'note'; render(); });
+            
+            // Magic Interface Logic
+            const submitAssistantValue = () => {
+                const totalPlaceholders = state.ui.placeholders.length;
+                if (state.ui.currentPlaceholderIndex < totalPlaceholders) {
+                    const currentName = state.ui.placeholders[state.ui.currentPlaceholderIndex];
+                    state.predictions[currentName] = DOM.placeholderInput.value.trim();
+                    state.ui.currentPlaceholderIndex++;
+                    
+                    if (state.ui.currentPlaceholderIndex === totalPlaceholders && totalPlaceholders > 0) {
+                        savePredictionsToFirestore();
+                    }
+                    render();
+                }
+            };
+            DOM.submitPlaceholderBtn.addEventListener('click', submitAssistantValue);
+            DOM.placeholderInput.addEventListener('keyup', e => e.key === 'Enter' && submitAssistantValue());
+
+            DOM.noteInputArea.addEventListener('input', (e) => {
+                 if (DOM.noteTitleDisplay.value.endsWith('.')) {
+                    DOM.noteTitleDisplay.value = state.config.noteTitle;
+                }
+                const lines = e.target.value.split('\n');
+                state.ui.placeholders.forEach((p, i) => {
+                    state.predictions[p] = lines[i] || '';
+                });
+
+                const filledLines = lines.filter(line => line.trim() !== '');
+                if (state.ui.placeholders.length > 0 && filledLines.length >= state.ui.placeholders.length) {
+                    savePredictionsToFirestore();
+                }
+            });
+
+            // Triple Tap to go back to Main Screen
+            const goBackToMain = () => {
+                state.ui.currentView = 'main';
+                render();
+            };
+            createTripleTapListener(DOM.noteHeader, goBackToMain);
+            createTripleTapListener(DOM.assistantContainer, goBackToMain);
+        }
+        
+        async function init() {
+            const savedMode = localStorage.getItem(VIEW_MODE_STORAGE_KEY);
+            const savedConfig = localStorage.getItem(CONFIG_STORAGE_KEY);
+            
+            if (savedMode) state.config.viewMode = savedMode;
+            if (savedConfig) {
+                 state.config = { ...state.config, ...JSON.parse(savedConfig) };
+            }
+            
+            setupEventListeners();
+            
+            try {
+                app = initializeApp(firebaseConfig);
+                db = getFirestore(app);
+                auth = getAuth(app);
+                
+                await signInAnonymously(auth);
+                state.ui.isAuthReady = true;
+                attachFirebaseListeners();
+
+            } catch (error) {
+                console.error("Firebase Init Error:", error);
+            }
+            render(); // Initial render for the main screen
+        }
+
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>

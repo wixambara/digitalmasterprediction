@@ -68,9 +68,11 @@
     </div>
 
     <script type="module">
+        // --- PERUBAHAN ---
+        // Menghapus onSnapshot dan menambahkan getDoc untuk mengambil data satu kali saja
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
         import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-        import { getFirestore, doc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+        import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyCd13i8nOby99JTa2AyhsG_YuFLmj5Bt5s",
@@ -107,7 +109,7 @@
 
             if (!data || !data.config) {
                 DOM.articleTitle.textContent = "Artikel tidak ditemukan";
-                DOM.articleContent.textContent = "Silakan atur konten melalui halaman kontrol terlebih dahulu.";
+                DOM.articleContent.textContent = "Data tidak ditemukan di server atau cache. Silakan coba lagi nanti.";
                 showContent();
                 return;
             }
@@ -144,53 +146,44 @@
 
             showContent();
         }
-        
-        async function init() {
-            // 1. Try to load from local storage first
-            const localDataRaw = localStorage.getItem(LOCAL_STORAGE_KEY);
-            if (localDataRaw) {
-                try {
-                    const localData = JSON.parse(localDataRaw);
-                    renderArticle(localData);
-                } catch (e) {
-                    console.error("Failed to parse local data", e);
-                }
-            }
 
+        async function fetchFromFirebase() {
+            console.log("Tidak ada data di local storage. Mengambil dari Firebase...");
             try {
                 app = initializeApp(firebaseConfig);
                 db = getFirestore(app);
                 auth = getAuth(app);
-                
                 await signInAnonymously(auth);
-                
+
                 const docRef = doc(db, "artifacts", FIXED_USER_ID);
-                onSnapshot(docRef, (docSnap) => {
-                    if (docSnap.exists()) {
-                        const serverData = docSnap.data();
-                        renderArticle(serverData);
-                        // 2. Automatically save fresh data to local storage
-                        localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(serverData));
-                    } else {
-                        renderArticle(null);
-                        localStorage.removeItem(LOCAL_STORAGE_KEY);
-                    }
-                }, (error) => {
-                    console.error("Error listening to Firestore:", error);
-                    if (!localDataRaw) renderArticle(null); // Only show error if no local data
-                });
+                // --- PERUBAHAN ---
+                // Menggunakan getDoc untuk mengambil data HANYA SEKALI
+                const docSnap = await getDoc(docRef);
 
+                if (docSnap.exists()) {
+                    const serverData = docSnap.data();
+                    renderArticle(serverData);
+                    // Simpan ke local storage untuk penggunaan selanjutnya
+                    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(serverData));
+                    console.log("Data berhasil diambil dan disimpan di cache.");
+                } else {
+                    console.log("Dokumen tidak ditemukan di Firestore.");
+                    renderArticle(null);
+                    localStorage.removeItem(LOCAL_STORAGE_KEY);
+                }
             } catch (error) {
-                console.error("Firebase Init Error:", error);
-                if (!localDataRaw) renderArticle(null); // Only show error if no local data
+                console.error("Gagal mengambil data dari Firebase:", error);
+                renderArticle(null);
             }
-
-            // 3. Add triple click reset feature
+        }
+        
+        async function init() {
+            // Setup triple click reset feature, ini akan selalu aktif
             let tapCount = 0;
             let lastTapTime = 0;
             DOM.header.addEventListener('click', () => {
                 const currentTime = new Date().getTime();
-                if (currentTime - lastTapTime < 300) { // 300ms window for triple tap
+                if (currentTime - lastTapTime < 300) {
                     tapCount++;
                 } else {
                     tapCount = 1;
@@ -199,9 +192,30 @@
 
                 if (tapCount === 3) {
                     localStorage.removeItem(LOCAL_STORAGE_KEY);
-                    window.location.replace('https://google.com/');
+                    // Mengganti redirect ke halaman ini sendiri agar me-refresh dan mengambil data baru
+                    window.location.reload(); 
                 }
             });
+
+            // --- PERUBAHAN UTAMA: ALUR KERJA BARU ---
+            const localDataRaw = localStorage.getItem(LOCAL_STORAGE_KEY);
+            
+            if (localDataRaw) {
+                // 1. Jika ada data di local storage, pakai data itu dan selesai.
+                console.log("Data ditemukan di local storage. Menampilkan dari cache.");
+                try {
+                    const localData = JSON.parse(localDataRaw);
+                    renderArticle(localData);
+                } catch (e) {
+                    // Jika data di local storage rusak, hapus dan ambil dari firebase
+                    console.error("Gagal parse data lokal, akan mengambil dari server.", e);
+                    localStorage.removeItem(LOCAL_STORAGE_KEY);
+                    await fetchFromFirebase();
+                }
+            } else {
+                // 2. Jika tidak ada data, baru ambil dari Firebase.
+                await fetchFromFirebase();
+            }
         }
 
         document.addEventListener('DOMContentLoaded', init);

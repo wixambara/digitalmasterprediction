@@ -19,15 +19,14 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* PERBAIKAN: Menambahkan margin dan padding 0 dan mempertahankan overflow: hidden */
+        /* Mengunci body/html agar tidak bisa di-scroll */
         html, body {
             height: 100%;
             margin: 0; 
             padding: 0;
-            overflow: hidden; /* Mencegah scroll pada level html dan body */
+            overflow: hidden; 
         }
         body { 
-            /* Menetapkan Inter sebagai font utama */
             font-family: 'Inter', sans-serif; 
             background-color: #ffffff;
             transition: background-color 0.3s ease;
@@ -44,7 +43,7 @@
 </head>
 <body class="text-gray-800 antialiased">
 
-    <!-- PERBAIKAN: Mengubah h-full kembali menjadi h-screen untuk mengunci viewport -->
+    <!-- Menggunakan h-screen untuk mengunci ke tinggi viewport dan mencegah scroll saat keyboard muncul -->
     <div id="app" class="relative h-screen w-full flex">
         
         <!-- Main Screen -->
@@ -121,7 +120,6 @@
         </main>
 
         <!-- Control Panel (Fullscreen) -->
-        <!-- Mengubah bg-slate-50 menjadi bg-white -->
         <aside id="control-panel" class="hidden fixed inset-0 z-50 bg-white flex flex-col">
             <header class="p-4 border-b border-gray-200 flex justify-between items-center flex-shrink-0">
                 <h2 class="text-lg font-bold text-gray-900">Panel Kontrol</h2>
@@ -133,29 +131,29 @@
             <div class="p-6 overflow-y-auto flex-grow space-y-6 text-gray-800">
                  <div>
                     <label for="control-article-title" class="block text-sm font-medium text-gray-600 mb-1">Judul Artikel</label>
-                    <!-- bg-white dan border-black untuk outline -->
+                    <!-- Input putih dengan outline hitam -->
                     <input type="text" id="control-article-title" class="block w-full bg-white border border-black rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
                 </div>
                 <div>
                     <label for="control-article-date" class="block text-sm font-medium text-gray-600 mb-1">Tanggal Publikasi</label>
-                    <!-- bg-white dan border-black untuk outline -->
+                    <!-- Input putih dengan outline hitam dan max-length 10 untuk DD-MM-YYYY -->
                     <input type="text" id="control-article-date" placeholder="DD-MM-YYYY" class="block w-full bg-white border border-black rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" maxlength="10">
                 </div>
                  <div>
                     <label for="control-article-content" class="block text-sm font-medium text-gray-600 mb-1">Konten Artikel (Template)</label>
-                    <!-- bg-white dan border-black untuk outline -->
+                    <!-- Input putih dengan outline hitam -->
                     <textarea id="control-article-content" rows="8" class="w-full bg-white border border-black rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none" placeholder="Contoh: Kartu Anda adalah $kartu..."></textarea>
                 </div>
                 <div>
                     <label for="control-note-title" class="block text-sm font-medium text-gray-600 mb-1">Judul Mode Catatan</label>
-                    <!-- bg-white dan border-black untuk outline -->
+                    <!-- Input putih dengan outline hitam -->
                     <input type="text" id="control-note-title" class="block w-full bg-white border border-black rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-gray-600 mb-2">Mode Tampilan</label>
                     <div class="flex bg-gray-200 rounded-lg p-1">
-                        <button id="view-assistant-btn" class="w-1/2 py-2 text-sm font-semibold rounded-md transition-colors">Asisten</button>
-                        <button id="view-note-btn" class="w-1/2 py-2 text-sm font-semibold rounded-md transition-colors">Catatan</button>
+                        <button id="view-assistant-btn" class="w-1/2 py-2 text-sm font-semibold rounded-md transition-colors text-gray-700">Asisten</button>
+                        <button id="view-note-btn" class="w-1/2 py-2 text-sm font-semibold rounded-md transition-colors text-gray-700">Catatan</button>
                     </div>
                 </div>
             </div>
@@ -200,7 +198,7 @@
         const state = {
             config: {
                 title: '',
-                // Tanggal default harus YYYY-MM-DD
+                // Tanggal internal YYYY-MM-DD
                 date: new Date().toISOString().split('T')[0], 
                 content: '',
                 viewMode: 'assistant',
@@ -256,8 +254,6 @@
 
         /**
          * Mengonversi format tanggal internal (YYYY-MM-DD) ke format tampilan (DD-MM-YYYY).
-         * @param {string} isoDate - Tanggal dalam format YYYY-MM-DD
-         * @returns {string} Tanggal dalam format DD-MM-YYYY
          */
         function toDisplayDate(isoDate) {
             if (!isoDate || isoDate.length !== 10) return '';
@@ -270,8 +266,6 @@
 
         /**
          * Mengonversi format tanggal tampilan (DD-MM-YYYY) ke format internal (YYYY-MM-DD).
-         * @param {string} displayDate - Tanggal dalam format DD-MM-YYYY
-         * @returns {string} Tanggal dalam format YYYY-MM-DD
          */
         function toInternalDate(displayDate) {
              if (!displayDate || displayDate.length !== 10) return '';
@@ -283,17 +277,14 @@
         }
 
         function render() {
-            // Main view switching
+            // Pengaturan tampilan utama dan panel
             DOM.mainScreen.classList.toggle('hidden', state.ui.currentView !== 'main');
             DOM.magicInterface.classList.toggle('hidden', state.ui.currentView !== 'magic');
-
             DOM.controlPanel.classList.toggle('hidden', !state.ui.isPanelOpen);
             
+            // Mengisi input di Panel Kontrol
             DOM.titleControl.value = state.config.title;
-            
-            // Konversi tanggal internal ke format tampilan (DD-MM-YYYY)
-            DOM.dateControl.value = toDisplayDate(state.config.date);
-
+            DOM.dateControl.value = toDisplayDate(state.config.date); // Format tampilan DD-MM-YYYY
             DOM.contentControl.value = state.config.content;
             DOM.controlNoteTitle.value = state.config.noteTitle;
 
@@ -333,8 +324,8 @@
             } else if (hasPlaceholders && !isComplete) {
                 const currentName = state.ui.placeholders[state.ui.currentPlaceholderIndex];
                 DOM.currentPlaceholder.textContent = `$${currentName}`;
-                // Input diisi dari state.predictions yang seharusnya kosong saat sesi dimulai
-                DOM.placeholderInput.value = state.predictions[currentName] || '';
+                // Input selalu fresh (kosong) saat sesi dimulai
+                DOM.placeholderInput.value = '';
                 DOM.placeholderInput.focus();
                 DOM.progressIndicator.textContent = `Langkah ${state.ui.currentPlaceholderIndex + 1} dari ${state.ui.placeholders.length}`;
             }
@@ -347,10 +338,11 @@
             // Atur ulang judul ke nilai konfigurasi aslinya saat render
             DOM.noteTitleDisplay.value = state.config.noteTitle; 
             
+            // Mode Notes dimulai blank (state.predictions kosong)
             const lines = state.ui.placeholders.map(p => state.predictions[p] || '');
             const content = lines.join('\n');
 
-            // Hapus baris kosong agar placeholder muncul
+            // Menghapus baris kosong agar placeholder muncul sempurna
             if (content.trim() === '') {
                  DOM.noteInputArea.value = '';
             } else {
@@ -379,7 +371,7 @@
 
             if (placeholdersChanged) {
                 state.ui.placeholders = newPlaceholders;
-                // Jika config berubah di luar sesi magic, reset predictions
+                // Jika config berubah di luar sesi magic, reset predictions lokal
                 if (state.ui.currentView === 'main') {
                     state.predictions = {};
                     state.ui.currentPlaceholderIndex = 0;
@@ -398,11 +390,10 @@
         }
 
         /**
-         * Mereset prediksi lokal dan memulai sesi input.
-         * Dipanggil saat menekan tombol "Start Magic".
+         * Mereset prediksi lokal dan memulai sesi input yang fresh.
          */
         function startMagicSession() {
-            // Reset semua input lokal untuk memulai sesi fresh
+            // Reset semua input LOKAL untuk memulai sesi fresh
             state.predictions = {};
             state.ui.currentPlaceholderIndex = 0;
             state.ui.currentView = 'magic';
@@ -419,18 +410,17 @@
             try {
                 const docRef = doc(db, "artifacts", FIXED_USER_ID);
                 
-                // Simpan konfigurasi dan *tulis timpa* objek prediksi kosong 
-                // agar reset juga terjadi di remote.
-                await setDoc(docRef, { config: state.config, predictions: {} });
+                // PERBAIKAN: Hanya mengirim 'config' dengan merge:true. 
+                // Ini menjaga data 'predictions' di Firebase tetap aman.
+                await setDoc(docRef, { config: state.config }, { merge: true });
                 
                 localStorage.setItem(CONFIG_STORAGE_KEY, JSON.stringify(state.config));
                 
-                // Reset local state after successful save
-                state.predictions = {};
+                // Reset local state (yang tidak memengaruhi server)
+                state.predictions = {}; 
                 state.ui.currentPlaceholderIndex = 0;
                 
                 DOM.saveStatus.textContent = 'Pengaturan disimpan!';
-                // Force a re-render to reflect the config update and prediction reset
                 updateStateAndRender({ config: state.config, predictions: {} }); 
 
             } catch (error) {
@@ -447,9 +437,18 @@
         async function savePredictionsToFirestore() {
             if (!state.ui.isAuthReady) return;
             
+            // Kumpulkan semua prediksi yang tidak kosong
+            const nonNullPredictions = Object.entries(state.predictions)
+                .filter(([, value]) => value && value.trim() !== '')
+                .reduce((acc, [key, value]) => ({ ...acc, [key]: value }), {});
+
+            // Jangan simpan jika tidak ada input yang sah.
+            if (Object.keys(nonNullPredictions).length === 0) return;
+            
             try {
                 const docRef = doc(db, "artifacts", FIXED_USER_ID);
-                await setDoc(docRef, { predictions: state.predictions }, { merge: true }); 
+                // Menimpa bagian 'predictions' di server dengan data baru.
+                await setDoc(docRef, { predictions: nonNullPredictions }, { merge: true }); 
                 console.log("Predictions saved.");
                 
                 // Indikator Titik Persisten
@@ -542,7 +541,6 @@
             if (formattedValue.length === 10) {
                  state.config.date = toInternalDate(formattedValue);
             } else {
-                 // Jika tanggal belum lengkap atau salah, simpan string kosong atau biarkan default
                  state.config.date = ''; 
             }
 
@@ -623,6 +621,7 @@
                     const value = DOM.placeholderInput.value.trim();
                     
                     if (value) {
+                         // Simpan nilai input saat ini ke prediksi lokal
                          state.predictions[currentName] = value;
                          state.ui.currentPlaceholderIndex++;
                     } else {
@@ -699,8 +698,7 @@
                 // Start real-time listener untuk CONFIG SAJA
                 attachFirebaseListeners();
 
-                // Karena kita ingin selalu start fresh, kita reset state.predictions di sini, 
-                // data dari Firebase hanya akan menimpa config melalui listener.
+                // Selalu reset state.predictions lokal untuk memulai sesi FRESH
                 state.predictions = {};
 
             } catch (error) {

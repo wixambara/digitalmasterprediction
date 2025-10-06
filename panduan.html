@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panduan - DMP for Wix Ambara</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: #f9fafb;
+        }
+        .prose {
+            max-width: 65ch;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .prose h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-top: 2.5em;
+            margin-bottom: 1em;
+            border-bottom: 1px solid #e5e7eb;
+            padding-bottom: 0.5rem;
+        }
+        .prose h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-top: 2em;
+            margin-bottom: 0.75em;
+        }
+        .prose p, .prose li {
+            font-size: 1rem;
+            line-height: 1.75;
+            color: #374151;
+        }
+        .prose ol, .prose ul {
+            padding-left: 1.5em;
+            margin-top: 1.25em;
+        }
+        .prose code {
+            background-color: #e5e7eb;
+            color: #1f2937;
+            padding: 0.2em 0.4em;
+            border-radius: 0.25rem;
+            font-family: monospace;
+            font-size: 0.9em;
+        }
+        .prose pre {
+            background-color: #f3f4f6;
+            border: 1px solid #d1d5db;
+            padding: 1em;
+            border-radius: 0.5rem;
+            overflow-x: auto;
+            margin-top: 1.25em;
+            white-space: pre-wrap;       /* Allows text to wrap */
+            overflow-wrap: break-word;   /* Breaks long words */
+        }
+        .tip-box {
+            background-color: #eff6ff;
+            border-left: 4px solid #3b82f6;
+            padding: 1rem;
+            margin-top: 1.5rem;
+            border-radius: 0.25rem;
+        }
+        .warning-box {
+            background-color: #fef2f2;
+            border-left: 4px solid #ef4444;
+            padding: 1rem;
+            margin-top: 1.5rem;
+            border-radius: 0.25rem;
+        }
+        .mode-box {
+            background-color: #f3f4f6;
+            border: 1px solid #d1d5db;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+            border-radius: 0.5rem;
+        }
+    </style>
+</head>
+<body class="text-gray-800 antialiased">
+
+    <div class="py-12 px-4 sm:px-6 lg:px-8">
+        <article class="prose">
+            <header class="text-center mb-12">
+                <h1 class="text-4xl font-bold text-gray-900">Panduan Digital Master Prediction</h1>
+                <p class="text-lg text-gray-600 mt-2">Dari Persiapan hingga Performance Profesional</p>
+                <a href="app.html" class="inline-block bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg mt-8 hover:bg-blue-700 transition-colors no-underline">Kembali ke Aplikasi</a>
+            </header>
+
+            <section>
+                <h2>Halo, Wix Ambara!</h2>
+                <p>
+                    Ini adalah panduan personal Anda untuk menguasai efek "Digital Master Prediction". Anda akan belajar cara kerja alat ini, mulai dari persiapan di belakang layar hingga momen <strong>reveal</strong> yang mustahil di depan penonton.
+                </p>
+                <p>
+                    Prinsipnya sederhana: Anda memiliki dua 'aset' digital.
+                </p>
+                <ul>
+                    <li><strong>Aplikasi "DMP for Wix Ambara":</strong> Ini adalah dasbor rahasia Anda. Hanya Anda (atau asisten Anda) yang bisa mengaksesnya.</li>
+                    <li><strong>Halaman Blog Prediksi:</strong> Ini adalah link yang akan diakses penonton melalui QR code. Halaman ini akan menampilkan prediksi akhir Anda.</li>
+                </ul>
+            </section>
+
+            <section>
+                <h2>Konsep Kunci: Placeholder ($)</h2>
+                <p>
+                    Inti dari efek ini adalah <strong>Placeholder</strong>. Anggap saja ini adalah "bagian kosong" yang nantinya akan Anda isi secara rahasia. Placeholder selalu diawali dengan tanda dolar <code>$</code>.
+                </p>
+                <div class="warning-box">
+                    <h3 class="!mt-0 !text-red-800">Aturan Penting Placeholder</h3>
+                    <p class="!text-red-900">
+                        Nama placeholder <strong>tidak boleh mengandung spasi</strong>. Jika Anda butuh dua kata atau lebih, gunakan underscore (<code>_</code>).
+                    </p>
+                    <ul class="!text-red-900">
+                        <li>✅ Benar: <code>$kartu_pilihan</code>, <code>$nama_kota</code></li>
+                        <li>❌ Salah: <code>$kartu pilihan</code>, <code>$nama kota</code></li>
+                    </ul>
+                </div>
+            </section>
+            
+            <section>
+                <h2>Memilih Mode Input: Asisten vs. Notes</h2>
+                <p>Di dalam aplikasi DMP, Anda bisa memilih dua mode untuk memasukkan informasi rahasia. Pilihan ini sangat menentukan cara Anda perform.</p>
+                
+                <div class="mode-box">
+                    <h3>Mode Asisten</h3>
+                    <p>Sesuai namanya, mode ini dirancang untuk performa yang dibantu oleh seorang <strong>asisten</strong>. Saat diaktifkan, asisten Anda akan melihat antarmuka yang jelas, menanyakan input untuk setiap placeholder satu per satu (Contoh: "Masukkan nilai untuk $kartu:").</p>
+                    <ul>
+                        <li><strong>Kelebihan:</strong> Tangan Anda bersih. Anda bisa 100% fokus pada interaksi dengan penonton, membuat semuanya terlihat sangat fair.</li>
+                        <li><strong>Kebutuhan:</strong> Seorang asisten yang sudah terlatih.</li>
+                    </ul>
+                </div>
+                
+                <div class="mode-box">
+                    <h3>Mode Notes</h3>
+                    <p>Mode ini dirancang untuk <strong>performa solo</strong> dan memiliki 'cover' yang sangat kuat. Tampilannya sengaja dibuat menyerupai aplikasi notes biasa di ponsel. Anda cukup mengetikkan setiap jawaban penonton baris per baris.</p>
+                    <p>Bahkan, Anda bisa memberikan ponsel Anda ke penonton dan meminta mereka mengetik sendiri pilihan mereka di setiap baris. Mereka bebas mengganti jawaban kapan saja dengan mengedit tulisan tersebut. Ini membuat efeknya terasa semakin mustahil karena mereka merasa memegang kendali penuh.</p>
+                     <div class="warning-box mt-4">
+                        <h3 class="!mt-0 !text-red-800">Panduan untuk Penonton</h3>
+                        <p class="!text-red-900">Jika penonton yang mengetik, Anda <strong>wajib</strong> memandu mereka dengan jelas agar tidak terjadi kesalahan. Instruksikan dengan spesifik: "Silakan ketik pilihan pertama di baris paling atas. Jika ingin ganti, cukup hapus tulisan di baris itu dan ganti dengan yang baru. Jangan menambah atau menghapus baris."</p>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <h2>Alur Permainan: Dari Setup hingga The Reveal</h2>
+                <h3>Langkah 1: The Setup (Persiapan)</h3>
+                <ol class="list-decimal pl-6 space-y-2">
+                    <li>Buka aplikasi <strong>"DMP for Wix Ambara"</strong> dan tekan tombol <strong>Setting</strong>.</li>
+                    <li>Atur konten blog prediksi Anda. Tulis seolah-olah itu adalah postingan blog atau diary sungguhan, lengkap dengan <code>$placeholder</code>.</li>
+                    <li>Pilih "Mode Tampilan" (Asisten atau Notes) yang akan Anda gunakan.</li>
+                    <li>Tekan <strong>Simpan & Kembali</strong>.</li>
+                </ol>
+
+                <h3>Langkah 2: Siapkan Prediksi Fisik (QR Code)</h3>
+                <p>Langkah ini membuat prediksi Anda terasa nyata dan tersegel.</p>
+                <ol class="list-decimal pl-6 space-y-2">
+                    <li>Buka website generator QR code <strong>gratis</strong> (penting agar tidak kadaluarsa).</li>
+                    <li>Ubah link Halaman Blog Prediksi Anda, yaitu <strong>https://blog.wixambara.my.id</strong>, menjadi sebuah QR code.</li>
+                    <li>Cetak QR code tersebut, lalu masukkan ke dalam amplop. Inilah "prediksi" fisik Anda.</li>
+                </ol>
+                
+                
+
+                <h3>Langkah 3: The Performance (Eksekusi)</h3>
+                <p>Minta penonton menyebutkan beberapa pilihan sesuai placeholder Anda. Sementara itu, Anda (dalam mode Notes) atau asisten Anda (dalam mode Asisten) secara diam-diam:</p>
+                <ol class="list-decimal pl-6 space-y-2">
+                    <li>Membuka aplikasi <strong>"DMP for Wix Ambara"</strong>.</li>
+                    <li>Menekan <strong>Start Magic</strong>.</li>
+                    <li>Memasukkan semua pilihan penonton. Aplikasi akan menyimpannya otomatis.</li>
+                </ol>
+
+                <h3>Langkah 4: The Reveal (Momen Puncak)</h3>
+                <ol class="list-decimal pl-6 space-y-2">
+                    <li>Keluarkan amplop prediksi. Tekankan bahwa amplop ini sudah disiapkan sejak awal.</li>
+                    <li>Minta penonton memindai (scan) QR code di dalamnya dengan ponsel mereka.</li>
+                    <li>Ponsel mereka akan membuka Halaman Blog Prediksi Anda. Minta mereka membaca isinya dengan lantang.</li>
+                </ol>
+                <p>Hasilnya, semua pilihan mereka akan sama persis dengan apa yang tertulis di postingan blog Anda.</p>
+            </section>
+
+            <section>
+                <h2>Contoh Template Bergaya Blog Post</h2>
+                <h3>Contoh 1: "Firasat Semalam"</h3>
+                <pre><code><strong>Judul:</strong> Catatan Iseng Tengah Malam
+
+Saya seringkali sulit tidur, dan semalam adalah salah satunya. Entah kenapa, saat pikiran sedang kosong, seringkali muncul gambaran-gambaran acak yang terasa begitu nyata. Biasanya saya abaikan, tapi kali ini terasa sedikit berbeda, lebih spesifik, jadi saya putuskan untuk menuliskannya di sini sebelum lupa.
+
+Gambaran yang paling jelas adalah sebuah angka. Bukan tanggal lahir atau nomor telepon, hanya sebuah angka yang berdiri sendiri, yaitu $angka. Selain itu, saya juga terus-terusan melihat satu gambar dari setumpuk kartu remi. Dari sekian banyak kartu, yang muncul berulang kali adalah $kartu.
+
+Aneh memang. Mungkin ini tidak berarti apa-apa dan hanya bunga tidur biasa. Tapi firasat saya mengatakan ada baiknya ini dicatat. Siapa tahu suatu saat nanti angka dan kartu ini muncul dalam sebuah kejadian tak terduga. Kita lihat saja nanti.</code></pre>
+                
+                <h3>Contoh 2: "Koneksi Tak Terduga"</h3>
+                 <pre><code><strong>Judul:</strong> Tentang Koneksi Antar Manusia
+
+Sebagai seorang seniman, saya sering mencari inspirasi dari orang-orang di sekitar saya. Kadang saya suka melakukan sebuah latihan kecil: mencoba membayangkan profil seseorang yang belum pernah saya temui sama sekali, hanya berdasarkan intuisi. Hari ini saya ingin mencatat hasil latihan iseng tersebut, mumpung sedang ada waktu luang di kafe langganan.
+
+Saya memejamkan mata dan membayangkan seseorang yang memiliki ikatan kuat dengan sebuah kota, sepertinya itu adalah kota kelahirannya, tempat ia tumbuh besar. Entah kenapa, dari sekian banyak kota di Indonesia, yang muncul di benak saya adalah $kota_lahir. Lalu saya mencoba memikirkan sesuatu yang lebih personal, sebuah warna favorit, warna yang mungkin sering ia pakai. Warna yang saya rasakan paling mewakili orang ini adalah $warna.
+
+Mungkin ini hanya imajinasi liar seorang penulis yang sedang bosan. Tapi bukankah luar biasa jika ternyata di luar sana benar-benar ada seseorang yang cocok dengan deskripsi ini? Ini menjadi pengingat bahwa kadang kita semua terhubung dengan cara-cara yang tidak kita duga, bahkan dengan orang asing sekalipun. Saya jadi penasaran apakah suatu saat saya akan bertemu orang ini.</code></pre>
+            </section>
+
+            <section>
+                <div class="tip-box">
+                    <h3 class="!mt-0 !text-blue-800">Tips untuk Performa Maksimal</h3>
+                    <ul class="!mt-2 text-blue-900">
+                        <li><strong>Gunakan Asisten jika Memungkinkan:</strong> Untuk efek yang paling bersih, Mode Asisten adalah pilihan terbaik. Ini menghilangkan semua kecurigaan dari Anda.</li>
+                        <li><strong>Koneksi Internet:</strong> Pastikan perangkat DMP Anda memiliki koneksi internet yang stabil saat memasukkan info. Ponsel penonton juga butuh internet untuk membuka link dari QR code.</li>
+                        <li><strong>Pacing is Key:</strong> Jangan terburu-buru saat reveal. Bangun suasana, biarkan penonton merasakan ketegangannya sebelum mereka scan QR code.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <footer class="text-center mt-16 py-8 border-t">
+                <p class="text-gray-600">Selamat beraksi dan ciptakan keajaiban!</p>
+            </footer>
+
+        </article>
+    </div>
+
+</body>
+</html>

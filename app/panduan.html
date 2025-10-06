@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panduan - DMP for Wix Ambara</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Library untuk membuat QR Code -->
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -55,9 +57,9 @@
             padding: 1em;
             border-radius: 0.5rem;
             overflow-x: auto;
+            white-space: pre-wrap;
+            overflow-wrap: break-word;
             margin-top: 1.25em;
-            white-space: pre-wrap;       /* Allows text to wrap */
-            overflow-wrap: break-word;   /* Breaks long words */
         }
         .tip-box {
             background-color: #eff6ff;
@@ -80,6 +82,17 @@
             margin-top: 1.5rem;
             border-radius: 0.5rem;
         }
+        #qrcode-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+            background-color: white;
+            border-radius: 0.5rem;
+            border: 1px solid #d1d5db;
+            margin-top: 1.5rem;
+            min-height: 150px;
+        }
     </style>
 </head>
 <body class="text-gray-800 antialiased">
@@ -89,10 +102,11 @@
             <header class="text-center mb-12">
                 <h1 class="text-4xl font-bold text-gray-900">Panduan Digital Master Prediction</h1>
                 <p class="text-lg text-gray-600 mt-2">Dari Persiapan hingga Performance Profesional</p>
-                <a href="./app.html" class="inline-block bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg mt-8 hover:bg-blue-700 transition-colors no-underline">Kembali ke Aplikasi</a>
+                <a href="app.html" class="inline-block bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg mt-8 hover:bg-blue-700 transition-colors no-underline">Kembali ke Aplikasi</a>
             </header>
 
-            <section>
+            <!-- ... (Bagian lain tetap sama) ... -->
+             <section>
                 <h2>Halo, Wix Ambara!</h2>
                 <p>
                     Ini adalah panduan personal Anda untuk menguasai efek "Digital Master Prediction". Anda akan belajar cara kerja alat ini, mulai dari persiapan di belakang layar hingga momen <strong>reveal</strong> yang mustahil di depan penonton.
@@ -158,14 +172,21 @@
                 </ol>
 
                 <h3>Langkah 2: Siapkan Prediksi Fisik (QR Code)</h3>
-                <p>Langkah ini membuat prediksi Anda terasa nyata dan tersegel.</p>
-                <ol class="list-decimal pl-6 space-y-2">
-                    <li>Buka website generator QR code <strong>gratis</strong> (penting agar tidak kadaluarsa).</li>
-                    <li>Ubah link Halaman Blog Prediksi Anda, yaitu <strong>https://blog.wixambara.my.id</strong>, menjadi sebuah QR code.</li>
-                    <li>Cetak QR code tersebut, lalu masukkan ke dalam amplop. Inilah "prediksi" fisik Anda.</li>
-                </ol>
+                <p>Langkah ini membuat prediksi Anda terasa nyata dan tersegel. Anda tidak perlu lagi ke website lain, cukup buat dan unduh QR code Anda langsung dari sini.</p>
                 
+                <div class="mt-6 text-center">
+                    <button id="qr-btn" class="bg-gray-800 text-white font-bold py-3 px-6 rounded-lg hover:bg-gray-900 transition-colors">
+                        Buat & Download QR Code Anda
+                    </button>
+                </div>
                 
+                <div id="qrcode-container">
+                    <span class="text-gray-500">QR code akan muncul di sini...</span>
+                </div>
+                
+                <a id="download-link" class="hidden text-center block mt-4 text-blue-600 font-semibold">Download Gambar QR Code</a>
+
+                <p class="mt-4">Setelah di-download, cetak QR code tersebut, lalu masukkan ke dalam amplop. Inilah "prediksi" fisik Anda yang siap digunakan.</p>
 
                 <h3>Langkah 3: The Performance (Eksekusi)</h3>
                 <p>Minta penonton menyebutkan beberapa pilihan sesuai placeholder Anda. Sementara itu, Anda (dalam mode Notes) atau asisten Anda (dalam mode Asisten) secara diam-diam:</p>
@@ -183,8 +204,8 @@
                 </ol>
                 <p>Hasilnya, semua pilihan mereka akan sama persis dengan apa yang tertulis di postingan blog Anda.</p>
             </section>
-
-            <section>
+            <!-- ... (Sisa bagian panduan tetap sama) ... -->
+             <section>
                 <h2>Contoh Template Bergaya Blog Post</h2>
                 <h3>Contoh 1: "Firasat Semalam"</h3>
                 <pre><code><strong>Judul:</strong> Catatan Iseng Tengah Malam
@@ -211,7 +232,7 @@ Mungkin ini hanya imajinasi liar seorang penulis yang sedang bosan. Tapi bukanka
                     <ul class="!mt-2 text-blue-900">
                         <li><strong>Gunakan Asisten jika Memungkinkan:</strong> Untuk efek yang paling bersih, Mode Asisten adalah pilihan terbaik. Ini menghilangkan semua kecurigaan dari Anda.</li>
                         <li><strong>Koneksi Internet:</strong> Pastikan perangkat DMP Anda memiliki koneksi internet yang stabil saat memasukkan info. Ponsel penonton juga butuh internet untuk membuka link dari QR code.</li>
-                        <li><strong>Pacing is Key:</strong> Jangan terburu-buru saat reveal. Bangun suasana, biarkan penonton merasakan ketegangannya sebelum mereka scan QR code.</li>
+                        <li><strong>Pacing is Key:</strong> Jangan terburu-buru saat reveal. Bangun suasana, biarkan penonton merasakan ketegangannya sebelum mereka scan QR code. Momen jeda sebelum kebenaran terungkap itu sangat penting.</li>
                     </ul>
                 </div>
             </section>
@@ -223,5 +244,42 @@ Mungkin ini hanya imajinasi liar seorang penulis yang sedang bosan. Tapi bukanka
         </article>
     </div>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const qrBtn = document.getElementById('qr-btn');
+            const qrContainer = document.getElementById('qrcode-container');
+            const downloadLink = document.getElementById('download-link');
+            const linkToEncode = 'https://blog.wixambara.my.id';
+
+            qrBtn.addEventListener('click', function () {
+                // Hapus QR code sebelumnya jika ada
+                qrContainer.innerHTML = '';
+                
+                // Buat QR code baru
+                const qrcode = new QRCode(qrContainer, {
+                    text: linkToEncode,
+                    width: 128,
+                    height: 128,
+                    colorDark: "#000000",
+                    colorLight: "#ffffff",
+                    correctLevel: QRCode.CorrectLevel.H
+                });
+
+                // Tampilkan tombol download
+                qrBtn.textContent = 'Buat Ulang QR Code'; // Ganti teks tombol
+                
+                // Beri sedikit waktu agar canvas selesai digambar
+                setTimeout(() => {
+                    const canvas = qrContainer.querySelector('canvas');
+                    if (canvas) {
+                        const imageUrl = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
+                        downloadLink.href = imageUrl;
+                        downloadLink.download = 'QR_Code_Prediksi.png';
+                        downloadLink.classList.remove('hidden');
+                    }
+                }, 100); // delay 100ms
+            });
+        });
+    </script>
 </body>
 </html>

@@ -62,9 +62,9 @@
                 </button>
                 <button id="settings-btn" class="w-full flex items-center justify-center bg-white text-gray-700 font-bold py-3 px-4 rounded-xl transition-transform duration-200 border border-gray-200 shadow-md active:scale-95">
                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mr-3">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.324.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 011.37.49l1.296 2.247a1.125 1.125 0 01-.26 1.431l-1.003.827c-.293.24-.438.613-.438.995a6.473 6.473 0 010 .255c0 .382.145.755.438.995l1.003.827c.424.35.534.954.26 1.431l-1.296 2.247a1.125 1.125 0 01-1.37.49l-1.217-.456c-.355-.133-.75-.072-1.075.124a6.57 6.57 0 01-.22.127c-.332.183-.582.495-.645.87l-.213 1.281c-.09.543-.56.94-1.11.94h-2.594c-.55 0-1.02-.398-1.11-.94l-.213-1.281c-.063-.374-.313-.686-.645-.87a6.52 6.52 0 01-.22-.127c-.324-.196-.72-.257-1.075-.124l-1.217.456a1.125 1.125 0 01-1.37-.49l-1.296-2.247a1.125 1.125 0 01.26-1.431l1.004-.827c.292-.24.437-.613.437-.995a6.473 6.473 0 010-.255c0-.382-.145-.755-.437-.995l-1.004-.827a1.125 1.125 0 01-.26-1.431l1.296-2.247a1.125 1.125 0 011.37-.49l1.217.456c.355.133.75.072 1.075-.124.072-.044.146-.087.22-.127.332-.183.582-.495-.645-.87l.213-1.281z" />
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                    </svg>
+                         <path stroke-linecap="round" stroke-linejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.324.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 011.37.49l1.296 2.247a1.125 1.125 0 01-.26 1.431l-1.003.827c-.293.24-.438.613-.438.995a6.473 6.473 0 010 .255c0 .382.145.755.438.995l1.003.827c.424.35.534.954.26 1.431l-1.296 2.247a1.125 1.125 0 01-1.37.49l-1.217-.456c-.355-.133-.75-.072-1.075.124a6.57 6.57 0 01-.22.127c-.332.183-.582.495-.645.87l-.213 1.281c-.09.543-.56.94-1.11.94h-2.594c-.55 0-1.02-.398-1.11-.94l-.213-1.281c-.063-.374-.313-.686-.645-.87a6.52 6.52 0 01-.22-.127c-.324-.196-.72-.257-1.075-.124l-1.217.456a1.125 1.125 0 01-1.37-.49l-1.296-2.247a1.125 1.125 0 01.26-1.431l1.004-.827c.292-.24.437-.613.437-.995a6.473 6.473 0 010-.255c0-.382-.145-.755-.437-.995l-1.004-.827a1.125 1.125 0 01-.26-1.431l1.296-2.247a1.125 1.125 0 011.37-.49l1.217.456c.355.133.75.072 1.075-.124.072-.044.146-.087.22-.127.332-.183.582-.495-.645-.87l.213-1.281z" />
+                         <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                     </svg>
                     <span>Setting</span>
                 </button>
                 <button id="panduan-btn" class="w-full flex items-center justify-center bg-white text-gray-700 font-bold py-3 px-4 rounded-xl transition-transform duration-200 border border-gray-200 shadow-md active:scale-95">
@@ -272,7 +272,7 @@
              if (!displayDate || displayDate.length !== 10) return '';
              const parts = displayDate.split('-'); // [DD, MM, YYYY]
              if (parts.length === 3) {
-                 return `${parts[2]}-${parts[1]}-${parts[0]}`; // YYYY-MM-DD
+                  return `${parts[2]}-${parts[1]}-${parts[0]}`; // YYYY-MM-DD
              }
              return displayDate;
         }
@@ -406,23 +406,47 @@
 
         async function saveConfigToFirestore() {
             if (!state.ui.isAuthReady) return;
-            DOM.saveStatus.textContent = 'Menyimpan & Mereset...';
+            DOM.saveStatus.textContent = 'Menyimpan & Membersihkan...';
+
+            const docRef = doc(db, "artifacts", FIXED_USER_ID);
             
             try {
-                const docRef = doc(db, "artifacts", FIXED_USER_ID);
+                // --- LOGIKA PEMBERSIHAN DIMULAI DI SINI ---
                 
-                // PERBAIKAN: Hanya mengirim 'config' dengan merge:true. 
-                // Ini menjaga data 'predictions' di Firebase tetap aman.
-                await setDoc(docRef, { config: state.config }, { merge: true });
+                // 1. Dapatkan placeholder baru dari config yang akan disimpan.
+                const newPlaceholders = parsePlaceholders(state.config.content);
+
+                // 2. Baca dokumen saat ini dari Firestore untuk mendapatkan `predictions` yang ada.
+                const docSnap = await getDoc(docRef);
+                const currentPredictions = docSnap.exists() ? docSnap.data().predictions || {} : {};
+                
+                // 3. Buat objek `predictions` baru yang sudah bersih.
+                const cleanedPredictions = {};
+                
+                // 4. Salin hanya data prediksi yang placeholdernya masih ada di config baru.
+                newPlaceholders.forEach(placeholder => {
+                    if (currentPredictions.hasOwnProperty(placeholder)) {
+                        cleanedPredictions[placeholder] = currentPredictions[placeholder];
+                    }
+                });
+                
+                // --- LOGIKA PEMBERSIHAN SELESAI ---
+
+                // 5. Simpan config BARU dan predictions yang sudah BERSIH.
+                // Ini akan menimpa `predictions` di server dengan versi yang bersih.
+                await setDoc(docRef, { 
+                    config: state.config,
+                    predictions: cleanedPredictions 
+                });
                 
                 localStorage.setItem(CONFIG_STORAGE_KEY, JSON.stringify(state.config));
                 
-                // Reset local state (yang tidak memengaruhi server)
-                state.predictions = {}; 
+                // Perbarui state lokal dengan data yang sudah bersih.
+                state.predictions = cleanedPredictions; 
                 state.ui.currentPlaceholderIndex = 0;
                 
-                DOM.saveStatus.textContent = 'Pengaturan disimpan!';
-                updateStateAndRender({ config: state.config, predictions: {} }); 
+                DOM.saveStatus.textContent = 'Pengaturan disimpan & dibersihkan!';
+                updateStateAndRender({ config: state.config, predictions: cleanedPredictions }); 
 
             } catch (error) {
                 console.error("Error saving config to Firestore:", error);

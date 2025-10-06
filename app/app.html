@@ -2,7 +2,8 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- BUG FIX: Mencegah pengguna melakukan zoom pada halaman -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
     <!-- PWA Tags Start -->
     <meta name="theme-color" content="#ffffff"/>
@@ -577,8 +578,10 @@
                 state.ui.isPanelOpen = true;
                 render();
             });
+
+            // BUG FIX: Membuat tombol Panduan berfungsi
             DOM.panduanBtn.addEventListener('click', () => {
-                console.log("Panduan button clicked. In a real PWA, this would open a guide view.");
+                window.location.href = 'panduan.html';
             });
             
             // Panel Buttons

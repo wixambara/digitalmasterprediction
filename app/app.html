@@ -19,8 +19,11 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        /* PERBAIKAN: Menambahkan margin dan padding 0 dan mempertahankan overflow: hidden */
         html, body {
             height: 100%;
+            margin: 0; 
+            padding: 0;
             overflow: hidden; /* Mencegah scroll pada level html dan body */
         }
         body { 
@@ -34,7 +37,6 @@
         ::-webkit-scrollbar-track { background: #f1f1f1; }
         ::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 3px; }
         
-        /* Menghapus pengaturan font di sini agar mewarisi dari body */
         #note-input-area:focus {
             outline: none;
         }
@@ -42,10 +44,12 @@
 </head>
 <body class="text-gray-800 antialiased">
 
+    <!-- PERBAIKAN: Mengubah h-full kembali menjadi h-screen untuk mengunci viewport -->
     <div id="app" class="relative h-screen w-full flex">
         
         <!-- Main Screen -->
-        <div id="main-screen" class="w-full h-full flex flex-col items-center p-4 pt-32 text-center">
+        <!-- Menggunakan justify-center untuk menyeimbangkan konten secara vertikal -->
+        <div id="main-screen" class="w-full h-full flex flex-col items-center justify-center p-4 text-center">
             
             <h1 class="text-4xl sm:text-5xl font-bold text-gray-800">Digital Master Prediction</h1>
             <p class="mt-2 text-gray-500">made for Wix Ambara</p>
@@ -89,7 +93,7 @@
                 </header>
                 <div class="flex-grow flex flex-col overflow-y-auto px-5 pt-3 pb-5">
                     <input id="note-title-display" type="text" value="Input Prediksi" readonly class="flex-shrink-0 text-2xl font-medium p-2 -mx-2 mb-2 focus:outline-none w-full bg-transparent text-gray-800" />
-                    <textarea id="note-input-area" class="flex-grow w-full bg-transparent text-gray-800 resize-none outline-none leading-relaxed text-base" placeholder="Write your note.."></textarea>
+                    <textarea id="note-input-area" class="flex-grow w-full bg-transparent text-gray-800 resize-none outline-none leading-relaxed text-base" placeholder="Tulis di sini..."></textarea>
                 </div>
             </div>
 
@@ -117,7 +121,8 @@
         </main>
 
         <!-- Control Panel (Fullscreen) -->
-        <aside id="control-panel" class="hidden fixed inset-0 z-50 bg-slate-50 flex flex-col">
+        <!-- Mengubah bg-slate-50 menjadi bg-white -->
+        <aside id="control-panel" class="hidden fixed inset-0 z-50 bg-white flex flex-col">
             <header class="p-4 border-b border-gray-200 flex justify-between items-center flex-shrink-0">
                 <h2 class="text-lg font-bold text-gray-900">Panel Kontrol</h2>
                 <button id="close-panel-btn" class="p-2 text-gray-500 rounded-full hover:bg-gray-200">
@@ -128,20 +133,23 @@
             <div class="p-6 overflow-y-auto flex-grow space-y-6 text-gray-800">
                  <div>
                     <label for="control-article-title" class="block text-sm font-medium text-gray-600 mb-1">Judul Artikel</label>
-                    <input type="text" id="control-article-title" class="block w-full bg-gray-100 border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <!-- bg-white dan border-black untuk outline -->
+                    <input type="text" id="control-article-title" class="block w-full bg-white border border-black rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
                 </div>
                 <div>
                     <label for="control-article-date" class="block text-sm font-medium text-gray-600 mb-1">Tanggal Publikasi</label>
-                    <!-- PERUBAHAN: type="date" diubah menjadi type="text" dengan placeholder -->
-                    <input type="text" id="control-article-date" placeholder="Format : TAHUN-BULAN-TANGGAL" class="block w-full bg-gray-100 border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <!-- bg-white dan border-black untuk outline -->
+                    <input type="text" id="control-article-date" placeholder="DD-MM-YYYY" class="block w-full bg-white border border-black rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" maxlength="10">
                 </div>
                  <div>
                     <label for="control-article-content" class="block text-sm font-medium text-gray-600 mb-1">Konten Artikel (Template)</label>
-                    <textarea id="control-article-content" rows="8" class="w-full bg-gray-100 border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none" placeholder="Contoh: Kartu Anda adalah $kartu..."></textarea>
+                    <!-- bg-white dan border-black untuk outline -->
+                    <textarea id="control-article-content" rows="8" class="w-full bg-white border border-black rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none" placeholder="Contoh: Kartu Anda adalah $kartu..."></textarea>
                 </div>
                 <div>
                     <label for="control-note-title" class="block text-sm font-medium text-gray-600 mb-1">Judul Mode Catatan</label>
-                    <input type="text" id="control-note-title" class="block w-full bg-gray-100 border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <!-- bg-white dan border-black untuk outline -->
+                    <input type="text" id="control-note-title" class="block w-full bg-white border border-black rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
                 </div>
                 <div>
                     <label class="block text-sm font-medium text-gray-600 mb-2">Mode Tampilan</label>
@@ -192,7 +200,8 @@
         const state = {
             config: {
                 title: '',
-                date: new Date().toISOString().split('T')[0],
+                // Tanggal default harus YYYY-MM-DD
+                date: new Date().toISOString().split('T')[0], 
                 content: '',
                 viewMode: 'assistant',
                 noteTitle: 'Input Prediksi'
@@ -245,6 +254,34 @@
 
         const parsePlaceholders = (content) => [...new Set((content || '').match(/\$(\w+)/g) || [])].map(p => p.substring(1));
 
+        /**
+         * Mengonversi format tanggal internal (YYYY-MM-DD) ke format tampilan (DD-MM-YYYY).
+         * @param {string} isoDate - Tanggal dalam format YYYY-MM-DD
+         * @returns {string} Tanggal dalam format DD-MM-YYYY
+         */
+        function toDisplayDate(isoDate) {
+            if (!isoDate || isoDate.length !== 10) return '';
+            const parts = isoDate.split('-'); // [YYYY, MM, DD]
+            if (parts.length === 3) {
+                 return `${parts[2]}-${parts[1]}-${parts[0]}`; // DD-MM-YYYY
+            }
+            return isoDate;
+        }
+
+        /**
+         * Mengonversi format tanggal tampilan (DD-MM-YYYY) ke format internal (YYYY-MM-DD).
+         * @param {string} displayDate - Tanggal dalam format DD-MM-YYYY
+         * @returns {string} Tanggal dalam format YYYY-MM-DD
+         */
+        function toInternalDate(displayDate) {
+             if (!displayDate || displayDate.length !== 10) return '';
+             const parts = displayDate.split('-'); // [DD, MM, YYYY]
+             if (parts.length === 3) {
+                 return `${parts[2]}-${parts[1]}-${parts[0]}`; // YYYY-MM-DD
+             }
+             return displayDate;
+        }
+
         function render() {
             // Main view switching
             DOM.mainScreen.classList.toggle('hidden', state.ui.currentView !== 'main');
@@ -253,7 +290,10 @@
             DOM.controlPanel.classList.toggle('hidden', !state.ui.isPanelOpen);
             
             DOM.titleControl.value = state.config.title;
-            DOM.dateControl.value = state.config.date;
+            
+            // Konversi tanggal internal ke format tampilan (DD-MM-YYYY)
+            DOM.dateControl.value = toDisplayDate(state.config.date);
+
             DOM.contentControl.value = state.config.content;
             DOM.controlNoteTitle.value = state.config.noteTitle;
 
@@ -307,9 +347,18 @@
             // Atur ulang judul ke nilai konfigurasi aslinya saat render
             DOM.noteTitleDisplay.value = state.config.noteTitle; 
             
-            DOM.noteInputArea.placeholder = "Tulis catatan Anda (baris harus sesuai urutan placeholder di Panel Kontrol)...";
-            // Populate note area from state.predictions which is empty when session starts
-            DOM.noteInputArea.value = state.ui.placeholders.map(p => state.predictions[p] || '').join('\n');
+            const lines = state.ui.placeholders.map(p => state.predictions[p] || '');
+            const content = lines.join('\n');
+
+            // Hapus baris kosong agar placeholder muncul
+            if (content.trim() === '') {
+                 DOM.noteInputArea.value = '';
+            } else {
+                DOM.noteInputArea.value = content;
+            }
+            
+            // Placeholder sederhana
+            DOM.noteInputArea.placeholder = `Tulis di sini...`;
             DOM.noteInputArea.focus();
         }
 
@@ -321,7 +370,6 @@
              }
              
              // Data predictions HANYA diimpor saat sinkronisasi paksa. 
-             // Untuk penggunaan normal, predictions diset ke {} di startMagicSession/init.
              if (data && data.predictions && state.ui.currentView === 'main') {
                  state.predictions = data.predictions;
              }
@@ -331,8 +379,7 @@
 
             if (placeholdersChanged) {
                 state.ui.placeholders = newPlaceholders;
-                // Karena kita memulai sesi input baru, kita tidak mempertahankan prediksi lama.
-                // Reset predictions hanya di sini jika config berubah (di luar sesi magic).
+                // Jika config berubah di luar sesi magic, reset predictions
                 if (state.ui.currentView === 'main') {
                     state.predictions = {};
                     state.ui.currentPlaceholderIndex = 0;
@@ -351,7 +398,7 @@
         }
 
         /**
-         * PERUBAHAN BARU: Mereset prediksi lokal dan memulai sesi input.
+         * Mereset prediksi lokal dan memulai sesi input.
          * Dipanggil saat menekan tombol "Start Magic".
          */
         function startMagicSession() {
@@ -396,16 +443,12 @@
 
         /**
          * Menyimpan prediksi ke Firestore, menimpa data prediksi yang ada.
-         * Dipanggil hanya setelah input selesai (mode assistant) atau setelah debounce (mode note).
          */
         async function savePredictionsToFirestore() {
             if (!state.ui.isAuthReady) return;
             
             try {
                 const docRef = doc(db, "artifacts", FIXED_USER_ID);
-                // Menimpa prediksi yang ada di Firebase dengan setDoc (merge: true hanya untuk menghindari penimpaan config)
-                // Kita memastikan bahwa predictions TIDAK di-merge, tapi predictions: state.predictions MENIMPA field predictions.
-                // Jika state.predictions sudah berisi data lengkap, ini menimpa data predictions sebelumnya.
                 await setDoc(docRef, { predictions: state.predictions }, { merge: true }); 
                 console.log("Predictions saved.");
                 
@@ -451,10 +494,7 @@
              onSnapshot(docRef, (docSnap) => {
                  if (docSnap.exists()) {
                      // Listener hanya digunakan untuk CONFIG update (judul, template, dll)
-                     // Data predictions HANYA DIIMPOR saat Sync Manual atau Inisialisasi awal.
                      const data = docSnap.data();
-                     // Agar listener tidak menimpa state.predictions saat user sedang input, 
-                     // kita hanya update config.
                      updateStateAndRender({ config: data.config }); 
                  } else {
                      console.log("No such document! Starting fresh.");
@@ -464,6 +504,54 @@
         }
 
         // --- UI Logic and Listeners ---
+        
+        /**
+         * Fungsi untuk memformat tanggal secara otomatis (DD-MM-YYYY)
+         */
+        function handleDateFormat(input) {
+            let value = input.value.replace(/[^0-9]/g, ''); // Hapus semua non-digit
+            let originalCursorPosition = input.selectionStart;
+
+            if (value.length > 8) {
+                value = value.substring(0, 8);
+            }
+
+            let formattedValue = value;
+            let newCursorPosition = originalCursorPosition;
+
+            // Tambahkan hyphen untuk DD
+            if (value.length > 2) {
+                formattedValue = value.substring(0, 2) + '-' + value.substring(2);
+                if (originalCursorPosition === 3 || originalCursorPosition === 4) {
+                    newCursorPosition += 1; // Pindahkan kursor melewati hyphen
+                }
+            }
+
+            // Tambahkan hyphen untuk MM
+            if (value.length > 4) {
+                formattedValue = formattedValue.substring(0, 5) + '-' + formattedValue.substring(5);
+                if (originalCursorPosition === 6 || originalCursorPosition === 7) {
+                    newCursorPosition += 1; // Pindahkan kursor melewati hyphen kedua
+                }
+            }
+            
+            // Perbarui input field
+            input.value = formattedValue;
+            
+            // Perbarui state.config dengan format internal (YYYY-MM-DD)
+            if (formattedValue.length === 10) {
+                 state.config.date = toInternalDate(formattedValue);
+            } else {
+                 // Jika tanggal belum lengkap atau salah, simpan string kosong atau biarkan default
+                 state.config.date = ''; 
+            }
+
+            // Pertahankan posisi kursor
+            if (input === document.activeElement) {
+                input.setSelectionRange(newCursorPosition, newCursorPosition);
+            }
+        }
+
 
         function createTripleTapListener(element, callback) {
             let tapCount = 0;
@@ -485,7 +573,6 @@
 
         function setupEventListeners() {
             // Main Screen Buttons
-            // PERUBAHAN: Memanggil startMagicSession untuk reset data
             DOM.startMagicBtn.addEventListener('click', startMagicSession);
             
             DOM.settingsBtn.addEventListener('click', () => {
@@ -502,6 +589,8 @@
                 render();
             });
             DOM.saveSettingsBtn.addEventListener('click', async () => {
+                // Pastikan format tanggal sudah benar saat disimpan
+                handleDateFormat(DOM.dateControl);
                 await saveConfigToFirestore();
                 localStorage.setItem(VIEW_MODE_STORAGE_KEY, state.config.viewMode);
                 state.ui.isPanelOpen = false;
@@ -513,10 +602,12 @@
 
             // Panel Inputs
             DOM.titleControl.addEventListener('input', e => { state.config.title = e.target.value; });
-            DOM.dateControl.addEventListener('input', e => { state.config.date = e.target.value; });
+            
+            // Pasang event listener untuk format tanggal otomatis
+            DOM.dateControl.addEventListener('input', (e) => handleDateFormat(e.target));
+
             DOM.contentControl.addEventListener('input', e => {
                 state.config.content = e.target.value;
-                // Re-parse placeholders immediately when content changes
                 updateStateAndRender(null); 
             });
             DOM.controlNoteTitle.addEventListener('input', e => { state.config.noteTitle = e.target.value; render(); });

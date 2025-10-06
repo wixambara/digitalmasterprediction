@@ -17,15 +17,16 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         html, body {
             height: 100%;
             overflow: hidden; /* Mencegah scroll pada level html dan body */
         }
         body { 
+            /* Menetapkan Inter sebagai font utama */
             font-family: 'Inter', sans-serif; 
-            background-color: #ffffff; /* Mengubah background menjadi putih */
+            background-color: #ffffff;
             transition: background-color 0.3s ease;
         }
 
@@ -33,9 +34,7 @@
         ::-webkit-scrollbar-track { background: #f1f1f1; }
         ::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 3px; }
         
-        #note-input-area {
-            font-family: 'Roboto', sans-serif;
-        }
+        /* Menghapus pengaturan font di sini agar mewarisi dari body */
         #note-input-area:focus {
             outline: none;
         }
@@ -46,11 +45,8 @@
     <div id="app" class="relative h-screen w-full flex">
         
         <!-- Main Screen -->
-        <div id="main-screen" class="w-full h-full flex flex-col items-center p-4 pt-24 text-center">
+        <div id="main-screen" class="w-full h-full flex flex-col items-center p-4 pt-32 text-center">
             
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24" stroke-width="1.5" stroke="currentColor" class="w-16 h-16 text-blue-600 mb-6">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456zM16.898 20.562L16.25 22.5l-.648-1.938a3.375 3.375 0 00-2.684-2.684l-1.938-.648 1.938-.648a3.375 3.375 0 002.684-2.684l.648-1.938.648 1.938a3.375 3.375 0 002.684 2.684l1.938.648-1.938.648a3.375 3.375 0 00-2.684 2.684z" />
-            </svg>
             <h1 class="text-4xl sm:text-5xl font-bold text-gray-800">Digital Master Prediction</h1>
             <p class="mt-2 text-gray-500">made for Wix Ambara</p>
             <div class="mt-10 space-y-3 w-full max-w-xs">
@@ -137,7 +133,7 @@
                 <div>
                     <label for="control-article-date" class="block text-sm font-medium text-gray-600 mb-1">Tanggal Publikasi</label>
                     <!-- PERUBAHAN: type="date" diubah menjadi type="text" dengan placeholder -->
-                    <input type="text" id="control-article-date" placeholder="YYYY-MM-DD" class="block w-full bg-gray-100 border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <input type="text" id="control-article-date" placeholder="Format : TAHUN-BULAN-TANGGAL" class="block w-full bg-gray-100 border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
                 </div>
                  <div>
                     <label for="control-article-content" class="block text-sm font-medium text-gray-600 mb-1">Konten Artikel (Template)</label>
@@ -173,6 +169,7 @@
         import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
         import { getFirestore, doc, setDoc, onSnapshot, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
+        // Menggunakan konfigurasi Firebase yang disematkan dalam kode asli Anda
         const firebaseConfig = {
             apiKey: "AIzaSyCd13i8nOby99JTa2AyhsG_YuFLmj5Bt5s",
             authDomain: "digital-master-prediction.firebaseapp.com",
@@ -265,10 +262,14 @@
             DOM.assistantView.classList.toggle('hidden', !isAssistantMode);
             DOM.noteView.classList.toggle('hidden', isAssistantMode);
 
+            // Toggling button styles for view mode
             DOM.viewAssistantBtn.classList.toggle('bg-blue-600', isAssistantMode);
             DOM.viewAssistantBtn.classList.toggle('text-white', isAssistantMode);
+            DOM.viewAssistantBtn.classList.toggle('text-gray-700', !isAssistantMode);
             DOM.viewNoteBtn.classList.toggle('bg-blue-600', !isAssistantMode);
             DOM.viewNoteBtn.classList.toggle('text-white', !isAssistantMode);
+            DOM.viewNoteBtn.classList.toggle('text-gray-700', isAssistantMode);
+
 
             if (state.ui.currentView === 'magic') {
                 if (isAssistantMode) renderAssistantView();
@@ -292,7 +293,9 @@
             } else if (hasPlaceholders && !isComplete) {
                 const currentName = state.ui.placeholders[state.ui.currentPlaceholderIndex];
                 DOM.currentPlaceholder.textContent = `$${currentName}`;
+                // Input diisi dari state.predictions yang seharusnya kosong saat sesi dimulai
                 DOM.placeholderInput.value = state.predictions[currentName] || '';
+                DOM.placeholderInput.focus();
                 DOM.progressIndicator.textContent = `Langkah ${state.ui.currentPlaceholderIndex + 1} dari ${state.ui.placeholders.length}`;
             }
         }
@@ -300,15 +303,27 @@
         function renderNoteView() {
             DOM.noteBackBtn.innerHTML = ICONS.ArrowLeft;
             DOM.noteSaveBtnDeco.innerHTML = ICONS.Save;
-            DOM.noteTitleDisplay.value = state.config.noteTitle;
-            DOM.noteInputArea.placeholder = "Write your note..";
+            
+            // Atur ulang judul ke nilai konfigurasi aslinya saat render
+            DOM.noteTitleDisplay.value = state.config.noteTitle; 
+            
+            DOM.noteInputArea.placeholder = "Tulis catatan Anda (baris harus sesuai urutan placeholder di Panel Kontrol)...";
+            // Populate note area from state.predictions which is empty when session starts
             DOM.noteInputArea.value = state.ui.placeholders.map(p => state.predictions[p] || '').join('\n');
+            DOM.noteInputArea.focus();
         }
 
         function updateStateAndRender(data) {
              if (data && data.config) {
+                 // Selalu update config dari Firebase/Local Storage
                  state.config = { ...state.config, ...data.config };
                  localStorage.setItem(CONFIG_STORAGE_KEY, JSON.stringify(state.config));
+             }
+             
+             // Data predictions HANYA diimpor saat sinkronisasi paksa. 
+             // Untuk penggunaan normal, predictions diset ke {} di startMagicSession/init.
+             if (data && data.predictions && state.ui.currentView === 'main') {
+                 state.predictions = data.predictions;
              }
             
             const newPlaceholders = parsePlaceholders(state.config.content);
@@ -316,11 +331,39 @@
 
             if (placeholdersChanged) {
                 state.ui.placeholders = newPlaceholders;
-                state.predictions = {};
-                state.ui.currentPlaceholderIndex = 0;
+                // Karena kita memulai sesi input baru, kita tidak mempertahankan prediksi lama.
+                // Reset predictions hanya di sini jika config berubah (di luar sesi magic).
+                if (state.ui.currentView === 'main') {
+                    state.predictions = {};
+                    state.ui.currentPlaceholderIndex = 0;
+                }
             }
+
+            // Find the first unfilled placeholder to set the current index
+            if (state.config.viewMode === 'assistant') {
+                const firstEmptyIndex = state.ui.placeholders.findIndex(p => !state.predictions[p]);
+                state.ui.currentPlaceholderIndex = firstEmptyIndex === -1 
+                    ? state.ui.placeholders.length // All filled
+                    : firstEmptyIndex;
+            }
+
             render();
         }
+
+        /**
+         * PERUBAHAN BARU: Mereset prediksi lokal dan memulai sesi input.
+         * Dipanggil saat menekan tombol "Start Magic".
+         */
+        function startMagicSession() {
+            // Reset semua input lokal untuk memulai sesi fresh
+            state.predictions = {};
+            state.ui.currentPlaceholderIndex = 0;
+            state.ui.currentView = 'magic';
+            render();
+        }
+
+
+        // --- Firebase/Data Functions ---
 
         async function saveConfigToFirestore() {
             if (!state.ui.isAuthReady) return;
@@ -328,29 +371,49 @@
             
             try {
                 const docRef = doc(db, "artifacts", FIXED_USER_ID);
+                
+                // Simpan konfigurasi dan *tulis timpa* objek prediksi kosong 
+                // agar reset juga terjadi di remote.
                 await setDoc(docRef, { config: state.config, predictions: {} });
                 
                 localStorage.setItem(CONFIG_STORAGE_KEY, JSON.stringify(state.config));
+                
+                // Reset local state after successful save
                 state.predictions = {};
                 state.ui.currentPlaceholderIndex = 0;
                 
                 DOM.saveStatus.textContent = 'Pengaturan disimpan!';
-                setTimeout(() => { DOM.saveStatus.textContent = ''; }, 2000);
+                // Force a re-render to reflect the config update and prediction reset
+                updateStateAndRender({ config: state.config, predictions: {} }); 
+
             } catch (error) {
                 console.error("Error saving config to Firestore:", error);
                 DOM.saveStatus.textContent = 'Gagal menyimpan.';
+            } finally {
+                setTimeout(() => { DOM.saveStatus.textContent = ''; }, 2000);
             }
         }
 
+        /**
+         * Menyimpan prediksi ke Firestore, menimpa data prediksi yang ada.
+         * Dipanggil hanya setelah input selesai (mode assistant) atau setelah debounce (mode note).
+         */
         async function savePredictionsToFirestore() {
             if (!state.ui.isAuthReady) return;
             
             try {
                 const docRef = doc(db, "artifacts", FIXED_USER_ID);
-                await setDoc(docRef, { predictions: state.predictions }, { merge: true });
+                // Menimpa prediksi yang ada di Firebase dengan setDoc (merge: true hanya untuk menghindari penimpaan config)
+                // Kita memastikan bahwa predictions TIDAK di-merge, tapi predictions: state.predictions MENIMPA field predictions.
+                // Jika state.predictions sudah berisi data lengkap, ini menimpa data predictions sebelumnya.
+                await setDoc(docRef, { predictions: state.predictions }, { merge: true }); 
                 console.log("Predictions saved.");
+                
+                // Indikator Titik Persisten
                 if (state.config.viewMode === 'note') {
-                    DOM.noteTitleDisplay.value = state.config.noteTitle + '.';
+                    if (!DOM.noteTitleDisplay.value.endsWith('.')) {
+                        DOM.noteTitleDisplay.value = state.config.noteTitle + '.';
+                    }
                 }
             } catch (error) {
                 console.error("Error saving predictions to Firestore:", error);
@@ -360,6 +423,7 @@
         async function forceSyncFromFirestore() {
             if (!state.ui.isAuthReady) {
                 DOM.saveStatus.textContent = 'Otentikasi belum siap.';
+                setTimeout(() => { DOM.saveStatus.textContent = ''; }, 2000);
                 return;
             }
             DOM.saveStatus.textContent = 'Sinkronisasi...';
@@ -367,7 +431,8 @@
                 const docRef = doc(db, "artifacts", FIXED_USER_ID);
                 const docSnap = await getDoc(docRef);
                 if (docSnap.exists()) {
-                    updateStateAndRender(docSnap.data());
+                    // Update state DENGAN data predictions, karena ini adalah sinkronisasi paksa.
+                    updateStateAndRender(docSnap.data()); 
                     DOM.saveStatus.textContent = 'Sinkronisasi berhasil!';
                 } else {
                     DOM.saveStatus.textContent = 'Tidak ada data di server.';
@@ -385,13 +450,20 @@
              const docRef = doc(db, "artifacts", FIXED_USER_ID);
              onSnapshot(docRef, (docSnap) => {
                  if (docSnap.exists()) {
-                     updateStateAndRender(docSnap.data());
+                     // Listener hanya digunakan untuk CONFIG update (judul, template, dll)
+                     // Data predictions HANYA DIIMPOR saat Sync Manual atau Inisialisasi awal.
+                     const data = docSnap.data();
+                     // Agar listener tidak menimpa state.predictions saat user sedang input, 
+                     // kita hanya update config.
+                     updateStateAndRender({ config: data.config }); 
                  } else {
                      console.log("No such document! Starting fresh.");
-                     updateStateAndRender(null);
+                     saveConfigToFirestore(); 
                  }
              }, (error) => console.error("Error listening to Firestore:", error));
         }
+
+        // --- UI Logic and Listeners ---
 
         function createTripleTapListener(element, callback) {
             let tapCount = 0;
@@ -413,16 +485,15 @@
 
         function setupEventListeners() {
             // Main Screen Buttons
-            DOM.startMagicBtn.addEventListener('click', () => {
-                state.ui.currentView = 'magic';
-                render();
-            });
+            // PERUBAHAN: Memanggil startMagicSession untuk reset data
+            DOM.startMagicBtn.addEventListener('click', startMagicSession);
+            
             DOM.settingsBtn.addEventListener('click', () => {
                 state.ui.isPanelOpen = true;
                 render();
             });
             DOM.panduanBtn.addEventListener('click', () => {
-                window.location.href = 'panduan.html';
+                console.log("Panduan button clicked. In a real PWA, this would open a guide view.");
             });
             
             // Panel Buttons
@@ -434,7 +505,7 @@
                 await saveConfigToFirestore();
                 localStorage.setItem(VIEW_MODE_STORAGE_KEY, state.config.viewMode);
                 state.ui.isPanelOpen = false;
-                state.ui.currentView = 'main';
+                state.ui.currentView = 'main'; // Go back to main after saving
                 render();
             });
 
@@ -445,7 +516,8 @@
             DOM.dateControl.addEventListener('input', e => { state.config.date = e.target.value; });
             DOM.contentControl.addEventListener('input', e => {
                 state.config.content = e.target.value;
-                updateStateAndRender(null);
+                // Re-parse placeholders immediately when content changes
+                updateStateAndRender(null); 
             });
             DOM.controlNoteTitle.addEventListener('input', e => { state.config.noteTitle = e.target.value; render(); });
 
@@ -457,10 +529,18 @@
                 const totalPlaceholders = state.ui.placeholders.length;
                 if (state.ui.currentPlaceholderIndex < totalPlaceholders) {
                     const currentName = state.ui.placeholders[state.ui.currentPlaceholderIndex];
-                    state.predictions[currentName] = DOM.placeholderInput.value.trim();
-                    state.ui.currentPlaceholderIndex++;
+                    const value = DOM.placeholderInput.value.trim();
                     
-                    if (state.ui.currentPlaceholderIndex === totalPlaceholders && totalPlaceholders > 0) {
+                    if (value) {
+                         state.predictions[currentName] = value;
+                         state.ui.currentPlaceholderIndex++;
+                    } else {
+                         console.log("Input tidak boleh kosong.");
+                         return; 
+                    }
+                    
+                    if (state.ui.currentPlaceholderIndex === totalPlaceholders) {
+                        // Simpan saat semua placeholder sudah terisi
                         savePredictionsToFirestore();
                     }
                     render();
@@ -470,17 +550,28 @@
             DOM.placeholderInput.addEventListener('keyup', e => e.key === 'Enter' && submitAssistantValue());
 
             DOM.noteInputArea.addEventListener('input', (e) => {
-                 if (DOM.noteTitleDisplay.value.endsWith('.')) {
+                // Hapus indikator titik saat user mulai mengetik
+                if (DOM.noteTitleDisplay.value.endsWith('.')) {
                     DOM.noteTitleDisplay.value = state.config.noteTitle;
                 }
+                
                 const lines = e.target.value.split('\n');
+                let predictionsChanged = false;
+
                 state.ui.placeholders.forEach((p, i) => {
-                    state.predictions[p] = lines[i] || '';
+                    const newValue = lines[i] || '';
+                    if (state.predictions[p] !== newValue) {
+                        state.predictions[p] = newValue;
+                        predictionsChanged = true;
+                    }
                 });
 
-                const filledLines = lines.filter(line => line.trim() !== '');
-                if (state.ui.placeholders.length > 0 && filledLines.length >= state.ui.placeholders.length) {
-                    savePredictionsToFirestore();
+                // Implementasi Debounce 1 detik
+                if (predictionsChanged) {
+                    clearTimeout(e.target.saveTimeout);
+                    e.target.saveTimeout = setTimeout(() => {
+                        savePredictionsToFirestore();
+                    }, 1000); // Delay 1000ms (1 detik)
                 }
             });
 
@@ -494,6 +585,7 @@
         }
         
         async function init() {
+            // Load local storage data
             const savedMode = localStorage.getItem(VIEW_MODE_STORAGE_KEY);
             const savedConfig = localStorage.getItem(CONFIG_STORAGE_KEY);
             
@@ -509,9 +601,16 @@
                 db = getFirestore(app);
                 auth = getAuth(app);
                 
+                // Sign in anonymously
                 await signInAnonymously(auth);
                 state.ui.isAuthReady = true;
+                
+                // Start real-time listener untuk CONFIG SAJA
                 attachFirebaseListeners();
+
+                // Karena kita ingin selalu start fresh, kita reset state.predictions di sini, 
+                // data dari Firebase hanya akan menimpa config melalui listener.
+                state.predictions = {};
 
             } catch (error) {
                 console.error("Firebase Init Error:", error);

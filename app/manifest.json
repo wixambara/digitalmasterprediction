@@ -4,7 +4,7 @@
   "description": "A digital master prediction application for Wix Ambara.",
   "start_url": "./app.html",
   "display": "standalone",
-  "background_color": "#f8fafc",
+  "background_color": "#ffffff",
   "theme_color": "#ffffff",
   "icons": [
     {

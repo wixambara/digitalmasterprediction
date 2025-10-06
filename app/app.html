@@ -444,7 +444,11 @@
                 .reduce((acc, [key, value]) => ({ ...acc, [key]: value }), {});
 
             // Jangan simpan jika tidak ada input yang sah.
-            if (Object.keys(nonNullPredictions).length === 0) return;
+            if (Object.keys(nonNullPredictions).length === 0 && Object.keys(state.predictions).length > 0) {
+                 // Jika semua prediksi dihapus, kirim objek kosong untuk membersihkan server
+            } else if (Object.keys(nonNullPredictions).length === 0) {
+                 return; // Jangan lakukan apa-apa jika memang awalnya kosong
+            }
             
             try {
                 const docRef = doc(db, "artifacts", FIXED_USER_ID);
@@ -649,24 +653,42 @@
                 }
                 
                 const lines = e.target.value.split('\n');
-                let predictionsChanged = false;
+                const newPredictions = {};
 
-                state.ui.placeholders.forEach((p, i) => {
-                    const newValue = lines[i] || '';
-                    if (state.predictions[p] !== newValue) {
-                        state.predictions[p] = newValue;
-                        predictionsChanged = true;
-                    }
+                // Rekonstruksi state prediksi dari awal untuk memastikan integritas data.
+                state.ui.placeholders.forEach((placeholder, index) => {
+                    newPredictions[placeholder] = lines[index] || '';
                 });
 
-                // Implementasi Debounce 1 detik
+                // Cek apakah ada perubahan dari state sebelumnya
+                const predictionsChanged = JSON.stringify(state.predictions) !== JSON.stringify(newPredictions);
+
                 if (predictionsChanged) {
+                    // Update state lokal dengan data yang baru
+                    state.predictions = newPredictions;
+
+                    // Hapus timer yang ada untuk me-reset debounce
                     clearTimeout(e.target.saveTimeout);
+
+                    // Atur timer baru untuk menyimpan setelah 2 detik tidak aktif
                     e.target.saveTimeout = setTimeout(() => {
-                        savePredictionsToFirestore();
-                    }, 1000); // Delay 1000ms (1 detik)
+                        // Cek apakah semua placeholder sudah terisi sebelum menyimpan.
+                        const allPlaceholdersFilled = state.ui.placeholders.every(p => {
+                            // Pastikan nilai ada dan bukan hanya spasi kosong.
+                            return state.predictions[p] && state.predictions[p].trim() !== '';
+                        });
+
+                        // Lanjutkan menyimpan hanya jika semua placeholder telah diisi.
+                        if (allPlaceholdersFilled) {
+                            console.log('All placeholders filled, saving...');
+                            savePredictionsToFirestore();
+                        } else {
+                            console.log('Save deferred: Not all placeholders are filled.');
+                        }
+                    }, 2000); // Delay 2 detik
                 }
             });
+
 
             // Triple Tap to go back to Main Screen
             const goBackToMain = () => {

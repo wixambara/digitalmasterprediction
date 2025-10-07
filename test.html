@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Load Gambar dari Root</title>
+</head>
+<body style="text-align:center; padding:20px;">
+  <h1>🖼️ Load Gambar dari Direktori Root</h1>
+  <input type="text" id="pathInput" placeholder="/images/photo1.jpg" style="width:300px;">
+  <button onclick="loadImage()">Tampilkan</button>
+
+  <div id="output" style="margin-top:20px;"></div>
+
+  <script>
+    function loadImage() {
+      const path = document.getElementById('pathInput').value.trim();
+      const output = document.getElementById('output');
+      if (!path) return;
+
+      const img = document.createElement('img');
+      img.src = path.startsWith('/') ? path : '/' + path;
+      img.style.maxWidth = '500px';
+      img.style.borderRadius = '8px';
+      output.innerHTML = ''; // hapus gambar sebelumnya
+      output.appendChild(img);
+
+      const p = document.createElement('p');
+      p.textContent = img.src;
+      output.appendChild(p);
+    }
+  </script>
+</body>
+</html>

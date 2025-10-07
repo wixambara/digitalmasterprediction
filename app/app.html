@@ -40,6 +40,38 @@
         #note-input-area:focus {
             outline: none;
         }
+
+        /* NEW: Wix Ambara's Blog Style */
+        .wix-blog #note-view {
+            background-color: #f9fafb; /* Latar belakang abu-abu muda */
+        }
+        .wix-blog #note-header {
+            background-color: #ffffff;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        .wix-blog #note-title-display {
+            font-family: 'Times New Roman', Times, serif;
+            font-weight: 700;
+            font-size: 2.25rem; /* 36px */
+            color: #111827; /* Teks lebih gelap */
+        }
+        .wix-blog #note-input-area {
+            font-family: 'Georgia', serif;
+            font-size: 1.125rem; /* 18px */
+            line-height: 1.75;
+            color: #374151; /* Warna teks lebih lembut */
+        }
+        .wix-blog #assistant-view {
+             background-color: #f9fafb;
+        }
+        .wix-blog #assistant-container {
+            font-family: 'Inter', sans-serif; /* Kembalikan asisten ke sans-serif agar UI mudah dibaca */
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            border: 1px solid #e5e7eb;
+        }
+        .modal-body {
+             max-height: 70vh;
+        }
     </style>
 </head>
 <body class="text-gray-800 antialiased">
@@ -48,8 +80,13 @@
     <div id="app" class="relative h-screen w-full flex">
         
         <!-- Main Screen -->
-        <!-- Menggunakan justify-center untuk menyeimbangkan konten secara vertikal -->
-        <div id="main-screen" class="w-full h-full flex flex-col items-center justify-center p-4 text-center">
+        <div id="main-screen" class="relative w-full h-full flex flex-col items-center justify-center p-4 text-center">
+            
+            <div id="connection-status" class="absolute top-4 left-0 w-full px-4 text-center hidden z-10">
+                <p class="inline-block bg-red-100 text-red-700 border border-red-200 rounded-lg py-2 px-4 text-sm shadow-md">
+                    <strong>Koneksi Gagal:</strong> Tidak dapat menghubungi server. Periksa koneksi internet Anda.
+                </p>
+            </div>
             
             <h1 class="text-4xl sm:text-5xl font-bold text-gray-800">Digital Master Prediction</h1>
             <p class="mt-2 text-gray-500">made for Wix Ambara</p>
@@ -130,24 +167,45 @@
             </header>
             
             <div class="p-6 overflow-y-auto flex-grow space-y-6 text-gray-800">
+                <!-- Template Management -->
+                <div class="p-4 rounded-lg bg-gray-50 border border-gray-200 space-y-3">
+                    <label for="template-select" class="block text-sm font-medium text-gray-600 mb-1">Muat dari Template</label>
+                    <div class="flex items-center space-x-2">
+                         <select id="template-select" class="block w-full bg-white border border-black rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <option value="">Pilih template...</option>
+                            <!-- Options will be populated by JS -->
+                        </select>
+                        <button id="delete-template-btn" class="p-2 text-red-500 hover:bg-red-100 rounded-md transition-colors">
+                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm4 0a1 1 0 012 0v6a1 1 0 11-2 0V8z" clip-rule="evenodd" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Style Selection -->
+                <div>
+                    <label for="control-style-select" class="block text-sm font-medium text-gray-600 mb-1">Gaya Tampilan</label>
+                    <select id="control-style-select" class="block w-full bg-white border border-black rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <option value="pub-cadabra">The Pub Cadabra</option>
+                        <option value="wix-blog">Wix Ambara's Blog</option>
+                    </select>
+                </div>
+
                  <div>
                     <label for="control-article-title" class="block text-sm font-medium text-gray-600 mb-1">Judul Artikel</label>
-                    <!-- Input putih dengan outline hitam -->
                     <input type="text" id="control-article-title" class="block w-full bg-white border border-black rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
                 </div>
                 <div>
                     <label for="control-article-date" class="block text-sm font-medium text-gray-600 mb-1">Tanggal Publikasi</label>
-                    <!-- Input putih dengan outline hitam dan max-length 10 untuk DD-MM-YYYY -->
                     <input type="text" id="control-article-date" placeholder="DD-MM-YYYY" class="block w-full bg-white border border-black rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" maxlength="10">
                 </div>
                  <div>
                     <label for="control-article-content" class="block text-sm font-medium text-gray-600 mb-1">Konten Artikel (Template)</label>
-                    <!-- Input putih dengan outline hitam -->
                     <textarea id="control-article-content" rows="8" class="w-full bg-white border border-black rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none" placeholder="Contoh: Kartu Anda adalah $kartu..."></textarea>
                 </div>
                 <div>
                     <label for="control-note-title" class="block text-sm font-medium text-gray-600 mb-1">Judul Mode Catatan</label>
-                    <!-- Input putih dengan outline hitam -->
                     <input type="text" id="control-note-title" class="block w-full bg-white border border-black rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
                 </div>
                 <div>
@@ -160,9 +218,14 @@
             </div>
 
             <footer class="p-6 border-t border-gray-200 flex-shrink-0 space-y-3">
-                 <button id="save-settings-btn" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-lg transition duration-200">
-                    Simpan & Kembali
-                </button>
+                <div class="flex space-x-3">
+                    <button id="create-template-btn" class="w-1/2 bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-4 rounded-lg transition duration-200">
+                        Buat Template
+                    </button>
+                    <button id="save-settings-btn" class="w-1/2 bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-lg transition duration-200">
+                        Simpan & Kembali
+                    </button>
+                </div>
                  <button id="sync-btn" class="w-full bg-gray-700 hover:bg-gray-600 text-white font-bold py-3 px-4 rounded-lg transition duration-200">
                     Sinkronkan Semuanya
                 </button>
@@ -171,12 +234,68 @@
         </aside>
     </div>
 
+    <!-- Create Template Modal -->
+    <div id="create-template-modal" class="hidden fixed inset-0 bg-gray-900 bg-opacity-70 flex items-center justify-center z-[60]">
+        <div class="bg-white rounded-xl shadow-xl w-full max-w-lg m-4 flex flex-col">
+            <header class="p-4 border-b border-gray-200 flex justify-between items-center flex-shrink-0">
+                <h3 class="text-lg font-bold text-gray-900">Buat Template Baru</h3>
+                <button id="close-modal-btn" class="p-2 text-gray-500 rounded-full hover:bg-gray-200">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </header>
+            <div class="p-6 overflow-y-auto modal-body">
+                <form id="template-form" class="space-y-4">
+                    <div>
+                        <label for="modal-template-name" class="block text-sm font-medium text-gray-600 mb-1">Nama Template (wajib)</label>
+                        <input type="text" id="modal-template-name" placeholder="Contoh: Prediksi Kartu" class="block w-full bg-white border border-black rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                    </div>
+                     <div>
+                        <label for="modal-article-title" class="block text-sm font-medium text-gray-600 mb-1">Judul Artikel</label>
+                        <input type="text" id="modal-article-title" class="block w-full bg-white border border-black rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                     <div>
+                        <label for="modal-article-content" class="block text-sm font-medium text-gray-600 mb-1">Konten Artikel (Template)</label>
+                        <textarea id="modal-article-content" rows="5" class="w-full bg-white border border-black rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none" placeholder="Contoh: Kartu Anda adalah $kartu..."></textarea>
+                    </div>
+                    <div>
+                        <label for="modal-note-title" class="block text-sm font-medium text-gray-600 mb-1">Judul Mode Catatan</label>
+                        <input type="text" id="modal-note-title" class="block w-full bg-white border border-black rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                     <div class="grid grid-cols-2 gap-4">
+                         <div>
+                            <label for="modal-view-mode" class="block text-sm font-medium text-gray-600 mb-1">Mode Tampilan</label>
+                            <select id="modal-view-mode" class="block w-full bg-white border border-black rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                <option value="assistant">Asisten</option>
+                                <option value="note">Catatan</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="modal-style-select" class="block text-sm font-medium text-gray-600 mb-1">Gaya Tampilan</label>
+                            <select id="modal-style-select" class="block w-full bg-white border border-black rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                <option value="pub-cadabra">The Pub Cadabra</option>
+                                <option value="wix-blog">Wix Ambara's Blog</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <footer class="p-4 border-t border-gray-200 flex justify-end space-x-3 flex-shrink-0">
+                <button type="button" id="cancel-modal-btn" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded-lg transition duration-200">Batal</button>
+                <button type="button" id="save-modal-btn" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-200">Simpan Template</button>
+            </footer>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast-notification" class="hidden fixed bottom-8 left-1/2 -translate-x-1/2 bg-gray-900 text-white py-2 px-5 rounded-full shadow-lg transition-all duration-300 opacity-0 z-[100]">
+        <p id="toast-message"></p>
+    </div>
+
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
         import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-        import { getFirestore, doc, setDoc, onSnapshot, getDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+        import { getFirestore, doc, setDoc, onSnapshot, getDoc, collection, getDocs, deleteDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-        // Menggunakan konfigurasi Firebase yang disematkan dalam kode asli Anda
         const firebaseConfig = {
             apiKey: "AIzaSyCd13i8nOby99JTa2AyhsG_YuFLmj5Bt5s",
             authDomain: "digital-master-prediction.firebaseapp.com",
@@ -190,6 +309,7 @@
         const FIXED_USER_ID = "wixAmbara";
         const CONFIG_STORAGE_KEY = 'dmp_config';
         const VIEW_MODE_STORAGE_KEY = 'dmp_view_mode';
+        const STYLE_STORAGE_KEY = 'dmp_style'; 
 
         const ICONS = {
             ArrowLeft: `<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24" fill="currentColor"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>`,
@@ -199,19 +319,21 @@
         const state = {
             config: {
                 title: '',
-                // Tanggal internal YYYY-MM-DD
                 date: new Date().toISOString().split('T')[0], 
                 content: '',
                 viewMode: 'assistant',
-                noteTitle: 'Input Prediksi'
+                noteTitle: 'Input Prediksi',
+                style: 'pub-cadabra'
             },
             predictions: {},
+            templates: [],
             ui: {
                 placeholders: [],
                 currentPlaceholderIndex: 0,
                 isPanelOpen: false,
                 isAuthReady: false,
-                currentView: 'main' // 'main' or 'magic'
+                currentView: 'main',
+                selectedTemplateId: ''
             }
         };
 
@@ -249,59 +371,114 @@
             placeholderInput: document.getElementById('placeholder-input'),
             submitPlaceholderBtn: document.getElementById('submit-placeholder'),
             progressIndicator: document.getElementById('progress-indicator'),
+            createTemplateBtn: document.getElementById('create-template-btn'),
+            templateSelect: document.getElementById('template-select'),
+            deleteTemplateBtn: document.getElementById('delete-template-btn'),
+            controlStyleSelect: document.getElementById('control-style-select'),
+            toastNotification: document.getElementById('toast-notification'),
+            toastMessage: document.getElementById('toast-message'),
+            connectionStatus: document.getElementById('connection-status'),
+
+            // Modal elements
+            createTemplateModal: document.getElementById('create-template-modal'),
+            closeModalBtn: document.getElementById('close-modal-btn'),
+            cancelModalBtn: document.getElementById('cancel-modal-btn'),
+            saveModalBtn: document.getElementById('save-modal-btn'),
+            templateForm: document.getElementById('template-form'),
+            modalTemplateName: document.getElementById('modal-template-name'),
+            modalArticleTitle: document.getElementById('modal-article-title'),
+            modalArticleContent: document.getElementById('modal-article-content'),
+            modalNoteTitle: document.getElementById('modal-note-title'),
+            modalViewMode: document.getElementById('modal-view-mode'),
+            modalStyleSelect: document.getElementById('modal-style-select'),
         };
+
+        function showToast(message, type = 'info', duration = 3000) {
+            const toast = DOM.toastNotification;
+            DOM.toastMessage.textContent = message;
+
+            toast.classList.remove('bg-green-600', 'bg-red-600', 'bg-blue-600');
+
+            switch (type) {
+                case 'success':
+                    toast.classList.add('bg-green-600');
+                    break;
+                case 'error':
+                    toast.classList.add('bg-red-600');
+                    break;
+                case 'info':
+                default:
+                    toast.classList.add('bg-blue-600');
+                    break;
+            }
+
+            toast.classList.remove('hidden', 'opacity-0');
+            toast.classList.add('opacity-100');
+
+            setTimeout(() => {
+                toast.classList.remove('opacity-100');
+                toast.classList.add('opacity-0');
+                 setTimeout(() => {
+                    toast.classList.add('hidden');
+                }, 300);
+            }, duration);
+        }
 
         const parsePlaceholders = (content) => [...new Set((content || '').match(/\$(\w+)/g) || [])].map(p => p.substring(1));
 
-        /**
-         * Mengonversi format tanggal internal (YYYY-MM-DD) ke format tampilan (DD-MM-YYYY).
-         */
         function toDisplayDate(isoDate) {
             if (!isoDate || isoDate.length !== 10) return '';
-            const parts = isoDate.split('-'); // [YYYY, MM, DD]
+            const parts = isoDate.split('-');
             if (parts.length === 3) {
-                 return `${parts[2]}-${parts[1]}-${parts[0]}`; // DD-MM-YYYY
+                 return `${parts[2]}-${parts[1]}-${parts[0]}`;
             }
             return isoDate;
         }
 
-        /**
-         * Mengonversi format tanggal tampilan (DD-MM-YYYY) ke format internal (YYYY-MM-DD).
-         */
         function toInternalDate(displayDate) {
-             if (!displayDate || displayDate.length !== 10) return '';
-             const parts = displayDate.split('-'); // [DD, MM, YYYY]
-             if (parts.length === 3) {
-                  return `${parts[2]}-${parts[1]}-${parts[0]}`; // YYYY-MM-DD
-             }
-             return displayDate;
+           if (!displayDate || displayDate.length !== 10) return '';
+           const parts = displayDate.split('-');
+           if (parts.length === 3) {
+                 return `${parts[2]}-${parts[1]}-${parts[0]}`;
+           }
+           return displayDate;
         }
 
         function render() {
-            // Pengaturan tampilan utama dan panel
+            document.body.className = 'text-gray-800 antialiased';
+            document.body.classList.add(state.config.style);
+
             DOM.mainScreen.classList.toggle('hidden', state.ui.currentView !== 'main');
             DOM.magicInterface.classList.toggle('hidden', state.ui.currentView !== 'magic');
             DOM.controlPanel.classList.toggle('hidden', !state.ui.isPanelOpen);
             
-            // Mengisi input di Panel Kontrol
             DOM.titleControl.value = state.config.title;
-            DOM.dateControl.value = toDisplayDate(state.config.date); // Format tampilan DD-MM-YYYY
+            DOM.dateControl.value = toDisplayDate(state.config.date);
             DOM.contentControl.value = state.config.content;
             DOM.controlNoteTitle.value = state.config.noteTitle;
+            DOM.controlStyleSelect.value = state.config.style;
+
+            DOM.templateSelect.innerHTML = '<option value="">Pilih template...</option>';
+            state.templates.sort((a, b) => a.name.localeCompare(b.name)).forEach(template => {
+                const option = document.createElement('option');
+                option.value = template.id;
+                option.textContent = template.name;
+                DOM.templateSelect.appendChild(option);
+            });
+            DOM.templateSelect.value = state.ui.selectedTemplateId;
+
 
             const isAssistantMode = state.config.viewMode === 'assistant';
             
             DOM.assistantView.classList.toggle('hidden', !isAssistantMode);
             DOM.noteView.classList.toggle('hidden', isAssistantMode);
 
-            // Toggling button styles for view mode
             DOM.viewAssistantBtn.classList.toggle('bg-blue-600', isAssistantMode);
             DOM.viewAssistantBtn.classList.toggle('text-white', isAssistantMode);
             DOM.viewAssistantBtn.classList.toggle('text-gray-700', !isAssistantMode);
             DOM.viewNoteBtn.classList.toggle('bg-blue-600', !isAssistantMode);
             DOM.viewNoteBtn.classList.toggle('text-white', !isAssistantMode);
             DOM.viewNoteBtn.classList.toggle('text-gray-700', isAssistantMode);
-
 
             if (state.ui.currentView === 'magic') {
                 if (isAssistantMode) renderAssistantView();
@@ -325,7 +502,6 @@
             } else if (hasPlaceholders && !isComplete) {
                 const currentName = state.ui.placeholders[state.ui.currentPlaceholderIndex];
                 DOM.currentPlaceholder.textContent = `$${currentName}`;
-                // Input selalu fresh (kosong) saat sesi dimulai
                 DOM.placeholderInput.value = '';
                 DOM.placeholderInput.focus();
                 DOM.progressIndicator.textContent = `Langkah ${state.ui.currentPlaceholderIndex + 1} dari ${state.ui.placeholders.length}`;
@@ -335,156 +511,189 @@
         function renderNoteView() {
             DOM.noteBackBtn.innerHTML = ICONS.ArrowLeft;
             DOM.noteSaveBtnDeco.innerHTML = ICONS.Save;
-            
-            // Atur ulang judul ke nilai konfigurasi aslinya saat render
             DOM.noteTitleDisplay.value = state.config.noteTitle; 
-            
-            // Mode Notes dimulai blank (state.predictions kosong)
             const lines = state.ui.placeholders.map(p => state.predictions[p] || '');
             const content = lines.join('\n');
 
-            // Menghapus baris kosong agar placeholder muncul sempurna
-            if (content.trim() === '') {
-                 DOM.noteInputArea.value = '';
-            } else {
-                DOM.noteInputArea.value = content;
-            }
-            
-            // Placeholder sederhana
+            DOM.noteInputArea.value = (content.trim() === '') ? '' : content;
             DOM.noteInputArea.placeholder = `Tulis di sini...`;
             DOM.noteInputArea.focus();
         }
 
-        function updateStateAndRender(data) {
-             if (data && data.config) {
-                 // Selalu update config dari Firebase/Local Storage
-                 state.config = { ...state.config, ...data.config };
-                 localStorage.setItem(CONFIG_STORAGE_KEY, JSON.stringify(state.config));
-             }
-             
-             // Data predictions HANYA diimpor saat sinkronisasi paksa. 
-             if (data && data.predictions && state.ui.currentView === 'main') {
-                 state.predictions = data.predictions;
-             }
-            
-            const newPlaceholders = parsePlaceholders(state.config.content);
-            const placeholdersChanged = JSON.stringify(state.ui.placeholders) !== JSON.stringify(newPlaceholders);
+        function updateStateAndRender(data, fromTemplateSelection = false) {
+            if (data && state.ui.isPanelOpen && !fromTemplateSelection) {
+               return;
+            }
 
-            if (placeholdersChanged) {
+           if (data && data.config) {
+                state.config = { ...state.config, ...data.config };
+                localStorage.setItem(CONFIG_STORAGE_KEY, JSON.stringify(state.config));
+           }
+           if (data && data.predictions && state.ui.currentView === 'main') {
+                state.predictions = data.predictions;
+           }
+           const newPlaceholders = parsePlaceholders(state.config.content);
+           const placeholdersChanged = JSON.stringify(state.ui.placeholders) !== JSON.stringify(newPlaceholders);
+
+           if (placeholdersChanged) {
                 state.ui.placeholders = newPlaceholders;
-                // Jika config berubah di luar sesi magic, reset predictions lokal
                 if (state.ui.currentView === 'main') {
                     state.predictions = {};
                     state.ui.currentPlaceholderIndex = 0;
                 }
-            }
+           }
 
-            // Find the first unfilled placeholder to set the current index
-            if (state.config.viewMode === 'assistant') {
+           if (state.config.viewMode === 'assistant') {
                 const firstEmptyIndex = state.ui.placeholders.findIndex(p => !state.predictions[p]);
-                state.ui.currentPlaceholderIndex = firstEmptyIndex === -1 
-                    ? state.ui.placeholders.length // All filled
-                    : firstEmptyIndex;
-            }
-
-            render();
+                state.ui.currentPlaceholderIndex = firstEmptyIndex === -1 ? state.ui.placeholders.length : firstEmptyIndex;
+           }
+           render();
         }
 
-        /**
-         * Mereset prediksi lokal dan memulai sesi input yang fresh.
-         */
         function startMagicSession() {
-            // Reset semua input LOKAL untuk memulai sesi fresh
+            if (!state.ui.isAuthReady) {
+                showToast('Koneksi ke server gagal. Tidak dapat memulai.', 'error');
+                return;
+            }
             state.predictions = {};
             state.ui.currentPlaceholderIndex = 0;
             state.ui.currentView = 'magic';
             render();
         }
 
+        async function loadTemplates() {
+            if (!state.ui.isAuthReady) return;
+            try {
+                const templatesCollectionRef = collection(db, "templates");
+                const querySnapshot = await getDocs(templatesCollectionRef);
+                state.templates = [];
+                querySnapshot.forEach((doc) => {
+                    state.templates.push({ id: doc.id, name: doc.id, ...doc.data() });
+                });
+                render();
+            } catch (error) {
+                console.error("Error loading templates:", error);
+            }
+        }
 
-        // --- Firebase/Data Functions ---
+        async function createTemplate() {
+            if (!state.ui.isAuthReady) {
+                showToast('Koneksi ke server gagal. Tidak dapat menyimpan.', 'error');
+                return;
+            }
+
+            const templateName = DOM.modalTemplateName.value.trim();
+            if (!templateName) {
+                showToast('Nama Template tidak boleh kosong.', 'error');
+                return;
+            }
+
+            const templateDocRef = doc(db, "templates", templateName);
+            
+            try {
+                const docSnap = await getDoc(templateDocRef);
+                if (docSnap.exists()) {
+                    showToast(`Template "${templateName}" sudah ada.`, 'error');
+                    return;
+                }
+
+                const newTemplateData = {
+                    title: DOM.modalArticleTitle.value,
+                    date: new Date().toISOString().split('T')[0], // Use current date for new template
+                    content: DOM.modalArticleContent.value,
+                    noteTitle: DOM.modalNoteTitle.value,
+                    viewMode: DOM.modalViewMode.value,
+                    style: DOM.modalStyleSelect.value
+                };
+
+                await setDoc(templateDocRef, newTemplateData);
+                showToast(`Template "${templateName}" berhasil dibuat!`, 'success');
+                DOM.templateForm.reset();
+                DOM.createTemplateModal.classList.add('hidden');
+                await loadTemplates();
+            } catch (error) {
+                console.error("Error creating template:", error);
+                showToast('Gagal membuat template. Cek koneksi Anda.', 'error');
+            }
+        }
+
+        async function deleteSelectedTemplate() {
+            if (!state.ui.isAuthReady) {
+                showToast('Koneksi ke server gagal. Tidak dapat menghapus.', 'error');
+                return;
+            }
+            const templateId = DOM.templateSelect.value;
+            if (!templateId) {
+                showToast("Pilih template yang ingin dihapus terlebih dahulu.", 'info');
+                return;
+            }
+
+            try {
+                const templateDocRef = doc(db, "templates", templateId);
+                await deleteDoc(templateDocRef);
+                showToast(`Template "${templateId}" berhasil dihapus!`, 'success');
+                
+                state.ui.selectedTemplateId = '';
+                state.config.title = '';
+                state.config.date = new Date().toISOString().split('T')[0];
+                state.config.content = '';
+                state.config.noteTitle = 'Input Prediksi';
+                state.config.viewMode = 'assistant';
+                state.config.style = 'pub-cadabra';
+                
+                await loadTemplates(); 
+
+            } catch (error) {
+                console.error("Error deleting template:", error);
+                showToast('Gagal menghapus template.', 'error');
+            }
+        }
 
         async function saveConfigToFirestore() {
             if (!state.ui.isAuthReady) return;
-            DOM.saveStatus.textContent = 'Menyimpan & Membersihkan...';
-
+            DOM.saveStatus.textContent = 'Menyimpan...';
             const docRef = doc(db, "artifacts", FIXED_USER_ID);
-            
             try {
-                // --- LOGIKA PEMBERSIHAN DIMULAI DI SINI ---
-                
-                // 1. Dapatkan placeholder baru dari config yang akan disimpan.
                 const newPlaceholders = parsePlaceholders(state.config.content);
-
-                // 2. Baca dokumen saat ini dari Firestore untuk mendapatkan `predictions` yang ada.
                 const docSnap = await getDoc(docRef);
                 const currentPredictions = docSnap.exists() ? docSnap.data().predictions || {} : {};
-                
-                // 3. Buat objek `predictions` baru yang sudah bersih.
                 const cleanedPredictions = {};
-                
-                // 4. Salin hanya data prediksi yang placeholdernya masih ada di config baru.
                 newPlaceholders.forEach(placeholder => {
                     if (currentPredictions.hasOwnProperty(placeholder)) {
                         cleanedPredictions[placeholder] = currentPredictions[placeholder];
                     }
                 });
-                
-                // --- LOGIKA PEMBERSIHAN SELESAI ---
-
-                // 5. Simpan config BARU dan predictions yang sudah BERSIH.
-                // Ini akan menimpa `predictions` di server dengan versi yang bersih.
                 await setDoc(docRef, { 
                     config: state.config,
                     predictions: cleanedPredictions 
                 });
-                
                 localStorage.setItem(CONFIG_STORAGE_KEY, JSON.stringify(state.config));
-                
-                // Perbarui state lokal dengan data yang sudah bersih.
                 state.predictions = cleanedPredictions; 
                 state.ui.currentPlaceholderIndex = 0;
-                
-                DOM.saveStatus.textContent = 'Pengaturan disimpan & dibersihkan!';
-                updateStateAndRender({ config: state.config, predictions: cleanedPredictions }); 
-
+                showToast('Pengaturan disimpan & dibersihkan!', 'success');
+                updateStateAndRender({ config: state.config, predictions: cleanedPredictions }, true);
             } catch (error) {
                 console.error("Error saving config to Firestore:", error);
-                DOM.saveStatus.textContent = 'Gagal menyimpan.';
+                showToast('Gagal menyimpan pengaturan.', 'error');
             } finally {
-                setTimeout(() => { DOM.saveStatus.textContent = ''; }, 2000);
+                 setTimeout(() => { DOM.saveStatus.textContent = ''; }, 2000);
             }
         }
 
-        /**
-         * Menyimpan prediksi ke Firestore, menimpa data prediksi yang ada.
-         */
         async function savePredictionsToFirestore() {
             if (!state.ui.isAuthReady) return;
-            
-            // Kumpulkan semua prediksi yang tidak kosong
             const nonNullPredictions = Object.entries(state.predictions)
                 .filter(([, value]) => value && value.trim() !== '')
                 .reduce((acc, [key, value]) => ({ ...acc, [key]: value }), {});
-
-            // Jangan simpan jika tidak ada input yang sah.
-            if (Object.keys(nonNullPredictions).length === 0 && Object.keys(state.predictions).length > 0) {
-                 // Jika semua prediksi dihapus, kirim objek kosong untuk membersihkan server
-            } else if (Object.keys(nonNullPredictions).length === 0) {
-                 return; // Jangan lakukan apa-apa jika memang awalnya kosong
-            }
+            if (Object.keys(nonNullPredictions).length === 0 && Object.keys(state.predictions).length > 0) {} 
+            else if (Object.keys(nonNullPredictions).length === 0) return;
             
             try {
                 const docRef = doc(db, "artifacts", FIXED_USER_ID);
-                // Menimpa bagian 'predictions' di server dengan data baru.
                 await setDoc(docRef, { predictions: nonNullPredictions }, { merge: true }); 
                 console.log("Predictions saved.");
-                
-                // Indikator Titik Persisten
-                if (state.config.viewMode === 'note') {
-                    if (!DOM.noteTitleDisplay.value.endsWith('.')) {
-                        DOM.noteTitleDisplay.value = state.config.noteTitle + '.';
-                    }
+                if (state.config.viewMode === 'note' && !DOM.noteTitleDisplay.value.endsWith('.')) {
+                    DOM.noteTitleDisplay.value = state.config.noteTitle + '.';
                 }
             } catch (error) {
                 console.error("Error saving predictions to Firestore:", error);
@@ -493,8 +702,7 @@
 
         async function forceSyncFromFirestore() {
             if (!state.ui.isAuthReady) {
-                DOM.saveStatus.textContent = 'Otentikasi belum siap.';
-                setTimeout(() => { DOM.saveStatus.textContent = ''; }, 2000);
+                showToast('Otentikasi belum siap.', 'error');
                 return;
             }
             DOM.saveStatus.textContent = 'Sinkronisasi...';
@@ -502,94 +710,66 @@
                 const docRef = doc(db, "artifacts", FIXED_USER_ID);
                 const docSnap = await getDoc(docRef);
                 if (docSnap.exists()) {
-                    // Update state DENGAN data predictions, karena ini adalah sinkronisasi paksa.
-                    updateStateAndRender(docSnap.data()); 
-                    DOM.saveStatus.textContent = 'Sinkronisasi berhasil!';
+                    const data = docSnap.data();
+                    state.config = data.config || state.config;
+                    state.predictions = data.predictions || {};
+                    state.ui.selectedTemplateId = ''; // Reset template selection
+                    updateStateAndRender({config: state.config, predictions: state.predictions}, true);
+                    showToast('Sinkronisasi berhasil!', 'success');
                 } else {
-                    DOM.saveStatus.textContent = 'Tidak ada data di server.';
+                    showToast('Tidak ada data di server.', 'info');
                 }
             } catch (error) {
                 console.error("Error syncing from Firestore:", error);
-                DOM.saveStatus.textContent = 'Gagal sinkronisasi.';
+                showToast('Gagal sinkronisasi.', 'error');
             } finally {
-                setTimeout(() => { DOM.saveStatus.textContent = ''; }, 2000);
+                 setTimeout(() => { DOM.saveStatus.textContent = ''; }, 2000);
             }
         }
         
         function attachFirebaseListeners() {
-             if (!state.ui.isAuthReady) return;
-             const docRef = doc(db, "artifacts", FIXED_USER_ID);
-             onSnapshot(docRef, (docSnap) => {
-                 if (docSnap.exists()) {
-                     // Listener hanya digunakan untuk CONFIG update (judul, template, dll)
-                     const data = docSnap.data();
-                     updateStateAndRender({ config: data.config }); 
-                 } else {
-                     console.log("No such document! Starting fresh.");
-                     saveConfigToFirestore(); 
-                 }
-             }, (error) => console.error("Error listening to Firestore:", error));
+           if (!state.ui.isAuthReady) return;
+           const docRef = doc(db, "artifacts", FIXED_USER_ID);
+           onSnapshot(docRef, (docSnap) => {
+                if (state.ui.isPanelOpen) {
+                    return; 
+                }
+                if (docSnap.exists()) {
+                    const data = docSnap.data();
+                    updateStateAndRender({ config: data.config, predictions: data.predictions }); 
+                } else {
+                    console.log("No such document! Starting fresh.");
+                    saveConfigToFirestore(); 
+                }
+           }, (error) => console.error("Error listening to Firestore:", error));
         }
 
-        // --- UI Logic and Listeners ---
-        
-        /**
-         * Fungsi untuk memformat tanggal secara otomatis (DD-MM-YYYY)
-         */
         function handleDateFormat(input) {
-            let value = input.value.replace(/[^0-9]/g, ''); // Hapus semua non-digit
+            let value = input.value.replace(/[^0-9]/g, '');
             let originalCursorPosition = input.selectionStart;
-
-            if (value.length > 8) {
-                value = value.substring(0, 8);
-            }
-
+            if (value.length > 8) value = value.substring(0, 8);
             let formattedValue = value;
             let newCursorPosition = originalCursorPosition;
-
-            // Tambahkan hyphen untuk DD
             if (value.length > 2) {
                 formattedValue = value.substring(0, 2) + '-' + value.substring(2);
-                if (originalCursorPosition === 3 || originalCursorPosition === 4) {
-                    newCursorPosition += 1; // Pindahkan kursor melewati hyphen
-                }
+                if (originalCursorPosition === 3 || originalCursorPosition === 4) newCursorPosition++;
             }
-
-            // Tambahkan hyphen untuk MM
             if (value.length > 4) {
                 formattedValue = formattedValue.substring(0, 5) + '-' + formattedValue.substring(5);
-                if (originalCursorPosition === 6 || originalCursorPosition === 7) {
-                    newCursorPosition += 1; // Pindahkan kursor melewati hyphen kedua
-                }
+                if (originalCursorPosition === 6 || originalCursorPosition === 7) newCursorPosition++;
             }
-            
-            // Perbarui input field
             input.value = formattedValue;
-            
-            // Perbarui state.config dengan format internal (YYYY-MM-DD)
-            if (formattedValue.length === 10) {
-                 state.config.date = toInternalDate(formattedValue);
-            } else {
-                 state.config.date = ''; 
-            }
-
-            // Pertahankan posisi kursor
+            state.config.date = (formattedValue.length === 10) ? toInternalDate(formattedValue) : '';
             if (input === document.activeElement) {
                 input.setSelectionRange(newCursorPosition, newCursorPosition);
             }
         }
 
-
         function createTripleTapListener(element, callback) {
-            let tapCount = 0;
-            let lastTapTime = 0;
+            let tapCount = 0, lastTapTime = 0;
             element.addEventListener('click', () => {
                 const currentTime = new Date().getTime();
-                if (currentTime - lastTapTime < 300) {
-                    tapCount++;
-                } else {
-                    tapCount = 1;
-                }
+                tapCount = (currentTime - lastTapTime < 300) ? tapCount + 1 : 1;
                 lastTapTime = currentTime;
                 if (tapCount === 3) {
                     callback();
@@ -599,69 +779,76 @@
         }
 
         function setupEventListeners() {
-            // Main Screen Buttons
             DOM.startMagicBtn.addEventListener('click', startMagicSession);
+            DOM.settingsBtn.addEventListener('click', () => { state.ui.isPanelOpen = true; render(); });
+            DOM.panduanBtn.addEventListener('click', () => { window.location.href = './panduan.html'; });
+            DOM.closePanelBtn.addEventListener('click', () => { state.ui.isPanelOpen = false; render(); });
             
-            DOM.settingsBtn.addEventListener('click', () => {
-                state.ui.isPanelOpen = true;
-                render();
-            });
-
-            // BUG FIX: Membuat tombol Panduan berfungsi
-            DOM.panduanBtn.addEventListener('click', () => {
-                window.location.href = './panduan.html';
-            });
-            
-            // Panel Buttons
-            DOM.closePanelBtn.addEventListener('click', () => {
-                state.ui.isPanelOpen = false;
-                render();
-            });
             DOM.saveSettingsBtn.addEventListener('click', async () => {
-                // Pastikan format tanggal sudah benar saat disimpan
                 handleDateFormat(DOM.dateControl);
                 await saveConfigToFirestore();
                 localStorage.setItem(VIEW_MODE_STORAGE_KEY, state.config.viewMode);
+                localStorage.setItem(STYLE_STORAGE_KEY, state.config.style);
                 state.ui.isPanelOpen = false;
-                state.ui.currentView = 'main'; // Go back to main after saving
+                state.ui.currentView = 'main';
                 render();
             });
 
             DOM.syncBtn.addEventListener('click', forceSyncFromFirestore);
 
-            // Panel Inputs
             DOM.titleControl.addEventListener('input', e => { state.config.title = e.target.value; });
-            
-            // Pasang event listener untuk format tanggal otomatis
             DOM.dateControl.addEventListener('input', (e) => handleDateFormat(e.target));
-
-            DOM.contentControl.addEventListener('input', e => {
-                state.config.content = e.target.value;
-                updateStateAndRender(null); 
-            });
-            DOM.controlNoteTitle.addEventListener('input', e => { state.config.noteTitle = e.target.value; render(); });
-
+            DOM.contentControl.addEventListener('input', e => { state.config.content = e.target.value; });
+            DOM.controlNoteTitle.addEventListener('input', e => { state.config.noteTitle = e.target.value; });
             DOM.viewAssistantBtn.addEventListener('click', () => { state.config.viewMode = 'assistant'; render(); });
             DOM.viewNoteBtn.addEventListener('click', () => { state.config.viewMode = 'note'; render(); });
             
-            // Magic Interface Logic
+            DOM.createTemplateBtn.addEventListener('click', () => {
+                DOM.templateForm.reset();
+                DOM.createTemplateModal.classList.remove('hidden');
+            });
+
+            DOM.deleteTemplateBtn.addEventListener('click', deleteSelectedTemplate);
+            DOM.controlStyleSelect.addEventListener('change', e => { state.config.style = e.target.value; render(); });
+
+            // Modal Listeners
+            const closeModal = () => DOM.createTemplateModal.classList.add('hidden');
+            DOM.closeModalBtn.addEventListener('click', closeModal);
+            DOM.cancelModalBtn.addEventListener('click', closeModal);
+            DOM.saveModalBtn.addEventListener('click', createTemplate);
+            DOM.templateForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                createTemplate();
+            });
+
+
+            DOM.templateSelect.addEventListener('change', (e) => {
+                const templateId = e.target.value;
+                state.ui.selectedTemplateId = templateId;
+
+                if (!templateId) return;
+
+                const selectedTemplate = state.templates.find(t => t.id === templateId);
+                if (selectedTemplate) {
+                    state.config.title = selectedTemplate.title;
+                    state.config.date = selectedTemplate.date;
+                    state.config.content = selectedTemplate.content;
+                    state.config.noteTitle = selectedTemplate.noteTitle;
+                    state.config.viewMode = selectedTemplate.viewMode;
+                    state.config.style = selectedTemplate.style || 'pub-cadabra';
+                    updateStateAndRender({config: state.config}, true);
+                }
+            });
+
             const submitAssistantValue = () => {
-                const totalPlaceholders = state.ui.placeholders.length;
-                if (state.ui.currentPlaceholderIndex < totalPlaceholders) {
+                if (state.ui.currentPlaceholderIndex < state.ui.placeholders.length) {
                     const currentName = state.ui.placeholders[state.ui.currentPlaceholderIndex];
                     const value = DOM.placeholderInput.value.trim();
-                    
                     if (value) {
-                         // Simpan nilai input saat ini ke prediksi lokal
                          state.predictions[currentName] = value;
                          state.ui.currentPlaceholderIndex++;
-                    } else {
-                         console.log("Input tidak boleh kosong.");
-                         return; 
-                    }
-                    
-                    if (state.ui.currentPlaceholderIndex === totalPlaceholders) {
-                        // Simpan saat semua placeholder sudah terisi
+                    } else { return; }
+                    if (state.ui.currentPlaceholderIndex === state.ui.placeholders.length) {
                         savePredictionsToFirestore();
                     }
                     render();
@@ -671,64 +858,34 @@
             DOM.placeholderInput.addEventListener('keyup', e => e.key === 'Enter' && submitAssistantValue());
 
             DOM.noteInputArea.addEventListener('input', (e) => {
-                // Hapus indikator titik saat user mulai mengetik
                 if (DOM.noteTitleDisplay.value.endsWith('.')) {
                     DOM.noteTitleDisplay.value = state.config.noteTitle;
                 }
-                
                 const lines = e.target.value.split('\n');
                 const newPredictions = {};
-
-                // Rekonstruksi state prediksi dari awal untuk memastikan integritas data.
-                state.ui.placeholders.forEach((placeholder, index) => {
-                    newPredictions[placeholder] = lines[index] || '';
-                });
-
-                // Cek apakah ada perubahan dari state sebelumnya
-                const predictionsChanged = JSON.stringify(state.predictions) !== JSON.stringify(newPredictions);
-
-                if (predictionsChanged) {
-                    // Update state lokal dengan data yang baru
+                state.ui.placeholders.forEach((p, i) => { newPredictions[p] = lines[i] || ''; });
+                if (JSON.stringify(state.predictions) !== JSON.stringify(newPredictions)) {
                     state.predictions = newPredictions;
-
-                    // Hapus timer yang ada untuk me-reset debounce
                     clearTimeout(e.target.saveTimeout);
-
-                    // Atur timer baru untuk menyimpan setelah 2 detik tidak aktif
                     e.target.saveTimeout = setTimeout(() => {
-                        // Cek apakah semua placeholder sudah terisi sebelum menyimpan.
-                        const allPlaceholdersFilled = state.ui.placeholders.every(p => {
-                            // Pastikan nilai ada dan bukan hanya spasi kosong.
-                            return state.predictions[p] && state.predictions[p].trim() !== '';
-                        });
-
-                        // Lanjutkan menyimpan hanya jika semua placeholder telah diisi.
-                        if (allPlaceholdersFilled) {
-                            console.log('All placeholders filled, saving...');
-                            savePredictionsToFirestore();
-                        } else {
-                            console.log('Save deferred: Not all placeholders are filled.');
-                        }
-                    }, 2000); // Delay 2 detik
+                        const allFilled = state.ui.placeholders.every(p => state.predictions[p] && state.predictions[p].trim() !== '');
+                        if (allFilled) savePredictionsToFirestore();
+                    }, 2000);
                 }
             });
 
-
-            // Triple Tap to go back to Main Screen
-            const goBackToMain = () => {
-                state.ui.currentView = 'main';
-                render();
-            };
+            const goBackToMain = () => { state.ui.currentView = 'main'; render(); };
             createTripleTapListener(DOM.noteHeader, goBackToMain);
             createTripleTapListener(DOM.assistantContainer, goBackToMain);
         }
         
         async function init() {
-            // Load local storage data
             const savedMode = localStorage.getItem(VIEW_MODE_STORAGE_KEY);
             const savedConfig = localStorage.getItem(CONFIG_STORAGE_KEY);
+            const savedStyle = localStorage.getItem(STYLE_STORAGE_KEY);
             
             if (savedMode) state.config.viewMode = savedMode;
+            if (savedStyle) state.config.style = savedStyle;
             if (savedConfig) {
                  state.config = { ...state.config, ...JSON.parse(savedConfig) };
             }
@@ -739,35 +896,26 @@
                 app = initializeApp(firebaseConfig);
                 db = getFirestore(app);
                 auth = getAuth(app);
-                
-                // Sign in anonymously
                 await signInAnonymously(auth);
                 state.ui.isAuthReady = true;
-                
-                // Start real-time listener untuk CONFIG SAJA
+                DOM.connectionStatus.classList.add('hidden'); // Hide error on success
                 attachFirebaseListeners();
-
-                // Selalu reset state.predictions lokal untuk memulai sesi FRESH
+                await loadTemplates();
                 state.predictions = {};
-
             } catch (error) {
                 console.error("Firebase Init Error:", error);
+                DOM.connectionStatus.classList.remove('hidden'); // Show error on failure
             }
-            render(); // Initial render for the main screen
+            render();
         }
 
         document.addEventListener('DOMContentLoaded', init);
 
-        // Service Worker Registration
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('./service-worker.js')
-                    .then(registration => {
-                        console.log('ServiceWorker registration successful with scope: ', registration.scope);
-                    })
-                    .catch(err => {
-                        console.log('ServiceWorker registration failed: ', err);
-                    });
+                    .then(reg => console.log('ServiceWorker registration successful with scope: ', reg.scope))
+                    .catch(err => console.log('ServiceWorker registration failed: ', err));
             });
         }
     </script>

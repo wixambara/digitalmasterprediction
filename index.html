@@ -299,15 +299,15 @@
              <div class="container mx-auto px-4">
                 <!-- Pub Cadabra Footer -->
                 <div class="footer-content">
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
+                    <div class="grid grid-cols-1 md:grid-cols-3 text-center md:text-left">
                         <!-- Column 1: Logo & Copyright -->
-                        <div class="flex flex-col items-center md:items-start">
+                        <div class="flex flex-col items-center md:items-start pb-8 border-b border-gray-800 md:pb-0 md:border-b-0 md:border-r md:border-gray-700 md:pr-8">
                             <img src="https://thepubcadabra.com/wp-content/uploads/2023/07/Logo.svg" alt="Footer Logo" class="h-24">
                             <p id="copyright-text" class="max-w-md mt-4 text-gray-400 text-sm"></p>
                         </div>
                 
                         <!-- Column 2: Quick Links -->
-                        <div>
+                        <div class="py-8 border-b border-gray-800 md:py-0 md:border-b-0 md:border-r md:border-gray-700 md:px-8">
                              <h4 class="font-bold text-lg mb-4 font-cardo">Quick Links</h4>
                              <div class="flex flex-col space-y-2 text-gray-300">
                                 <a href="https://thepubcadabra.com/" class="hover:text-white transition-colors">Home</a>
@@ -318,7 +318,7 @@
                         </div>
                 
                         <!-- Column 3: Contact & Social -->
-                        <div class="flex flex-col items-center md:items-start">
+                        <div class="flex flex-col items-center md:items-start pt-8 md:pt-0 md:pl-8">
                             <h4 class="font-bold text-lg mb-4 font-cardo">Contact Us</h4>
                              <div class="flex flex-col space-y-3 text-gray-300">
                                  <a href="https://goo.gl/maps/BKiAC93nFJLNaRFQ8" class="flex items-center hover:text-white transition-colors">
@@ -513,17 +513,16 @@
                     let captionText = singleImageMatch[2] || '';
                     let captionHtml = '';
 
-                     const placeholdersInCaption = [...new Set((captionText.match(/\$(\w+)/g) || []))];
-                     placeholdersInCaption.forEach(placeholderKey => {
-                        const key = placeholderKey.substring(1);
-                        const value = finalPredictions[key] || '_____';
-                        const capitalizedValue = value.charAt(0).toUpperCase() + value.slice(1);
-                        const replacementHtml = `<span class="prediction-value">${capitalizedValue}</span>`;
-                        captionText = captionText.replace(new RegExp(`\\${placeholderKey}`, 'g'), replacementHtml);
-                    });
-
-                    if (captionText) {
-                         captionHtml = `<figcaption class="text-center text-sm mt-2">${captionText}</figcaption>`;
+                     if (captionText) {
+                        const placeholdersInCaption = [...new Set((captionText.match(/\$(\w+)/g) || []))];
+                         placeholdersInCaption.forEach(placeholderKey => {
+                            const key = placeholderKey.substring(1);
+                            const value = finalPredictions[key] || '_____';
+                             const capitalizedValue = value.charAt(0).toUpperCase() + value.slice(1);
+                            const replacementHtml = `<span class="prediction-value">${capitalizedValue}</span>`;
+                            captionText = captionText.replace(new RegExp(`\\${placeholderKey}`, 'g'), replacementHtml);
+                        });
+                        captionHtml = `<figcaption class="text-center text-sm mt-2">${captionText}</figcaption>`;
                     }
 
                      lineHtml = `

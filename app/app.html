@@ -136,7 +136,7 @@
                     </button>
                 </header>
                 <div class="flex-grow flex flex-col overflow-y-auto px-5 pt-3 pb-5">
-                    <input id="note-title-display" type="text" value="Input Prediksi" readonly class="flex-shrink-0 text-2xl font-medium p-2 -mx-2 mb-2 focus:outline-none w-full bg-transparent text-gray-800" />
+                    <input id="note-title-display" type="text" value="Note Baru" readonly class="flex-shrink-0 text-2xl font-medium p-2 -mx-2 mb-2 focus:outline-none w-full bg-transparent text-gray-800" />
                     <textarea id="note-input-area" class="flex-grow w-full bg-transparent text-gray-800 resize-none outline-none leading-relaxed text-base" placeholder="Tulis di sini..."></textarea>
                     <div id="note-peek-view" class="hidden flex-grow w-full bg-transparent text-gray-800 resize-none outline-none leading-relaxed text-base"></div>
                 </div>
@@ -368,7 +368,7 @@
                 date: new Date().toISOString().split('T')[0], 
                 content: '',
                 viewMode: 'assistant',
-                noteTitle: 'Input Prediksi',
+                noteTitle: 'Note Baru',
                 style: 'pub-cadabra'
             },
             predictions: {},
@@ -733,7 +733,7 @@
                     state.config.title = '';
                     state.config.date = new Date().toISOString().split('T')[0];
                     state.config.content = '';
-                    state.config.noteTitle = 'Input Prediksi';
+                    state.config.noteTitle = 'Note Baru';
                     state.config.viewMode = 'assistant';
                     state.config.style = 'pub-cadabra';
                     await loadTemplates();

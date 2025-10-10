@@ -55,7 +55,7 @@
             font-size: 2.25rem; /* 36px */
             color: #111827; /* Teks lebih gelap */
         }
-        .wix-blog #note-input-area {
+        .wix-blog #note-input-area, .wix-blog #note-peek-view {
             font-family: 'Georgia', serif;
             font-size: 1.125rem; /* 18px */
             line-height: 1.75;
@@ -91,25 +91,32 @@
             <h1 class="text-4xl sm:text-5xl font-bold text-gray-800">Digital Master Prediction</h1>
             <p class="mt-2 text-gray-500">made for Wix Ambara</p>
             <div class="mt-10 space-y-3 w-full max-w-xs">
-                <button id="start-magic-btn" class="w-full flex items-center justify-center bg-gradient-to-br from-blue-500 to-blue-700 text-white font-bold py-4 px-4 rounded-xl transition-transform duration-200 shadow-lg active:scale-95">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mr-3">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456zM16.898 20.562L16.25 22.5l-.648-1.938a3.375 3.375 0 00-2.684-2.684l-1.938-.648 1.938-.648a3.375 3.375 0 002.684-2.684l.648-1.938.648 1.938a3.375 3.375 0 002.684 2.684l1.938.648-1.938.648a3.375 3.375 0 00-2.684 2.684z" />
-                    </svg>
-                    <span>Start Magic</span>
-                </button>
-                <button id="settings-btn" class="w-full flex items-center justify-center bg-white text-gray-700 font-bold py-3 px-4 rounded-xl transition-transform duration-200 border border-gray-200 shadow-md active:scale-95">
-                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mr-3">
-                         <path stroke-linecap="round" stroke-linejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.324.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 011.37.49l1.296 2.247a1.125 1.125 0 01-.26 1.431l-1.003.827c-.293.24-.438.613-.438.995a6.473 6.473 0 010 .255c0 .382.145.755.438.995l1.003.827c.424.35.534.954.26 1.431l-1.296 2.247a1.125 1.125 0 01-1.37.49l-1.217-.456c-.355-.133-.75-.072-1.075.124a6.57 6.57 0 01-.22.127c-.332.183-.582.495-.645.87l-.213 1.281c-.09.543-.56.94-1.11.94h-2.594c-.55 0-1.02-.398-1.11-.94l-.213-1.281c-.063-.374-.313-.686-.645-.87a6.52 6.52 0 01-.22-.127c-.324-.196-.72-.257-1.075-.124l-1.217.456a1.125 1.125 0 01-1.37-.49l-1.296-2.247a1.125 1.125 0 01.26-1.431l1.004-.827c.292-.24.437-.613.437-.995a6.473 6.473 0 010-.255c0-.382-.145-.755-.437-.995l-1.004-.827a1.125 1.125 0 01-.26-1.431l1.296-2.247a1.125 1.125 0 011.37-.49l1.217.456c.355.133.75.072 1.075-.124.072-.044.146-.087.22-.127.332-.183.582-.495-.645-.87l.213-1.281z" />
-                         <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                     </svg>
-                    <span>Setting</span>
-                </button>
-                <button id="panduan-btn" class="w-full flex items-center justify-center bg-white text-gray-700 font-bold py-3 px-4 rounded-xl transition-transform duration-200 border border-gray-200 shadow-md active:scale-95">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mr-3">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
-                    </svg>
-                    <span>Panduan</span>
-                </button>
+                
+                <div id="loading-state">
+                    <p class="text-gray-500 animate-pulse">Menghubungkan ke server...</p>
+                </div>
+                
+                <div id="button-group" class="hidden space-y-3">
+                    <button id="start-magic-btn" class="w-full flex items-center justify-center bg-gradient-to-br from-blue-500 to-blue-700 text-white font-bold py-4 px-4 rounded-xl transition-transform duration-200 shadow-lg active:scale-95">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mr-3">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456zM16.898 20.562L16.25 22.5l-.648-1.938a3.375 3.375 0 00-2.684-2.684l-1.938-.648 1.938-.648a3.375 3.375 0 002.684-2.684l.648-1.938.648 1.938a3.375 3.375 0 002.684 2.684l1.938.648-1.938.648a3.375 3.375 0 00-2.684 2.684z" />
+                        </svg>
+                        <span>Start Magic</span>
+                    </button>
+                    <button id="settings-btn" class="w-full flex items-center justify-center bg-white text-gray-700 font-bold py-3 px-4 rounded-xl transition-transform duration-200 border border-gray-200 shadow-md active:scale-95">
+                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mr-3">
+                             <path stroke-linecap="round" stroke-linejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.324.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 011.37.49l1.296 2.247a1.125 1.125 0 01-.26 1.431l-1.003.827c-.293.24-.438.613-.438.995a6.473 6.473 0 010 .255c0 .382.145.755.438.995l1.003.827c.424.35.534.954.26 1.431l-1.296 2.247a1.125 1.125 0 01-1.37.49l-1.217-.456c-.355-.133-.75-.072-1.075.124a6.57 6.57 0 01-.22.127c-.332.183-.582.495-.645.87l-.213 1.281c-.09.543-.56.94-1.11.94h-2.594c-.55 0-1.02-.398-1.11-.94l-.213-1.281c-.063-.374-.313-.686-.645-.87a6.52 6.52 0 01-.22-.127c-.324-.196-.72-.257-1.075-.124l-1.217.456a1.125 1.125 0 01-1.37-.49l-1.296-2.247a1.125 1.125 0 01.26-1.431l1.004-.827c.292-.24.437-.613.437-.995a6.473 6.473 0 010-.255c0-.382-.145-.755-.437-.995l-1.004-.827a1.125 1.125 0 01-.26-1.431l1.296-2.247a1.125 1.125 0 011.37-.49l1.217.456c.355.133.75.072 1.075-.124.072-.044.146-.087.22-.127.332-.183.582-.495-.645-.87l.213-1.281z" />
+                             <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                         </svg>
+                        <span>Setting</span>
+                    </button>
+                    <button id="panduan-btn" class="w-full flex items-center justify-center bg-white text-gray-700 font-bold py-3 px-4 rounded-xl transition-transform duration-200 border border-gray-200 shadow-md active:scale-95">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mr-3">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
+                        </svg>
+                        <span>Panduan</span>
+                    </button>
+                </div>
             </div>
             
             <p class="absolute bottom-6 text-xs italic text-gray-400">Concepted by Heri Sanjaya</p>
@@ -121,16 +128,17 @@
             <!-- Note View -->
             <div id="note-view" class="hidden w-full h-full flex flex-col bg-white">
                 <header id="note-header" class="flex-shrink-0 sticky top-0 z-10 flex justify-between items-center p-2 bg-white/80 backdrop-blur-md border-b border-gray-200">
-                    <button id="note-back-btn" class="p-3 text-black rounded-full hover:bg-gray-100 cursor-default">
-                        <!-- Decorative ArrowLeft Icon -->
+                    <button id="note-peek-btn" class="p-3 text-black rounded-full hover:bg-gray-100">
+                        <!-- Peek/Back Arrow Icon -->
                     </button>
-                     <button id="note-save-btn-deco" class="p-3 text-black rounded-full cursor-default">
-                        <!-- Decorative Save Icon -->
+                     <button id="note-save-btn" class="p-3 text-black rounded-full hover:bg-gray-100">
+                        <!-- Save Icon -->
                     </button>
                 </header>
                 <div class="flex-grow flex flex-col overflow-y-auto px-5 pt-3 pb-5">
                     <input id="note-title-display" type="text" value="Input Prediksi" readonly class="flex-shrink-0 text-2xl font-medium p-2 -mx-2 mb-2 focus:outline-none w-full bg-transparent text-gray-800" />
                     <textarea id="note-input-area" class="flex-grow w-full bg-transparent text-gray-800 resize-none outline-none leading-relaxed text-base" placeholder="Tulis di sini..."></textarea>
+                    <div id="note-peek-view" class="hidden flex-grow w-full bg-transparent text-gray-800 resize-none outline-none leading-relaxed text-base"></div>
                 </div>
             </div>
 
@@ -140,8 +148,31 @@
                     <div id="assistant-content" class="hidden">
                         <p class="text-sm mb-1 text-gray-500">Masukkan nilai untuk:</p>
                         <h2 id="current-placeholder" class="text-xl sm:text-2xl font-bold text-gray-800 mb-4 break-all">$placeholder</h2>
-                        <input id="placeholder-input" type="text" class="w-full bg-gray-100 border border-gray-300 rounded-lg px-4 py-2.5 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4" placeholder="Ketik nilainya di sini...">
-                        <button id="submit-placeholder" class="w-full bg-gray-800 hover:bg-gray-900 text-white font-bold py-2.5 px-4 rounded-lg transition duration-200">Lanjut</button>
+                        
+                        <div id="standard-input-group">
+                            <input id="placeholder-input" type="text" class="w-full bg-gray-100 border border-gray-300 rounded-lg px-4 py-2.5 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4" placeholder="Ketik nilainya di sini...">
+                            <button id="submit-placeholder" class="w-full bg-gray-800 hover:bg-gray-900 text-white font-bold py-2.5 px-4 rounded-lg transition duration-200">Lanjut</button>
+                        </div>
+
+                        <!-- Card Selector UI -->
+                        <div id="card-selector" class="hidden w-full">
+                            <div class="mb-4 bg-gray-100 rounded-lg p-2 flex justify-center items-center h-48">
+                                <img id="card-preview" src="https://deckofcardsapi.com/static/img/back.png" alt="Selected Card" class="h-full rounded-md shadow-md">
+                            </div>
+                            <div class="mb-4">
+                                <p class="text-sm font-medium text-gray-600 mb-2 text-left">Pilih Nilai</p>
+                                <div id="card-values" class="grid grid-cols-7 gap-1">
+                                    <!-- Value buttons will be generated by JS -->
+                                </div>
+                            </div>
+                            <div>
+                                <p class="text-sm font-medium text-gray-600 mb-2 text-left">Pilih Suit</p>
+                                <div id="card-suits" class="grid grid-cols-4 gap-2">
+                                    <!-- Suit buttons will be generated by JS -->
+                                </div>
+                            </div>
+                        </div>
+
                         <p id="progress-indicator" class="text-gray-500 mt-3 text-xs"></p>
                     </div>
                     <div id="assistant-idle">
@@ -285,6 +316,21 @@
             </footer>
         </div>
     </div>
+    
+    <!-- Delete Confirmation Modal -->
+    <div id="delete-confirm-modal" class="hidden fixed inset-0 bg-gray-900 bg-opacity-70 flex items-center justify-center z-[60]">
+        <div class="bg-white rounded-xl shadow-xl w-full max-w-sm m-4">
+            <div class="p-6">
+                <h3 class="text-lg font-bold text-gray-900">Konfirmasi Penghapusan</h3>
+                <p class="text-sm text-gray-600 mt-2">Apakah Anda yakin ingin menghapus template "<span id="template-to-delete-name" class="font-semibold"></span>"? Tindakan ini tidak dapat diurungkan.</p>
+            </div>
+            <footer class="px-6 py-4 bg-gray-50 flex justify-end space-x-3 rounded-b-xl">
+                <button type="button" id="cancel-delete-btn" class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded-lg transition duration-200">Batal</button>
+                <button type="button" id="confirm-delete-btn" class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg transition duration-200">Hapus</button>
+            </footer>
+        </div>
+    </div>
+
 
     <!-- Toast Notification -->
     <div id="toast-notification" class="hidden fixed bottom-8 left-1/2 -translate-x-1/2 bg-gray-900 text-white py-2 px-5 rounded-full shadow-lg transition-all duration-300 opacity-0 z-[100]">
@@ -333,7 +379,11 @@
                 isPanelOpen: false,
                 isAuthReady: false,
                 currentView: 'main',
-                selectedTemplateId: ''
+                selectedTemplateId: '',
+                selectedCardValue: null,
+                selectedCardSuit: null,
+                isPeekModeActive: false,
+                lastCursorPosition: 0,
             }
         };
 
@@ -343,6 +393,8 @@
             startMagicBtn: document.getElementById('start-magic-btn'),
             settingsBtn: document.getElementById('settings-btn'),
             panduanBtn: document.getElementById('panduan-btn'),
+            loadingState: document.getElementById('loading-state'),
+            buttonGroup: document.getElementById('button-group'),
             controlPanel: document.getElementById('control-panel'),
             closePanelBtn: document.getElementById('close-panel-btn'),
             saveSettingsBtn: document.getElementById('save-settings-btn'),
@@ -350,10 +402,11 @@
             saveStatus: document.getElementById('save-status'),
             noteView: document.getElementById('note-view'),
             noteHeader: document.getElementById('note-header'),
-            noteBackBtn: document.getElementById('note-back-btn'),
-            noteSaveBtnDeco: document.getElementById('note-save-btn-deco'),
+            notePeekBtn: document.getElementById('note-peek-btn'),
+            noteSaveBtn: document.getElementById('note-save-btn'),
             noteTitleDisplay: document.getElementById('note-title-display'),
             noteInputArea: document.getElementById('note-input-area'),
+            notePeekView: document.getElementById('note-peek-view'),
             assistantView: document.getElementById('assistant-view'),
             assistantContainer: document.getElementById('assistant-container'),
             titleControl: document.getElementById('control-article-title'),
@@ -368,6 +421,7 @@
             assistantSummaryList: document.getElementById('assistant-summary-list'),
             assistantSaveStatus: document.getElementById('assistant-save-status'),
             currentPlaceholder: document.getElementById('current-placeholder'),
+            standardInputGroup: document.getElementById('standard-input-group'),
             placeholderInput: document.getElementById('placeholder-input'),
             submitPlaceholderBtn: document.getElementById('submit-placeholder'),
             progressIndicator: document.getElementById('progress-indicator'),
@@ -378,8 +432,10 @@
             toastNotification: document.getElementById('toast-notification'),
             toastMessage: document.getElementById('toast-message'),
             connectionStatus: document.getElementById('connection-status'),
-
-            // Modal elements
+            cardSelector: document.getElementById('card-selector'),
+            cardPreview: document.getElementById('card-preview'),
+            cardValues: document.getElementById('card-values'),
+            cardSuits: document.getElementById('card-suits'),
             createTemplateModal: document.getElementById('create-template-modal'),
             closeModalBtn: document.getElementById('close-modal-btn'),
             cancelModalBtn: document.getElementById('cancel-modal-btn'),
@@ -391,36 +447,62 @@
             modalNoteTitle: document.getElementById('modal-note-title'),
             modalViewMode: document.getElementById('modal-view-mode'),
             modalStyleSelect: document.getElementById('modal-style-select'),
+            deleteConfirmModal: document.getElementById('delete-confirm-modal'),
+            templateToDeleteName: document.getElementById('template-to-delete-name'),
+            cancelDeleteBtn: document.getElementById('cancel-delete-btn'),
+            confirmDeleteBtn: document.getElementById('confirm-delete-btn'),
         };
+
+        const CARD_API_BASE_URL = 'https://deckofcardsapi.com/static/img/';
+        const CARD_VALUES = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '0', 'J', 'Q', 'K'];
+        const CARD_SUITS = ['S', 'H', 'D', 'C'];
+        const INDONESIAN_CARD_MAP = {
+            value: {'As':'A', 'Raja':'K', 'Ratu':'Q', 'Jack':'J', '10':'0'},
+            suit: {'Sekop':'S', 'Hati':'H', 'Wajik':'D', 'Keriting':'C'}
+        };
+        const ENGLISH_CARD_MAP = {
+            value: {'Ace':'A', 'King':'K', 'Queen':'Q', 'Jack':'J', '10':'0'},
+            suit: {'Spades':'S', 'Hearts':'H', 'Diamonds':'D', 'Clubs':'C'}
+        };
+
+        function formatCardCode(code) {
+            if (!code || code.length !== 2) return code;
+            const valueCode = code.charAt(0);
+            const suitCode = code.charAt(1);
+            const valueName = Object.keys(INDONESIAN_CARD_MAP.value).find(key => INDONESIAN_CARD_MAP.value[key] === valueCode) || (valueCode === '0' ? '10' : valueCode);
+            const suitName = Object.keys(INDONESIAN_CARD_MAP.suit).find(key => INDONESIAN_CARD_MAP.suit[key] === suitCode);
+            return (valueName && suitName) ? `${valueName} ${suitName}` : code;
+        }
+
+        function parseCardInput(text) {
+            const cleanText = text.toLowerCase().trim();
+            const parts = cleanText.split(/ (?:of )?/); 
+            let valueCode = null, suitCode = null;
+            for (const part of parts) {
+                if (!valueCode && Object.keys(INDONESIAN_CARD_MAP.value).map(k => k.toLowerCase()).includes(part)) valueCode = INDONESIAN_CARD_MAP.value[Object.keys(INDONESIAN_CARD_MAP.value).find(k => k.toLowerCase() === part)];
+                else if (!valueCode && Object.keys(ENGLISH_CARD_MAP.value).map(k => k.toLowerCase()).includes(part)) valueCode = ENGLISH_CARD_MAP.value[Object.keys(ENGLISH_CARD_MAP.value).find(k => k.toLowerCase() === part)];
+                else if (!valueCode && !isNaN(parseInt(part)) && parseInt(part) >= 2 && parseInt(part) <= 9) valueCode = part;
+                if (!suitCode && Object.keys(INDONESIAN_CARD_MAP.suit).map(k => k.toLowerCase()).includes(part)) suitCode = INDONESIAN_CARD_MAP.suit[Object.keys(INDONESIAN_CARD_MAP.suit).find(k => k.toLowerCase() === part)];
+                else if (!suitCode && Object.keys(ENGLISH_CARD_MAP.suit).map(k => k.toLowerCase()).includes(part)) suitCode = ENGLISH_CARD_MAP.suit[Object.keys(ENGLISH_CARD_MAP.suit).find(k => k.toLowerCase() === part)];
+            }
+            return (valueCode && suitCode) ? `${valueCode}${suitCode}` : text;
+        }
 
         function showToast(message, type = 'info', duration = 3000) {
             const toast = DOM.toastNotification;
             DOM.toastMessage.textContent = message;
-
             toast.classList.remove('bg-green-600', 'bg-red-600', 'bg-blue-600');
-
             switch (type) {
-                case 'success':
-                    toast.classList.add('bg-green-600');
-                    break;
-                case 'error':
-                    toast.classList.add('bg-red-600');
-                    break;
-                case 'info':
-                default:
-                    toast.classList.add('bg-blue-600');
-                    break;
+                case 'success': toast.classList.add('bg-green-600'); break;
+                case 'error': toast.classList.add('bg-red-600'); break;
+                default: toast.classList.add('bg-blue-600'); break;
             }
-
             toast.classList.remove('hidden', 'opacity-0');
             toast.classList.add('opacity-100');
-
             setTimeout(() => {
                 toast.classList.remove('opacity-100');
                 toast.classList.add('opacity-0');
-                 setTimeout(() => {
-                    toast.classList.add('hidden');
-                }, 300);
+                 setTimeout(() => { toast.classList.add('hidden'); }, 300);
             }, duration);
         }
 
@@ -429,35 +511,26 @@
         function toDisplayDate(isoDate) {
             if (!isoDate || isoDate.length !== 10) return '';
             const parts = isoDate.split('-');
-            if (parts.length === 3) {
-                 return `${parts[2]}-${parts[1]}-${parts[0]}`;
-            }
-            return isoDate;
+            return (parts.length === 3) ? `${parts[2]}-${parts[1]}-${parts[0]}` : isoDate;
         }
 
         function toInternalDate(displayDate) {
            if (!displayDate || displayDate.length !== 10) return '';
            const parts = displayDate.split('-');
-           if (parts.length === 3) {
-                 return `${parts[2]}-${parts[1]}-${parts[0]}`;
-           }
-           return displayDate;
+           return (parts.length === 3) ? `${parts[2]}-${parts[1]}-${parts[0]}` : displayDate;
         }
 
         function render() {
             document.body.className = 'text-gray-800 antialiased';
             document.body.classList.add(state.config.style);
-
             DOM.mainScreen.classList.toggle('hidden', state.ui.currentView !== 'main');
             DOM.magicInterface.classList.toggle('hidden', state.ui.currentView !== 'magic');
             DOM.controlPanel.classList.toggle('hidden', !state.ui.isPanelOpen);
-            
             DOM.titleControl.value = state.config.title;
             DOM.dateControl.value = toDisplayDate(state.config.date);
             DOM.contentControl.value = state.config.content;
             DOM.controlNoteTitle.value = state.config.noteTitle;
             DOM.controlStyleSelect.value = state.config.style;
-
             DOM.templateSelect.innerHTML = '<option value="">Pilih template...</option>';
             state.templates.sort((a, b) => a.name.localeCompare(b.name)).forEach(template => {
                 const option = document.createElement('option');
@@ -466,20 +539,13 @@
                 DOM.templateSelect.appendChild(option);
             });
             DOM.templateSelect.value = state.ui.selectedTemplateId;
-
-
             const isAssistantMode = state.config.viewMode === 'assistant';
-            
             DOM.assistantView.classList.toggle('hidden', !isAssistantMode);
             DOM.noteView.classList.toggle('hidden', isAssistantMode);
-
             DOM.viewAssistantBtn.classList.toggle('bg-blue-600', isAssistantMode);
             DOM.viewAssistantBtn.classList.toggle('text-white', isAssistantMode);
-            DOM.viewAssistantBtn.classList.toggle('text-gray-700', !isAssistantMode);
             DOM.viewNoteBtn.classList.toggle('bg-blue-600', !isAssistantMode);
             DOM.viewNoteBtn.classList.toggle('text-white', !isAssistantMode);
-            DOM.viewNoteBtn.classList.toggle('text-gray-700', isAssistantMode);
-
             if (state.ui.currentView === 'magic') {
                 if (isAssistantMode) renderAssistantView();
                 else renderNoteView();
@@ -493,71 +559,106 @@
             DOM.assistantComplete.classList.toggle('hidden', !(hasPlaceholders && isComplete));
             DOM.assistantContent.classList.toggle('hidden', !hasPlaceholders || isComplete);
 
-            if (hasPlaceholders && isComplete) {
+            if (hasPlaceholders && !isComplete) {
+                const currentName = state.ui.placeholders[state.ui.currentPlaceholderIndex];
+                DOM.currentPlaceholder.textContent = `$${currentName}`;
+                const isCardPlaceholder = currentName.toLowerCase() === 'card';
+                DOM.standardInputGroup.classList.toggle('hidden', isCardPlaceholder);
+                DOM.cardSelector.classList.toggle('hidden', !isCardPlaceholder);
+                if (isCardPlaceholder) {
+                    let cardCode = '';
+                    if (state.ui.selectedCardValue) cardCode += state.ui.selectedCardValue;
+                    if (state.ui.selectedCardSuit) cardCode += state.ui.selectedCardSuit;
+                    else if(state.ui.selectedCardValue) cardCode += 'S';
+                    DOM.cardPreview.src = (cardCode.length >= 1) ? `${CARD_API_BASE_URL}${cardCode}.png` : 'https://deckofcardsapi.com/static/img/back.png';
+                } else {
+                    DOM.placeholderInput.value = '';
+                    DOM.placeholderInput.focus();
+                }
+                DOM.progressIndicator.textContent = `Langkah ${state.ui.currentPlaceholderIndex + 1} dari ${state.ui.placeholders.length}`;
+            } else if (hasPlaceholders && isComplete) {
                 const summaryHtml = state.ui.placeholders.map(p => {
-                    const value = state.predictions[p] || '<i>Kosong</i>';
+                    let value = state.predictions[p] || '<i>Kosong</i>';
+                    if (p.toLowerCase() === 'card') {
+                        value = `<img src="${CARD_API_BASE_URL}${value}.png" class="h-8 inline-block" /> (${formatCardCode(value)})`;
+                    }
                     return `<div class="flex justify-between items-center"><span class="font-semibold text-gray-700">$${p}:</span><span class="truncate ml-2">${value}</span></div>`;
                 }).join('');
                 DOM.assistantSummaryList.innerHTML = summaryHtml;
-            } else if (hasPlaceholders && !isComplete) {
-                const currentName = state.ui.placeholders[state.ui.currentPlaceholderIndex];
-                DOM.currentPlaceholder.textContent = `$${currentName}`;
-                DOM.placeholderInput.value = '';
-                DOM.placeholderInput.focus();
-                DOM.progressIndicator.textContent = `Langkah ${state.ui.currentPlaceholderIndex + 1} dari ${state.ui.placeholders.length}`;
             }
         }
         
         function renderNoteView() {
-            DOM.noteBackBtn.innerHTML = ICONS.ArrowLeft;
-            DOM.noteSaveBtnDeco.innerHTML = ICONS.Save;
+            DOM.notePeekBtn.innerHTML = ICONS.ArrowLeft;
+            DOM.noteSaveBtn.innerHTML = ICONS.Save;
             DOM.noteTitleDisplay.value = state.config.noteTitle; 
-            const lines = state.ui.placeholders.map(p => state.predictions[p] || '');
-            const content = lines.join('\n');
 
-            DOM.noteInputArea.value = (content.trim() === '') ? '' : content;
-            DOM.noteInputArea.placeholder = `Tulis di sini...`;
-            DOM.noteInputArea.focus();
+            DOM.noteInputArea.classList.toggle('hidden', state.ui.isPeekModeActive);
+            DOM.notePeekView.classList.toggle('hidden', !state.ui.isPeekModeActive);
+
+            if (state.ui.isPeekModeActive) {
+                const peekContentHTML = state.ui.placeholders.map(p => {
+                    const value = state.predictions[p];
+                    if (value) {
+                        const displayValue = p.toLowerCase() === 'card' ? formatCardCode(value) : value;
+                        return `<div>${displayValue}</div>`;
+                    } else {
+                        return `<div class="text-gray-400">$${p}</div>`;
+                    }
+                }).join('');
+                DOM.notePeekView.innerHTML = peekContentHTML;
+            } else {
+                const lines = state.ui.placeholders.map(p => {
+                    const pred = state.predictions[p] || '';
+                    return p.toLowerCase() === 'card' ? formatCardCode(pred) : pred;
+                });
+                DOM.noteInputArea.value = lines.join('\n');
+                DOM.noteInputArea.placeholder = `Tulis di sini...`;
+                setTimeout(() => {
+                    DOM.noteInputArea.focus();
+                    const pos = state.ui.lastCursorPosition;
+                    DOM.noteInputArea.setSelectionRange(pos, pos);
+                }, 0);
+            }
         }
 
         function updateStateAndRender(data, fromTemplateSelection = false) {
-            if (data && state.ui.isPanelOpen && !fromTemplateSelection) {
-               return;
-            }
-
-           if (data && data.config) {
+            if (data && state.ui.isPanelOpen && !fromTemplateSelection) return;
+            if (data && data.config) {
                 state.config = { ...state.config, ...data.config };
                 localStorage.setItem(CONFIG_STORAGE_KEY, JSON.stringify(state.config));
-           }
-           if (data && data.predictions && state.ui.currentView === 'main') {
-                state.predictions = data.predictions;
-           }
-           const newPlaceholders = parsePlaceholders(state.config.content);
-           const placeholdersChanged = JSON.stringify(state.ui.placeholders) !== JSON.stringify(newPlaceholders);
-
-           if (placeholdersChanged) {
+            }
+            if (data && data.predictions) {
+                 if (state.ui.currentView === 'main' || fromTemplateSelection) state.predictions = data.predictions;
+            }
+            const newPlaceholders = parsePlaceholders(state.config.content);
+            const placeholdersChanged = JSON.stringify(state.ui.placeholders) !== JSON.stringify(newPlaceholders);
+            if (placeholdersChanged) {
                 state.ui.placeholders = newPlaceholders;
                 if (state.ui.currentView === 'main') {
                     state.predictions = {};
                     state.ui.currentPlaceholderIndex = 0;
                 }
-           }
-
-           if (state.config.viewMode === 'assistant') {
+            }
+            if (state.config.viewMode === 'assistant') {
                 const firstEmptyIndex = state.ui.placeholders.findIndex(p => !state.predictions[p]);
                 state.ui.currentPlaceholderIndex = firstEmptyIndex === -1 ? state.ui.placeholders.length : firstEmptyIndex;
-           }
-           render();
+            }
+            render();
         }
 
         function startMagicSession() {
             if (!state.ui.isAuthReady) {
-                showToast('Koneksi ke server gagal. Tidak dapat memulai.', 'error');
+                showToast('Aplikasi masih menghubungkan ke server.', 'error');
                 return;
             }
             state.predictions = {};
             state.ui.currentPlaceholderIndex = 0;
             state.ui.currentView = 'magic';
+            state.ui.selectedCardValue = null;
+            state.ui.selectedCardSuit = null;
+            state.ui.isPeekModeActive = false;
+            state.ui.lastCursorPosition = 0;
             render();
         }
 
@@ -571,9 +672,7 @@
                     state.templates.push({ id: doc.id, name: doc.id, ...doc.data() });
                 });
                 render();
-            } catch (error) {
-                console.error("Error loading templates:", error);
-            }
+            } catch (error) { console.error("Error loading templates:", error); }
         }
 
         async function createTemplate() {
@@ -581,31 +680,26 @@
                 showToast('Koneksi ke server gagal. Tidak dapat menyimpan.', 'error');
                 return;
             }
-
             const templateName = DOM.modalTemplateName.value.trim();
             if (!templateName) {
                 showToast('Nama Template tidak boleh kosong.', 'error');
                 return;
             }
-
             const templateDocRef = doc(db, "templates", templateName);
-            
             try {
                 const docSnap = await getDoc(templateDocRef);
                 if (docSnap.exists()) {
                     showToast(`Template "${templateName}" sudah ada.`, 'error');
                     return;
                 }
-
                 const newTemplateData = {
                     title: DOM.modalArticleTitle.value,
-                    date: new Date().toISOString().split('T')[0], // Use current date for new template
+                    date: new Date().toISOString().split('T')[0],
                     content: DOM.modalArticleContent.value,
                     noteTitle: DOM.modalNoteTitle.value,
                     viewMode: DOM.modalViewMode.value,
                     style: DOM.modalStyleSelect.value
                 };
-
                 await setDoc(templateDocRef, newTemplateData);
                 showToast(`Template "${templateName}" berhasil dibuat!`, 'success');
                 DOM.templateForm.reset();
@@ -627,26 +721,29 @@
                 showToast("Pilih template yang ingin dihapus terlebih dahulu.", 'info');
                 return;
             }
+            DOM.templateToDeleteName.textContent = templateId;
+            DOM.deleteConfirmModal.classList.remove('hidden');
 
-            try {
-                const templateDocRef = doc(db, "templates", templateId);
-                await deleteDoc(templateDocRef);
-                showToast(`Template "${templateId}" berhasil dihapus!`, 'success');
-                
-                state.ui.selectedTemplateId = '';
-                state.config.title = '';
-                state.config.date = new Date().toISOString().split('T')[0];
-                state.config.content = '';
-                state.config.noteTitle = 'Input Prediksi';
-                state.config.viewMode = 'assistant';
-                state.config.style = 'pub-cadabra';
-                
-                await loadTemplates(); 
-
-            } catch (error) {
-                console.error("Error deleting template:", error);
-                showToast('Gagal menghapus template.', 'error');
-            }
+            DOM.confirmDeleteBtn.onclick = async () => {
+                try {
+                    const templateDocRef = doc(db, "templates", templateId);
+                    await deleteDoc(templateDocRef);
+                    showToast(`Template "${templateId}" berhasil dihapus!`, 'success');
+                    state.ui.selectedTemplateId = '';
+                    state.config.title = '';
+                    state.config.date = new Date().toISOString().split('T')[0];
+                    state.config.content = '';
+                    state.config.noteTitle = 'Input Prediksi';
+                    state.config.viewMode = 'assistant';
+                    state.config.style = 'pub-cadabra';
+                    await loadTemplates();
+                } catch (error) {
+                    console.error("Error deleting template:", error);
+                    showToast('Gagal menghapus template.', 'error');
+                } finally {
+                    DOM.deleteConfirmModal.classList.add('hidden');
+                }
+            };
         }
 
         async function saveConfigToFirestore() {
@@ -663,10 +760,7 @@
                         cleanedPredictions[placeholder] = currentPredictions[placeholder];
                     }
                 });
-                await setDoc(docRef, { 
-                    config: state.config,
-                    predictions: cleanedPredictions 
-                });
+                await setDoc(docRef, { config: state.config, predictions: cleanedPredictions });
                 localStorage.setItem(CONFIG_STORAGE_KEY, JSON.stringify(state.config));
                 state.predictions = cleanedPredictions; 
                 state.ui.currentPlaceholderIndex = 0;
@@ -687,17 +781,11 @@
                 .reduce((acc, [key, value]) => ({ ...acc, [key]: value }), {});
             if (Object.keys(nonNullPredictions).length === 0 && Object.keys(state.predictions).length > 0) {} 
             else if (Object.keys(nonNullPredictions).length === 0) return;
-            
             try {
                 const docRef = doc(db, "artifacts", FIXED_USER_ID);
                 await setDoc(docRef, { predictions: nonNullPredictions }, { merge: true }); 
                 console.log("Predictions saved.");
-                if (state.config.viewMode === 'note' && !DOM.noteTitleDisplay.value.endsWith('.')) {
-                    DOM.noteTitleDisplay.value = state.config.noteTitle + '.';
-                }
-            } catch (error) {
-                console.error("Error saving predictions to Firestore:", error);
-            }
+            } catch (error) { console.error("Error saving predictions to Firestore:", error); }
         }
 
         async function forceSyncFromFirestore() {
@@ -713,7 +801,7 @@
                     const data = docSnap.data();
                     state.config = data.config || state.config;
                     state.predictions = data.predictions || {};
-                    state.ui.selectedTemplateId = ''; // Reset template selection
+                    state.ui.selectedTemplateId = '';
                     updateStateAndRender({config: state.config, predictions: state.predictions}, true);
                     showToast('Sinkronisasi berhasil!', 'success');
                 } else {
@@ -731,9 +819,7 @@
            if (!state.ui.isAuthReady) return;
            const docRef = doc(db, "artifacts", FIXED_USER_ID);
            onSnapshot(docRef, (docSnap) => {
-                if (state.ui.isPanelOpen) {
-                    return; 
-                }
+                if (state.ui.isPanelOpen) return; 
                 if (docSnap.exists()) {
                     const data = docSnap.data();
                     updateStateAndRender({ config: data.config, predictions: data.predictions }); 
@@ -746,23 +832,12 @@
 
         function handleDateFormat(input) {
             let value = input.value.replace(/[^0-9]/g, '');
-            let originalCursorPosition = input.selectionStart;
             if (value.length > 8) value = value.substring(0, 8);
             let formattedValue = value;
-            let newCursorPosition = originalCursorPosition;
-            if (value.length > 2) {
-                formattedValue = value.substring(0, 2) + '-' + value.substring(2);
-                if (originalCursorPosition === 3 || originalCursorPosition === 4) newCursorPosition++;
-            }
-            if (value.length > 4) {
-                formattedValue = formattedValue.substring(0, 5) + '-' + formattedValue.substring(5);
-                if (originalCursorPosition === 6 || originalCursorPosition === 7) newCursorPosition++;
-            }
+            if (value.length > 2) formattedValue = `${value.substring(0,2)}-${value.substring(2)}`;
+            if (value.length > 4) formattedValue = `${formattedValue.substring(0,5)}-${formattedValue.substring(5)}`;
             input.value = formattedValue;
             state.config.date = (formattedValue.length === 10) ? toInternalDate(formattedValue) : '';
-            if (input === document.activeElement) {
-                input.setSelectionRange(newCursorPosition, newCursorPosition);
-            }
         }
 
         function createTripleTapListener(element, callback) {
@@ -778,11 +853,31 @@
             });
         }
 
+        function handleCardSelection() {
+            if (state.ui.selectedCardValue && state.ui.selectedCardSuit) {
+                const cardCode = `${state.ui.selectedCardValue}${state.ui.selectedCardSuit}`;
+                const currentName = state.ui.placeholders[state.ui.currentPlaceholderIndex];
+                state.predictions[currentName] = cardCode;
+                state.ui.selectedCardValue = null;
+                state.ui.selectedCardSuit = null;
+                state.ui.currentPlaceholderIndex++;
+                savePredictionsToFirestore();
+                render();
+            }
+        }
+
         function setupEventListeners() {
             DOM.startMagicBtn.addEventListener('click', startMagicSession);
-            DOM.settingsBtn.addEventListener('click', () => { state.ui.isPanelOpen = true; render(); });
+            DOM.settingsBtn.addEventListener('click', () => {
+                if (!state.ui.isAuthReady) {
+                    showToast('Aplikasi masih menghubungkan ke server.', 'error');
+                    return;
+                }
+                state.ui.isPanelOpen = true;
+                render();
+            });
             DOM.panduanBtn.addEventListener('click', () => { window.location.href = './panduan.html'; });
-            DOM.closePanelBtn.addEventListener('click', () => { state.ui.isPanelOpen = false; render(); });
+            DOM.closePanelBtn.addEventListener('click', () => { state.ui.isPanelOpen = false; forceSyncFromFirestore(); });
             
             DOM.saveSettingsBtn.addEventListener('click', async () => {
                 handleDateFormat(DOM.dateControl);
@@ -811,44 +906,37 @@
             DOM.deleteTemplateBtn.addEventListener('click', deleteSelectedTemplate);
             DOM.controlStyleSelect.addEventListener('change', e => { state.config.style = e.target.value; render(); });
 
-            // Modal Listeners
             const closeModal = () => DOM.createTemplateModal.classList.add('hidden');
             DOM.closeModalBtn.addEventListener('click', closeModal);
             DOM.cancelModalBtn.addEventListener('click', closeModal);
             DOM.saveModalBtn.addEventListener('click', createTemplate);
-            DOM.templateForm.addEventListener('submit', (e) => {
-                e.preventDefault();
-                createTemplate();
-            });
+            DOM.templateForm.addEventListener('submit', (e) => { e.preventDefault(); createTemplate(); });
+            
+            const closeDeleteModal = () => DOM.deleteConfirmModal.classList.add('hidden');
+            DOM.cancelDeleteBtn.addEventListener('click', closeDeleteModal);
 
 
             DOM.templateSelect.addEventListener('change', (e) => {
                 const templateId = e.target.value;
                 state.ui.selectedTemplateId = templateId;
-
                 if (!templateId) return;
-
                 const selectedTemplate = state.templates.find(t => t.id === templateId);
                 if (selectedTemplate) {
-                    state.config.title = selectedTemplate.title;
-                    state.config.date = selectedTemplate.date;
-                    state.config.content = selectedTemplate.content;
-                    state.config.noteTitle = selectedTemplate.noteTitle;
-                    state.config.viewMode = selectedTemplate.viewMode;
-                    state.config.style = selectedTemplate.style || 'pub-cadabra';
-                    updateStateAndRender({config: state.config}, true);
+                    state.config = {...state.config, ...selectedTemplate};
+                    updateStateAndRender({config: state.config, predictions: {}}, true);
                 }
             });
 
             const submitAssistantValue = () => {
                 if (state.ui.currentPlaceholderIndex < state.ui.placeholders.length) {
                     const currentName = state.ui.placeholders[state.ui.currentPlaceholderIndex];
+                    if (currentName.toLowerCase() === 'card') return;
                     const value = DOM.placeholderInput.value.trim();
                     if (value) {
                          state.predictions[currentName] = value;
                          state.ui.currentPlaceholderIndex++;
                     } else { return; }
-                    if (state.ui.currentPlaceholderIndex === state.ui.placeholders.length) {
+                    if (state.ui.currentPlaceholderIndex >= state.ui.placeholders.length) {
                         savePredictionsToFirestore();
                     }
                     render();
@@ -857,22 +945,37 @@
             DOM.submitPlaceholderBtn.addEventListener('click', submitAssistantValue);
             DOM.placeholderInput.addEventListener('keyup', e => e.key === 'Enter' && submitAssistantValue());
 
-            DOM.noteInputArea.addEventListener('input', (e) => {
-                if (DOM.noteTitleDisplay.value.endsWith('.')) {
-                    DOM.noteTitleDisplay.value = state.config.noteTitle;
-                }
-                const lines = e.target.value.split('\n');
-                const newPredictions = {};
-                state.ui.placeholders.forEach((p, i) => { newPredictions[p] = lines[i] || ''; });
-                if (JSON.stringify(state.predictions) !== JSON.stringify(newPredictions)) {
+            // Note Mode Event Listeners
+            DOM.notePeekBtn.addEventListener('click', () => {
+                if (!state.ui.isPeekModeActive) {
+                    state.ui.lastCursorPosition = DOM.noteInputArea.selectionStart;
+                    const lines = DOM.noteInputArea.value.split('\n');
+                    const newPredictions = {};
+                    state.ui.placeholders.forEach((p, i) => { 
+                        let value = lines[i] || '';
+                        if (p.toLowerCase() === 'card') value = parseCardInput(value);
+                        newPredictions[p] = value;
+                    });
                     state.predictions = newPredictions;
-                    clearTimeout(e.target.saveTimeout);
-                    e.target.saveTimeout = setTimeout(() => {
-                        const allFilled = state.ui.placeholders.every(p => state.predictions[p] && state.predictions[p].trim() !== '');
-                        if (allFilled) savePredictionsToFirestore();
-                    }, 2000);
                 }
+                state.ui.isPeekModeActive = !state.ui.isPeekModeActive;
+                renderNoteView();
             });
+
+            DOM.noteSaveBtn.addEventListener('click', async () => {
+                const lines = DOM.noteInputArea.value.split('\n');
+                const newPredictions = {};
+                state.ui.placeholders.forEach((p, i) => { 
+                    let value = lines[i] || '';
+                    if (p.toLowerCase() === 'card') value = parseCardInput(value);
+                    newPredictions[p] = value;
+                });
+                state.predictions = newPredictions;
+                
+                await savePredictionsToFirestore();
+                showToast('Catatan Disimpan!', 'success');
+            });
+
 
             const goBackToMain = () => { state.ui.currentView = 'main'; render(); };
             createTripleTapListener(DOM.noteHeader, goBackToMain);
@@ -880,15 +983,37 @@
         }
         
         async function init() {
+            CARD_VALUES.forEach(val => {
+                const btn = document.createElement('button');
+                btn.textContent = (val === '0' ? '10' : val);
+                btn.dataset.value = val;
+                btn.className = "p-2 bg-white border border-gray-300 rounded-md text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-blue-500";
+                btn.onclick = () => {
+                    state.ui.selectedCardValue = val;
+                    handleCardSelection();
+                    render();
+                };
+                DOM.cardValues.appendChild(btn);
+            });
+            CARD_SUITS.forEach(suit => {
+                const btn = document.createElement('button');
+                btn.innerHTML = `<span class="${suit === 'H' || suit === 'D' ? 'text-red-600' : 'text-black'} text-2xl">${{'S':'♠','H':'♥','D':'♦','C':'♣'}[suit]}</span>`;
+                btn.dataset.suit = suit;
+                btn.className = "p-2 bg-white border border-gray-300 rounded-md flex justify-center items-center focus:outline-none focus:ring-2 focus:ring-blue-500";
+                btn.onclick = () => {
+                    state.ui.selectedCardSuit = suit;
+                    handleCardSelection();
+                    render();
+                };
+                DOM.cardSuits.appendChild(btn);
+            });
+
             const savedMode = localStorage.getItem(VIEW_MODE_STORAGE_KEY);
             const savedConfig = localStorage.getItem(CONFIG_STORAGE_KEY);
             const savedStyle = localStorage.getItem(STYLE_STORAGE_KEY);
-            
             if (savedMode) state.config.viewMode = savedMode;
             if (savedStyle) state.config.style = savedStyle;
-            if (savedConfig) {
-                 state.config = { ...state.config, ...JSON.parse(savedConfig) };
-            }
+            if (savedConfig) state.config = { ...state.config, ...JSON.parse(savedConfig) };
             
             setupEventListeners();
             
@@ -898,13 +1023,16 @@
                 auth = getAuth(app);
                 await signInAnonymously(auth);
                 state.ui.isAuthReady = true;
-                DOM.connectionStatus.classList.add('hidden'); // Hide error on success
+                DOM.loadingState.classList.add('hidden');
+                DOM.buttonGroup.classList.remove('hidden');
+                DOM.connectionStatus.classList.add('hidden');
                 attachFirebaseListeners();
                 await loadTemplates();
                 state.predictions = {};
             } catch (error) {
                 console.error("Firebase Init Error:", error);
-                DOM.connectionStatus.classList.remove('hidden'); // Show error on failure
+                DOM.loadingState.classList.add('hidden');
+                DOM.connectionStatus.classList.remove('hidden');
             }
             render();
         }
@@ -914,7 +1042,7 @@
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('./service-worker.js')
-                    .then(reg => console.log('ServiceWorker registration successful with scope: ', reg.scope))
+                    .then(reg => console.log('ServiceWorker registration successful'))
                     .catch(err => console.log('ServiceWorker registration failed: ', err));
             });
         }

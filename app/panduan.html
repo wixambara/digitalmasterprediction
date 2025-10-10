@@ -93,6 +93,21 @@
             margin-top: 1.5rem;
             min-height: 150px;
         }
+        .ui-snippet {
+            background-color: #ffffff;
+            border: 1px solid #d1d5db;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        }
+        .wix-blog-font {
+             font-family: 'Georgia', serif;
+        }
+        /* FIX: Override prose style for green helper text */
+        .prose .ui-snippet .text-green-700 {
+            color: #16a34a; /* Tailwind green-600 */
+        }
     </style>
 </head>
 <body class="text-gray-800 antialiased">
@@ -105,7 +120,6 @@
                 <a href="app.html" class="inline-block bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg mt-8 hover:bg-blue-700 transition-colors no-underline">Kembali ke Aplikasi</a>
             </header>
 
-            <!-- ... (Bagian lain tetap sama) ... -->
              <section>
                 <h2>Halo, Wix Ambara!</h2>
                 <p>
@@ -138,12 +152,70 @@
             </section>
             
             <section>
+                <h2>Fitur Khusus: Placeholder <code>$card</code></h2>
+                <p>
+                    Aplikasi ini memiliki fitur cerdas khusus untuk placeholder yang mengandung kata "card", misalnya <code>$card</code>, <code>$card1</code>, atau <code>$kartu_penonton</code>. Fitur ini mengubah cara Anda memasukkan dan menampilkan prediksi kartu.
+                </p>
+                <div class="mode-box">
+                    <h3>Input Kartu di Mode Asisten</h3>
+                    <p>Jika <code>$card</code> aktif, tampilan input standar akan digantikan oleh antarmuka pemilihan kartu, seperti gambar di bawah. Asisten Anda bisa memilih nilai (A-K) dan suit (♠, ♥, ♦, ♣) dengan tombol. Gambar kartu akan muncul sebagai pratinjau untuk memastikan tidak ada kesalahan.</p>
+                     <div class="ui-snippet">
+                        <p class="text-sm text-center text-gray-500">Masukkan nilai untuk:</p>
+                        <h2 class="text-xl text-center font-bold text-gray-800 mb-4 break-all">$card</h2>
+                        <div class="mb-4 bg-gray-100 rounded-lg p-2 flex justify-center items-center h-48">
+                            <img src="https://deckofcardsapi.com/static/img/KH.png" alt="King of Hearts" class="h-full rounded-md shadow-md">
+                        </div>
+                        <div class="mb-4">
+                            <p class="text-sm font-medium text-gray-600 mb-2 text-left">Pilih Nilai</p>
+                            <div class="grid grid-cols-7 gap-1 text-sm">
+                                <button class="p-2 bg-white border border-gray-300 rounded-md">A</button>
+                                <button class="p-2 bg-white border border-gray-300 rounded-md">2</button>
+                                <span class="text-center self-center">...</span>
+                                <button class="p-2 bg-blue-600 text-white border border-blue-700 rounded-md">K</button>
+                                 <span class="text-center self-center">...</span>
+                                <button class="p-2 bg-white border border-gray-300 rounded-md">J</button>
+                                <button class="p-2 bg-white border border-gray-300 rounded-md">Q</button>
+                            </div>
+                        </div>
+                        <div>
+                            <p class="text-sm font-medium text-gray-600 mb-2 text-left">Pilih Suit</p>
+                            <div class="grid grid-cols-4 gap-2">
+                                <button class="p-2 bg-white border border-gray-300 rounded-md text-2xl flex justify-center items-center">♠</button>
+                                <button class="p-2 bg-blue-600 text-white border border-blue-700 rounded-md text-2xl flex justify-center items-center"><span class="text-red-500">♥</span></button>
+                                <button class="p-2 bg-white border border-gray-300 rounded-md text-2xl flex justify-center items-center"><span class="text-red-500">♦</span></button>
+                                <button class="p-2 bg-white border border-gray-300 rounded-md text-2xl flex justify-center items-center">♣</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mode-box">
+                    <h3>Input Kartu di Mode Notes</h3>
+                    <p>Di mode ini, Anda atau penonton cukup mengetik nama kartu secara alami. Aplikasi akan secara otomatis mendeteksinya. Format yang didukung:</p>
+                    <ul>
+                        <li><strong>Bahasa Indonesia:</strong> <code>As Sekop</code>, <code>Raja Hati</code>, <code>10 Wajik</code></li>
+                        <li><strong>Bahasa Inggris:</strong> <code>Ace of Spades</code>, <code>King of Hearts</code>, <code>10 of Diamonds</code></li>
+                    </ul>
+                    <p>Setelah Anda menyimpan, teks tersebut akan diubah menjadi format kartu yang benar secara otomatis.</p>
+                </div>
+                 <div class="tip-box">
+                    <h3 class="!mt-0 !text-blue-800">Tampilan Kartu di Halaman Blog</h3>
+                    <p class="!text-blue-900">Di halaman blog yang dilihat penonton, placeholder <code>$card</code> akan secara otomatis berubah menjadi gambar kartu yang sesuai, membuat prediksi Anda jauh lebih visual dan mengesankan.</p>
+                 </div>
+            </section>
+
+            <section>
                 <h2>Memilih Mode Input: Asisten vs. Notes</h2>
                 <p>Di dalam aplikasi DMP, Anda bisa memilih dua mode untuk memasukkan informasi rahasia. Pilihan ini sangat menentukan cara Anda perform.</p>
                 
                 <div class="mode-box">
                     <h3>Mode Asisten</h3>
-                    <p>Sesuai namanya, mode ini dirancang untuk performa yang dibantu oleh seorang <strong>asisten</strong>. Saat diaktifkan, asisten Anda akan melihat antarmuka yang jelas, menanyakan input untuk setiap placeholder satu per satu (Contoh: "Masukkan nilai untuk $kartu:").</p>
+                    <p>Sesuai namanya, mode ini dirancang untuk performance yang dibantu oleh seorang <strong>asisten</strong>. Saat diaktifkan, asisten Anda akan melihat antarmuka yang jelas, menanyakan input untuk setiap placeholder satu per satu.</p>
+                     <div class="ui-snippet text-center">
+                        <p class="text-sm mb-1 text-gray-500">Masukkan nilai untuk:</p>
+                        <h2 class="text-xl font-bold text-gray-800 mb-4 break-all">$nama_penonton</h2>
+                        <input type="text" class="w-full bg-gray-100 border border-gray-300 rounded-lg px-4 py-2.5 mb-4" placeholder="Ketik nilainya di sini...">
+                        <button class="w-full bg-gray-800 hover:bg-gray-900 text-white font-bold py-2.5 px-4 rounded-lg">Lanjut</button>
+                    </div>
                     <ul>
                         <li><strong>Kelebihan:</strong> Tangan Anda bersih. Anda bisa 100% fokus pada interaksi dengan penonton, membuat semuanya terlihat sangat fair.</li>
                         <li><strong>Kebutuhan:</strong> Seorang asisten yang sudah terlatih.</li>
@@ -152,23 +224,110 @@
                 
                 <div class="mode-box">
                     <h3>Mode Notes</h3>
-                    <p>Mode ini dirancang untuk <strong>performa solo</strong> dan memiliki 'cover' yang sangat kuat. Tampilannya sengaja dibuat menyerupai aplikasi notes biasa di ponsel. Anda cukup mengetikkan setiap jawaban penonton baris per baris.</p>
-                    <p>Bahkan, Anda bisa memberikan ponsel Anda ke penonton dan meminta mereka mengetik sendiri pilihan mereka di setiap baris. Mereka bebas mengganti jawaban kapan saja dengan mengedit tulisan tersebut. Ini membuat efeknya terasa semakin mustahil karena mereka merasa memegang kendali penuh.</p>
+                    <p>Mode ini dirancang untuk <strong>performance solo</strong> dan memiliki 'cover' yang sangat kuat. Tampilannya sengaja dibuat menyerupai aplikasi notes biasa di ponsel. Anda cukup mengetikkan setiap jawaban penonton baris per baris.</p>
+                    
+                     <div class="ui-snippet wix-blog-font">
+                         <div class="flex justify-between items-center p-2 border-b">
+                            <svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"></path></svg>
+                            <svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor"><path d="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z"></path></svg>
+                         </div>
+                         <div class="p-4">
+                            <div class="text-3xl font-bold mb-2">Input Prediksi</div>
+                            <div class="text-lg leading-relaxed">
+                                <p>Hotel California</p>
+                                <p>Queen of Spades</p>
+                                <p class="text-gray-400">$lagu_jadul3</p>
+                                <p class="text-gray-400">$nama_orang1</p>
+                            </div>
+                         </div>
+                    </div>
+
+                    <h4>Fitur Baru di Mode Notes:</h4>
+                    <ul>
+                        <li><strong>Simpan Manual:</strong> Penyimpanan tidak lagi otomatis. Anda harus menekan ikon <strong>Save</strong> (simpan) di pojok kanan atas untuk menyimpan input. Setelah berhasil, notifikasi "Catatan Disimpan!" akan muncul.</li>
+                        <li><strong>Mode Intip (Peek Mode):</strong> Tekan tombol <strong>panah</strong> di pojok kiri atas untuk masuk ke mode ini. Anda akan melihat daftar semua placeholder. Placeholder yang kosong akan berwarna abu-abu (seperti <code>$lagu_jadul3</code> pada gambar di atas). Tekan kembali tombol panah untuk kembali mengetik. Kursor akan kembali ke posisi terakhir Anda mengetik.</li>
+                    </ul>
                      <div class="warning-box mt-4">
                         <h3 class="!mt-0 !text-red-800">Panduan untuk Penonton</h3>
                         <p class="!text-red-900">Jika penonton yang mengetik, Anda <strong>wajib</strong> memandu mereka dengan jelas agar tidak terjadi kesalahan. Instruksikan dengan spesifik: "Silakan ketik pilihan pertama di baris paling atas. Jika ingin ganti, cukup hapus tulisan di baris itu dan ganti dengan yang baru. Jangan menambah atau menghapus baris."</p>
                     </div>
                 </div>
             </section>
+            
+            <section>
+                <h2>Mengenal Halaman Setting (Panel Kontrol)</h2>
+                <p>Halaman Setting adalah pusat kendali Anda. Di sinilah Anda mempersiapkan semua aspek dari efek sebelum performance dimulai. Berikut adalah penjelasan setiap bagiannya:</p>
+                <div class="ui-snippet space-y-4">
+                    <!-- Template Management -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-600 mb-1">Muat dari Template</label>
+                        <div class="flex items-center space-x-2">
+                            <select class="block w-full bg-white border border-black rounded-lg px-3 py-2">
+                                <option>Template Kartu</option>
+                            </select>
+                            <button class="p-2 text-red-500 hover:bg-red-100 rounded-md">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm4 0a1 1 0 012 0v6a1 1 0 11-2 0V8z" clip-rule="evenodd"></path>
+                                </svg>
+                            </button>
+                        </div>
+                        <p class="text-xs text-green-700 mt-1">Pilih konfigurasi yang sudah Anda simpan. Tombol sampah di sebelahnya untuk menghapus template yang dipilih.</p>
+                    </div>
+
+                    <!-- Article & Display Settings -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-600 mb-1">Gaya Tampilan</label>
+                        <select class="block w-full bg-white border border-black rounded-lg px-3 py-2">
+                            <option>The Pub Cadabra</option>
+                            <option>Wix Ambara's Blog</option>
+                        </select>
+                        <p class="text-xs text-green-700 mt-1">Pilih tema visual (Blog Pribadi atau The Pub Cadabra) untuk halaman blog yang dilihat penonton.</p>
+                    </div>
+                     <div>
+                        <label class="block text-sm font-medium text-gray-600 mb-1">Judul Artikel & Konten</label>
+                        <input type="text" value="Jurnal Mimpi" class="block w-full bg-white border border-black rounded-lg px-3 py-2 mb-2">
+                        <textarea rows="4" class="w-full bg-white border border-black rounded-lg px-3 py-2 resize-none">Semalam saya bermimpi tentang kartu ini : $card...</textarea>
+                        <p class="text-xs text-green-700 mt-1">Isi narasi prediksi Anda di sini, lengkap dengan <code>$placeholder</code>.</p>
+                    </div>
+
+                    <!-- Performance Mode -->
+                     <div>
+                        <label class="block text-sm font-medium text-gray-600 mb-1">Judul Mode Catatan</label>
+                        <input type="text" value="Input Prediksi" class="block w-full bg-white border border-black rounded-lg px-3 py-2">
+                        <p class="text-xs text-green-700 mt-1">Ubah judul ini untuk menyamarkan aplikasi saat dalam Mode Catatan.</p>
+                    </div>
+                     <div>
+                        <label class="block text-sm font-medium text-gray-600 mb-2">Mode Tampilan</label>
+                        <div class="flex bg-gray-200 rounded-lg p-1">
+                            <button class="w-1/2 py-2 text-sm font-semibold rounded-md bg-blue-600 text-white">Asisten</button>
+                            <button class="w-1/2 py-2 text-sm font-semibold rounded-md text-gray-700">Catatan</button>
+                        </div>
+                        <p class="text-xs text-green-700 mt-1">Pilih metode input yang akan digunakan saat performance.</p>
+                    </div>
+                    
+                    <!-- Action Buttons -->
+                    <div class="border-t pt-4 space-y-3">
+                         <div class="flex space-x-3">
+                            <button class="w-1/2 bg-green-600 text-white font-bold py-3 px-4 rounded-lg">Buat Template</button>
+                            <button class="w-1/2 bg-blue-600 text-white font-bold py-3 px-4 rounded-lg">Simpan & Kembali</button>
+                        </div>
+                        <button class="w-full bg-gray-700 text-white font-bold py-3 px-4 rounded-lg">Sinkronkan Semuanya</button>
+                        <ul class="text-xs text-green-700 list-disc pl-5">
+                            <li><b>Buat Template:</b> Membuka form untuk menyimpan konfigurasi baru.</li>
+                            <li><b>Simpan & Kembali:</b> Tombol terpenting. Mengesahkan semua pengaturan di atas menjadi konfigurasi aktif.</li>
+                             <li><b>Sinkronkan:</b> Membatalkan perubahan dan memuat ulang konfigurasi aktif terakhir dari server.</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
 
             <section>
-                <h2>Alur Permainan: Dari Setup hingga The Reveal</h2>
-                <h3>Langkah 1: The Setup (Persiapan)</h3>
+                <h2>Alur Permainan: Dari Setup hingga Reveal</h2>
+                <h3>Langkah 1: Persiapan</h3>
                 <ol class="list-decimal pl-6 space-y-2">
-                    <li>Buka aplikasi <strong>"DMP for Wix Ambara"</strong> dan tekan tombol <strong>Setting</strong>.</li>
-                    <li>Atur konten blog prediksi Anda. Tulis seolah-olah itu adalah postingan blog atau diary sungguhan, lengkap dengan <code>$placeholder</code>.</li>
-                    <li>Pilih "Mode Tampilan" (Asisten atau Notes) yang akan Anda gunakan.</li>
-                    <li>Tekan <strong>Simpan & Kembali</strong>.</li>
+                    <li>Buka aplikasi <strong>"DMP for Wix Ambara"</strong>. Tunggu hingga tulisan "Menghubungkan ke server..." hilang dan tombol-tombol muncul.</li>
+                    <li>Tekan tombol <strong>Setting</strong>.</li>
+                    <li>Gunakan formulir untuk mengatur konten prediksi Anda, lalu tekan <strong>Simpan & Kembali</strong>.</li>
                 </ol>
 
                 <h3>Langkah 2: Siapkan Prediksi Fisik (QR Code)</h3>
@@ -188,15 +347,16 @@
 
                 <p class="mt-4">Setelah di-download, cetak QR code tersebut, lalu masukkan ke dalam amplop. Inilah "prediksi" fisik Anda yang siap digunakan.</p>
 
-                <h3>Langkah 3: The Performance (Eksekusi)</h3>
+                <h3>Langkah 3: Eksekusi</h3>
                 <p>Minta penonton menyebutkan beberapa pilihan sesuai placeholder Anda. Sementara itu, Anda (dalam mode Notes) atau asisten Anda (dalam mode Asisten) secara diam-diam:</p>
                 <ol class="list-decimal pl-6 space-y-2">
                     <li>Membuka aplikasi <strong>"DMP for Wix Ambara"</strong>.</li>
                     <li>Menekan <strong>Start Magic</strong>.</li>
-                    <li>Memasukkan semua pilihan penonton. Aplikasi akan menyimpannya otomatis.</li>
+                    <li>Memasukkan semua pilihan penonton.</li>
+                    <li>(Mode Notes) Jangan lupa menekan tombol <strong>Save</strong> setelah selesai.</li>
                 </ol>
 
-                <h3>Langkah 4: The Reveal (Momen Puncak)</h3>
+                <h3>Langkah 4: Reveal</h3>
                 <ol class="list-decimal pl-6 space-y-2">
                     <li>Keluarkan amplop prediksi. Tekankan bahwa amplop ini sudah disiapkan sejak awal.</li>
                     <li>Minta penonton memindai (scan) QR code di dalamnya dengan ponsel mereka.</li>
@@ -204,7 +364,6 @@
                 </ol>
                 <p>Hasilnya, semua pilihan mereka akan sama persis dengan apa yang tertulis di postingan blog Anda.</p>
             </section>
-            <!-- ... (Sisa bagian panduan tetap sama) ... -->
              <section>
                 <h2>Contoh Template Bergaya Blog Post</h2>
                 <h3>Contoh 1: "Firasat Semalam"</h3>
@@ -228,7 +387,7 @@ Mungkin ini hanya imajinasi liar seorang penulis yang sedang bosan. Tapi bukanka
 
             <section>
                 <div class="tip-box">
-                    <h3 class="!mt-0 !text-blue-800">Tips untuk Performa Maksimal</h3>
+                    <h3 class="!mt-0 !text-blue-800">Tips untuk Performance Maksimal</h3>
                     <ul class="!mt-2 text-blue-900">
                         <li><strong>Gunakan Asisten jika Memungkinkan:</strong> Untuk efek yang paling bersih, Mode Asisten adalah pilihan terbaik. Ini menghilangkan semua kecurigaan dari Anda.</li>
                         <li><strong>Koneksi Internet:</strong> Pastikan perangkat DMP Anda memiliki koneksi internet yang stabil saat memasukkan info. Ponsel penonton juga butuh internet untuk membuka link dari QR code.</li>
@@ -238,7 +397,7 @@ Mungkin ini hanya imajinasi liar seorang penulis yang sedang bosan. Tapi bukanka
             </section>
 
             <footer class="text-center mt-16 py-8 border-t">
-                <p class="text-gray-600">Selamat beraksi dan ciptakan keajaiban!</p>
+                <p class="text-gray-600">Enjoy Digital Master Prediction!</p>
             </footer>
 
         </article>
